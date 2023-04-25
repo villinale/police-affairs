@@ -13,7 +13,7 @@ const routes = [
       },
       {
         path: 'person',
-        name: 'Home',
+        name: 'personInfo',
         component: () => import('@/views/PersonInfoView.vue'),
       },
     ],
