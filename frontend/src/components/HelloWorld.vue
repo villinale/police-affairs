@@ -1,46 +1,53 @@
+<!--
+ * @Author: yingxin wang
+ * @Date: 2023-04-24 13:53:02
+ * @LastEditors: yingxin wang
+ * @LastEditTime: 2023-04-25 14:56:43
+ * @Description: 主页面
+-->
 <template>
-  <v-container class="fill-height">
-    <v-responsive class="d-flex align-center text-center fill-height">
-      <v-img contain height="300" src="@/assets/logo.svg" />
+	<v-container class="fill-height">
+		<v-responsive class="d-flex align-center text-center fill-height">
+			<v-row class="d-flex align-center justify-center">
+				<v-col cols="auto">
+					<v-btn href="" min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text">
+						<v-icon icon="mdi-file-arrow-up-down" size="large" start />
+						电子报案
+					</v-btn>
+				</v-col>
 
-      <div class="text-body-2 font-weight-light mb-n1">Welcome to</div>
+				<v-col cols="auto">
+					<div class="login-wrapper">
+						<v-btn color="primary" href="/login" min-width="228" rel="noopener noreferrer" size="x-large"
+							target="_blank" variant="flat" prepend-icon="mdi-login">
+							登陆/注册
+						</v-btn>
+					</div>
+				</v-col>
 
-      <h1 class="text-h2 font-weight-bold">Vuetify</h1>
-
-      <div class="py-14" />
-
-      <v-row class="d-flex align-center justify-center">
-        <v-col cols="auto">
-          <v-btn href="https://next.vuetifyjs.com/components/all/" min-width="164" rel="noopener noreferrer"
-            target="_blank" variant="text">
-            <v-icon icon="mdi-view-dashboard" size="large" start />
-
-            Components
-          </v-btn>
-        </v-col>
-
-        <v-col cols="auto">
-          <v-btn color="primary" href="https://next.vuetifyjs.com/introduction/why-vuetify/#feature-guides"
-            min-width="228" rel="noopener noreferrer" size="x-large" target="_blank" variant="flat">
-            <v-icon icon="mdi-speedometer" size="large" start />
-
-            Get Started
-          </v-btn>
-        </v-col>
-
-        <v-col cols="auto">
-          <v-btn href="https://community.vuetifyjs.com/" min-width="164" rel="noopener noreferrer" target="_blank"
-            variant="text">
-            <v-icon icon="mdi-account-group" size="large" start />
-
-            Community
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-responsive>
-  </v-container>
+				<v-col cols="auto">
+					<v-btn href="" min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text">
+						<v-icon icon="mdi-message-bulleted" size="large" start />
+						最新消息
+					</v-btn>
+				</v-col>
+			</v-row>
+		</v-responsive>
+	</v-container>
 </template>
 
-<script setup>
-  //
-</script>
+<style>
+.login-wrapper {
+	position: relative;
+}
+
+.login-icon {
+	position: absolute;
+	top: -24px;
+	/* 调整icon的垂直位置 */
+	left: 50%;
+	/* 居中定位 */
+	transform: translateX(-50%);
+	/* 水平居中 */
+}
+</style>

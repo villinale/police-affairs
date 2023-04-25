@@ -2,7 +2,7 @@
  * @Author: yingxin wang
  * @Date: 2023-04-24 13:53:02
  * @LastEditors: yingxin wang
- * @LastEditTime: 2023-04-25 12:49:46
+ * @LastEditTime: 2023-04-25 13:15:50
  * @Description: 顶部导航栏
 -->
 <template>
@@ -25,6 +25,7 @@ export default {
 
 <style>
 .title {
+  margin-left: 30px;
   text-decoration: none;
   color: white;
   font-family: 'Noto Sans SC', sans-serif;
