@@ -1,13 +1,32 @@
+<!--
+ * @Author: yingxin wang
+ * @Date: 2023-04-24 13:53:02
+ * @LastEditors: yingxin wang
+ * @LastEditTime: 2023-04-25 12:49:46
+ * @Description: 顶部导航栏
+-->
 <template>
-  <v-app-bar flat>
-    <v-app-bar-title>
-      <v-icon icon="mdi-circle-slice-4" />
-
-      Base Preset
-    </v-app-bar-title>
+  <v-app-bar app color="primary" dark>
+    <router-link to="/" class="title">
+      <v-toolbar-title>智慧警务系统</v-toolbar-title>
+    </router-link>
+    <v-spacer></v-spacer>
+    <v-btn text>Link 1</v-btn>
+    <v-btn text>Link 2</v-btn>
   </v-app-bar>
 </template>
 
-<script setup>
-  //
+<script>
+export default {
+  data() {
+  },
+}
 </script>
+
+<style>
+.title {
+  text-decoration: none;
+  color: white;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+</style>
