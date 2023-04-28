@@ -29,6 +29,9 @@
 	</v-container>
 </template>
 
+<script>
+</script>
+
 <style>
 .login-wrapper {
 	position: relative;

@@ -2,7 +2,7 @@
  * @Author: yingxin wang
  * @Date: 2023-04-24 14:05:40
  * @LastEditors: yingxin wang
- * @LastEditTime: 2023-04-27 20:45:43
+ * @LastEditTime: 2023-04-28 19:54:48
  * @Description: 登陆注册页面
 -->
 <template>
