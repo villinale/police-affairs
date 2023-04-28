@@ -2,7 +2,7 @@
  * @Author: yingxin wang
  * @Date: 2023-04-24 14:05:40
  * @LastEditors: yingxin wang
- * @LastEditTime: 2023-04-25 20:48:24
+ * @LastEditTime: 2023-04-27 20:45:43
  * @Description: 登陆注册页面
 -->
 <template>
@@ -57,17 +57,17 @@ export default {
     methods: {
         login() {
             // 根据手机号和密码查询数据库
-            const user = // 查询结果
-            if (user) {
-                // 登录成功，设置cookie
-                this.$cookies.set('userid', user.id)
-                this.$cookies.set('role', user.role)
-                // 跳转到主页
-                this.$router.push('/')
-            } else {
-                // 登录失败，给出提示
-                // TODO: 实现提示逻辑
-            }
+            // const user = // 查询结果
+            // if (user) {
+            //     // 登录成功，设置cookie
+            //     this.$cookies.set('userid', user.id)
+            //     this.$cookies.set('role', user.role)
+            //     // 跳转到主页
+            //     this.$router.push('/')
+            // } else {
+            //     // 登录失败，给出提示
+            //     // TODO: 实现提示逻辑
+            // }
         },
         register() {
             // TODO: 实现注册逻辑
