@@ -1,6 +1,7 @@
 <template>
 	<v-container class="fill-height">
-		<v-responsive class="d-flex align-center text-center fill-height">
+		<mymap style="margin-bottom:20px;"></mymap>
+		<v-responsive class="d-flex align-center text-center">
 			<v-row class="d-flex align-center justify-center">
 				<v-col cols="auto">
 					<v-btn href="" min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text">
@@ -30,6 +31,10 @@
 </template>
 
 <script>
+import mymap from '@/components/MapItem.vue'
+export default {
+	components: { mymap },
+}
 </script>
 
 <style>
@@ -40,10 +45,7 @@
 .login-icon {
 	position: absolute;
 	top: -24px;
-	/* 调整icon的垂直位置 */
 	left: 50%;
-	/* 居中定位 */
 	transform: translateX(-50%);
-	/* 水平居中 */
 }
 </style>

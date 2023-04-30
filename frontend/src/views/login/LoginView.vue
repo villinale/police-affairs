@@ -2,7 +2,7 @@
  * @Author: yingxin wang
  * @Date: 2023-04-24 14:05:40
  * @LastEditors: yingxin wang
- * @LastEditTime: 2023-04-28 19:54:48
+ * @LastEditTime: 2023-04-28 22:07:54
  * @Description: 登陆注册页面
 -->
 <template>
@@ -14,7 +14,7 @@
         </v-row>
         <v-row>
             <v-col class="header">
-                <h1 style="font-weight: 100;">智慧警务系统</h1>
+                <h1 style="font-weight: 100;">智慧交通警务系统</h1>
             </v-col>
         </v-row>
         <v-card class="cardBox">

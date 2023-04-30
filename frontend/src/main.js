@@ -28,5 +28,4 @@ const app = createApp(App)
 registerPlugins(app)
 
 app.mount('#app')
-app.use(VueCookies)
 app.config.globalProperties.$L = L

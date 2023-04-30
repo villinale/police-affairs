@@ -3,7 +3,7 @@
  * @Date: 2023-04-28 09:57:01
  * @LastEditors: yingxin wang
  * @LastEditTime: 2023-04-28 20:28:52
- * @Description: 请填写简介
+ * @Description: 默认样式，有一个导航栏，一个主体
 -->
 <template>
   <v-app>
