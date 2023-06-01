@@ -2,7 +2,7 @@
  * @Author: yingxin wang
  * @Date: 2023-04-28 20:29:55
  * @LastEditors: yingxin wang
- * @LastEditTime: 2023-04-30 17:09:29
+ * @LastEditTime: 2023-04-30 20:23:47
  * @Description: 地图组件，显示所有辖区地图
 -->
  
@@ -12,6 +12,7 @@
 
 <script>
 import AMapLoader from '@amap/amap-jsapi-loader';
+import AMapUI from '@amap/amap-jsapi-loader';
 import { shallowRef } from '@vue/reactivity';
 
 export default {
@@ -30,47 +31,59 @@ export default {
             AMapLoader.load({
                 key: "f5d84e6e315b88e94510f92d132bc894",// 申请好的Web端开发者Key，首次调用 load 时必填
                 version: "2.0",      // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+                AMapUI: {
+                    version: '1.1',
+                    plugins: ['geo/DistrictExplorer',
+                        'overlay/SimpleMarker']
+                },
                 plugins: [''],       // 需要使用的的插件列表，如比例尺'AMap.Scale'等
-            }).then((AMap) => {
+            }).then(() => {
                 this.map = new AMap.Map("map", {  //设置地图容器id
                     viewMode: "3D",    //是否为3D地图模式
                     zoom: 10,           //初始化地图级别
                     center: [121.470463, 31.224329], //初始化地图中心点位置
-                    features: ['bg', 'road',],
                     mapStyle: "amap://styles/whitesmoke",
-                    dragEnable: false,
-                    zoomEnable: false,
+                    //dragEnable: false,
+                    //zoomEnable: false,
                 });
+                // var lngLats = [121.470751, 31.246058];
 
-                var circle = new AMap.Circle({
-                    center: new AMap.LngLat("121.476213", "31.237293"), // 圆心位置
-                    radius: 200,  //半径
-                    strokeColor: "#1f8fff",  //线颜色
-                    strokeOpacity: 1,  //线透明度
-                    strokeWeight: 3,  //线粗细度
-                    fillColor: "#1f8fff",  //填充颜色
-                    fillOpacity: 0.35 //填充透明度
-                });
-                this.map.add(circle);
+                // var ui1 = new AMapUI.SimpleMarker({
+                //     iconLabel: '1',
+                //     //自定义图标地址
+                //     iconStyle: '//webapi.amap.com/theme/v1.3/markers/b/mark_r.png',
 
-                // 创建纯文本标记
-                var text = new AMap.Text({
-                    text: '上海市',
-                    anchor: 'center', // 设置文本标记锚点
-                    style: {
-                        'padding': '.75rem 1.25rem',
-                        'margin-bottom': '1rem',
-                        'border-radius': '.25rem',
-                        'background-color': 'rgb(40, 248, 255, 0)',
-                        'border-width': 0,
-                        'text-align': 'center',
-                        'font-size': '18px',
-                        'color': '#413e3e'
-                    },
-                    position: [121.470751, 31.246058]
-                });
+                //     //设置基点偏移
+                //     offset: new AMap.Pixel(-19, -60),
 
-                text.setMap(this.map);
+                //     map: this.map,
+
+                //     showPositionPoint: true,
+                //     position: lngLats[0],
+                //     zIndex: 100
+                // });
+
+                // var ui2 = new AMapUI.SimpleMarker({
+                //     iconLabel: '2',
+                //     //自定义图标节点(img)的属性
+                //     iconStyle: {
+
+                //         src: '//webapi.amap.com/theme/v1.3/markers/b/mark_b.png',
+                //         style: {
+                //             width: '20px',
+                //             height: '30px'
+                //         }
+                //     },
+
+                //     //设置基点偏移
+                //     offset: new AMap.Pixel(-10, -30),
+
+                //     map: this.map,
+                //     showPositionPoint: true,
+                //     position: lngLats[1],
+                //     zIndex: 200
+                // });
+
             }).catch(e => {
                 console.log(e);
             })

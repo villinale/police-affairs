@@ -14,7 +14,7 @@ import { createApp } from 'vue'
 import { registerPlugins } from '@/plugins'
 
 //vue-coolkies引入
-import VueCookies from 'vue-cookies'
+//import VueCookies from 'vue-cookies'
 
 //leaflet引入
 import 'leaflet/dist/leaflet.css'

@@ -6,5 +6,11 @@ module.exports = {
   extends: [
     'plugin:vue/vue3-essential',
     'eslint:recommended',
+    'AMap:window.Amap',
+    'AMapUI:window.AMapUI'
   ],
+  globals: {
+    AMap: true,
+    AMapUI: true,
+  },
 }

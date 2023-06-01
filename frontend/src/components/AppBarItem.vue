@@ -11,8 +11,8 @@
       <v-toolbar-title>智慧交通警务系统</v-toolbar-title>
     </router-link>
     <v-spacer></v-spacer>
-    <v-btn text>Link 1</v-btn>
-    <v-btn text>Link 2</v-btn>
+    <v-btn text>个人主页</v-btn>
+    <v-btn text>信息查看</v-btn>
   </v-app-bar>
 </template>
 
