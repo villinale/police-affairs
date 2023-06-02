@@ -32,8 +32,11 @@ CREATE TABLE officer(
 
 CREATE TABLE cases(
     c_no INTEGER NOT NULL AUTO_INCREMENT,
+    c_title VARCHAR(128) NOT NULL,
     c_text VARCHAR(1024) DEFAULT NULL,
+    c_data DATE NOT NULL,
     c_level INTEGER NOT NULL,
+    c_loc VARCHAR(128) NOT NULL,
     c_stat INTEGER NOT NULL,
     s_no INTEGER NOT NULL,
     o_no INTEGER NOT NULL,
