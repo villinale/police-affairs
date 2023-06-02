@@ -1,70 +1,94 @@
-<!--
- * @Author: yingxin wang
- * @Date: 2023-04-25 15:14:19
- * @LastEditors: yingxin wang
- * @LastEditTime: 2023-04-25 15:14:23
- * @Description: 个人信息
--->
 <template>
-    <v-form v-model="valid">
-        <v-container>
-            <v-row>
-                <v-col cols="12" md="6">
-                    <v-text-field v-model="firstName" :rules="nameRules" label="First name"></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6">
-                    <v-text-field v-model="lastName" :rules="nameRules" label="Last name"></v-text-field>
-                </v-col>
-            </v-row>
-
-            <v-row>
-                <v-col cols="12" md="6">
-                    <v-text-field v-model="email" :rules="emailRules" label="E-mail"></v-text-field>
-                </v-col>
-                <v-col cols="12" md="6">
-                    <v-text-field v-model="phone" :rules="phoneRules" label="Phone number"></v-text-field>
-                </v-col>
-            </v-row>
-
-            <v-row>
-                <v-col cols="12">
-                    <v-btn color="primary" @click="submit">Save</v-btn>
-                </v-col>
-            </v-row>
-        </v-container>
-    </v-form>
+    <Dashboard />
+    <v-card class="mx-auto pe-continer" max-width="400">
+        <v-card-title class="primary">
+            <span class="pe-header-text">用户信息</span>
+        </v-card-title>
+        <v-card-text>
+            <v-list dense>
+                <v-list-item>
+                    <v-list-item-content>
+                        <v-list-item-title class="font-weight-bold">姓名:</v-list-item-title>
+                        <v-list-item-subtitle>{{ userInfo.u_name }}</v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                    <v-list-item-content>
+                        <v-list-item-title class="font-weight-bold">性别:</v-list-item-title>
+                        <v-list-item-subtitle>{{ userInfo.u_sex }}</v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                    <v-list-item-content>
+                        <v-list-item-title class="font-weight-bold">手机号:</v-list-item-title>
+                        <v-list-item-subtitle>{{ userInfo.u_phone }}</v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                    <v-list-item-content>
+                        <v-list-item-title class="font-weight-bold">身份:</v-list-item-title>
+                        <v-list-item-subtitle>{{ userInfo.u_role }}</v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-card-text>
+    </v-card>
 </template>
   
 <script>
+import Dashboard from '../components/DashBoard.vue';
+
+//TODO:界面美化
 export default {
+    components: {
+        Dashboard
+    },
     data() {
         return {
-            valid: false,
-            firstName: '',
-            lastName: '',
-            email: '',
-            phone: '',
-            nameRules: [
-                v => !!v || 'Name is required',
-                v => (v && v.length <= 10) || 'Name must be less than 10 characters'
-            ],
-            emailRules: [
-                v => !!v || 'E-mail is required',
-                v => /.+@.+/.test(v) || 'E-mail must be valid'
-            ],
-            phoneRules: [
-                v => !!v || 'Phone number is required',
-                v => /^\d{10}$/.test(v) || 'Phone number must be valid'
-            ]
-        }
-    },
-    methods: {
-        submit() {
-            if (this.$refs.form.validate()) {
-                // 保存用户信息的代码
+            uid: this.$cookies.get('userid'),
+            userInfo: {
+                u_no: 0,
+                u_role: '',
+                u_name: '',
+                u_psw: '',
+                u_sex: '',
+                u_phone: ''
             }
+        };
+    },
+    created() {
+        if (this.uid) {
+            this.$axios
+                .get(`/user/getUserInfoById/` + this.uid)
+                .then(res => {
+                    console.log(res.data);
+                    this.userInfo = res.data;
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     }
-}
+};
 </script>
+  
+<style scoped>
+.pe-continer {
+    margin-top: 20px;
+    display: contents;
+}
+
+.primary {
+    background-color: #1976d2;
+}
+
+.pe-header-text {
+    font-size: 20px;
+    color: white;
+}
+
+.font-weight-bold {
+    font-weight: bold;
+}
+</style>
   

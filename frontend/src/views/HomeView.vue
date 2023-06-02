@@ -5,7 +5,7 @@
 			<v-row class="d-flex align-center justify-center">
 				<v-col v-if="!isManager && !isOfficer" cols="auto">
 					<v-btn href="" min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text">
-						<v-icon icon="mdi-file-arrow-up-down" size="large" start />
+						<v-icon icon="mdi-file-arrow-up-down" size="large" @click="goToReportCase" />
 						电子报案
 					</v-btn>
 				</v-col>
@@ -48,7 +48,7 @@ export default {
 			}
 			console.log(this.isLogin);
 		},
-		updataRole() {
+		updateRole() {
 			if (this.$cookies.get("role") == "管理员") {
 				this.isManager = true;
 			} else if (this.$cookies.get("role") == "警员") {
@@ -58,11 +58,35 @@ export default {
 		goToLogin() {
 			this.$router.push('/login');
 		},
+		goToReportCase() {
+			this.$router.push('/report');
+		},
 	},
 	mounted() {
 		this.checkLoginStatus();
+		this.updateRole();
 	},
+	// beforeRouteEnter(to, from, next) {
+	// 	const isLoggedIn = this.isLogin;
+	// 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
+	// 	if (requiresAuth && !isLoggedIn) {
+	// 		next('/login');
+	// 	} else {
+	// 		next();
+	// 	}
+	// },
+	// beforeRouteUpdate(to, from, next) {
+	// 	// 在路由更新时进行相应的逻辑处理
+	// 	const isLoggedIn = this.isLogin;
+	// 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+	// 	if (requiresAuth && !isLoggedIn) {
+	// 		next('/login');
+	// 	} else {
+	// 		next();
+	// 	}
+	// },
 }
 </script>
 

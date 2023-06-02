@@ -2,7 +2,7 @@
  * @Author: yingxin wang
  * @Date: 2023-06-02 08:06:43
  * @LastEditors: yingxin wang
- * @LastEditTime: 2023-06-02 10:42:30
+ * @LastEditTime: 2023-06-02 20:07:20
  * @Description: 请填写简介
  */
 package com.police.controller;
@@ -81,4 +81,9 @@ public class UserController {
         }
     }
 
+    @GetMapping("/getUserInfoById/{id}")
+    public User getUserInfoById(@PathVariable Integer id) {// 根据用户id查找用户信息
+        User u = userMapper.selectById(id);
+        return u;
+    }
 }
