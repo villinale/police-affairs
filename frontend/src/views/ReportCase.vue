@@ -24,7 +24,7 @@
                             <v-text-field v-model="loc.lat" label="纬度" required></v-text-field>
                         </v-col>
                         <v-col cols="6">
-                            <v-text-field type="date" v-model="date" label="时间" required></v-text-field>
+                            <v-text-field type="datetime-local" v-model="date" label="时间" required></v-text-field>
                         </v-col>
                     </v-row>
                     <v-textarea v-model="description" label="描述" required></v-textarea>
@@ -46,7 +46,7 @@ export default {
     data() {
         return {
             title: '',
-            date: null,
+            date: '',
             loc: {
                 lon: '',
                 lat: '',
@@ -66,20 +66,30 @@ export default {
         submitForm() {
             var a = {
                 c_title: this.title,
-                c_date: this.date,
-                c_loc: this.loc,
                 c_text: this.description,
+                c_date: this.date,
                 c_level: (this.urgent) ? 1 : 0,
+                c_province: this.loc.province,
+                c_city: this.loc.city,
+                c_area: this.loc.area,
+                c_address: this.loc.address,
+                c_lon: this.loc.lon,
+                c_lat: this.loc.lat,
                 c_stat: 0,
             };
             console.log(a);
             this.$axios.post(`/case/addCase`,
                 {
                     c_title: this.title,
-                    c_date: this.date,
-                    c_loc: this.loc,
                     c_text: this.description,
+                    c_date: this.date,
                     c_level: (this.urgent) ? 1 : 0,
+                    c_province: this.loc.province,
+                    c_city: this.loc.city,
+                    c_area: this.loc.area,
+                    c_address: this.loc.address,
+                    c_lon: this.loc.lon,
+                    c_lat: this.loc.lat,
                     c_stat: 0,
                 })
                 .then(res => {

@@ -34,27 +34,20 @@ CREATE TABLE cases(
     c_no INTEGER NOT NULL AUTO_INCREMENT,
     c_title VARCHAR(128) NOT NULL,
     c_text VARCHAR(1024) DEFAULT NULL,
-    c_data DATE NOT NULL,
+    c_date DATETIME NOT NULL,
     c_level INTEGER NOT NULL,
-    c_loc VARCHAR(128) NOT NULL,
+    c_province VARCHAR(50) DEFAULT NULL,
+    c_city VARCHAR(50) DEFAULT NULL,
+    c_area VARCHAR(50) DEFAULT NULL,
+    c_address VARCHAR(256) DEFAULT NULL,
+    c_lon DOUBLE PRECISION NOT NULL,
+    c_lat DOUBLE PRECISION NOT NULL,
     c_stat INTEGER NOT NULL,
     s_no INTEGER NOT NULL,
     o_no INTEGER NOT NULL,
+    u_no INTEGER NOT NULL,
     PRIMARY KEY(c_no),
     FOREIGN KEY (o_no) REFERENCES officer(o_no),
-    FOREIGN KEY (s_no) REFERENCES station(s_no)
-);
-
-CREATE TABLE records(
-    r_no INTEGER NOT NULL AUTO_INCREMENT,
-    r_text VARCHAR(1024) DEFAULT NULL,
-    r_data TIMESTAMP NOT NULL,
-    r_stat INTEGER NOT NULL,
-    c_no INTEGER NOT NULL,
-    o_no INTEGER NOT NULL,
-    u_no INTEGER NOT NULL,
-    PRIMARY KEY (r_no),
-    FOREIGN KEY (c_no) REFERENCES cases(c_no),
-    FOREIGN KEY (o_no) REFERENCES officer(o_no),
+    FOREIGN KEY (s_no) REFERENCES station(s_no),
     FOREIGN KEY (u_no) REFERENCES user(u_no)
 );

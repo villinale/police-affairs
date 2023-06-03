@@ -13,7 +13,7 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @TableName("cases")
@@ -29,15 +29,30 @@ public class Case implements Serializable {
     private String c_text;
 
     @TableField
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private Date c_data;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime c_date;
 
     @TableField
     private int c_level;
 
     @TableField
-    private String c_loc;
+    private String c_province;
+
+    @TableField
+    private String c_city;
+
+    @TableField
+    private String c_area;
+
+    @TableField
+    private String c_address;
+
+    @TableField
+    private double c_lon;
+
+    @TableField
+    private double c_lat;
 
     @TableField
     private int c_stat;
@@ -48,19 +63,10 @@ public class Case implements Serializable {
     @TableField
     private int o_no;
 
+    @TableField
+    private int u_no;
+
     public Case() {
     }
 
-    public Case(int c_no, String c_text, String c_title, Date c_data, int c_level, String c_loc,
-            int c_stat, int s_no, int o_no) {
-        this.c_no = c_no;
-        this.c_title = c_title;
-        this.c_text = c_text;
-        this.c_data = c_data;
-        this.c_level = c_level;
-        this.c_loc = c_loc;
-        this.c_stat = c_stat;
-        this.s_no = s_no;
-        this.o_no = o_no;
-    }
 }

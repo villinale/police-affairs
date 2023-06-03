@@ -9,8 +9,5 @@ INSERT INTO station(s_no,s_name,s_long,s_lat) VALUES
 INSERT INTO officer(o_no,o_stat,u_no,s_no) VALUES
 (1,0,2,1);
 
-INSERT INTO cases(c_no,c_title,c_text,c_data,c_level,c_loc,c_stat,s_no,o_no) VALUES
-(1,'案件1','案件1','2020-01-01',1,'浦东',0,1,1);
-
-INSERT INTO records(r_no,r_text,r_data,r_stat,c_no,o_no,u_no) VALUES
-(1,'记录1','2020-01-01 00:00:00',0,1,1,1);
+INSERT INTO cases(c_no,c_title,c_text,c_date,c_level,c_province,c_city,c_area, c_address,c_lon,c_lat,c_stat,s_no,o_no,u_no) VALUES
+(1,'案件1','案件1','2020-01-01 17:43:03',0,'上海市','','浦东区','浦东',0.0,0.0,0,1,1,1);
