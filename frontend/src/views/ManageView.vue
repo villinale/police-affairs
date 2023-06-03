@@ -17,15 +17,18 @@
             </v-list>
         </v-navigation-drawer>
     </div>
-    <v-container class="fill-height">
+    <v-container v-if="manageType == 'officer'" class="fill-height" style="display: block;">
+        <v-data-table :headers="headers" :items="officers"></v-data-table>
     </v-container>
 </template>
 
 <script>
 import { VDataTable } from 'vuetify/labs/VDataTable'
+import * as roleUtils from '@/plugins/roleUtils.js'
 export default {
     components: {
         VDataTable,
+        roleUtils,
     },
     data() {
         return {
@@ -35,40 +38,36 @@ export default {
             isLogin: false,
             isManager: false,
             isOfficer: false,
+            officers: [],
+            headers: [
+                { title: '警员编号', align: 'start', key: 'o_no', },
+                { title: '警员名', align: 'end', key: 'u_name' },
+                { title: '性别', align: 'end', key: 'u_sex' },
+                { title: '手机号码', align: 'end', key: 'u_phone' },
+                { title: '警员状态', align: 'end', key: 'o_stat' },
+                { title: '站点编号', align: 'end', key: 's_no' },
+            ],
         }
     },
     methods: {
-        checkLoginStatus() {
-            if (this.$cookies.get("userid") != null) {
-                this.isLogin = true;
-            }
-            console.log(this.isLogin);
+        getAllData() {
+            this.$axios.get('/Officer/getAllOfficers').then(res => {
+                this.officers = res.data;
+            });
         },
         changeManage(data) {
             if (data == "officer" || data == "station")
                 this.manageType = data;
         },
-        updateRole() {
-            if (this.$cookies.get("role") == "管理员") {
-                this.isManager = true;
-            } else if (this.$cookies.get("role") == "警员") {
-                this.isOfficer = true;
-            }
-        },
         toggleRail() {
             this.rail = !this.rail;
         },
-        goToLogin() {
-            this.$router.push('/login');
-        },
-        goToReportCase() {
-            console.log("go to report case");
-            this.$router.push('/report');
-        },
     },
     mounted() {
-        this.checkLoginStatus();
-        this.updateRole();
+        roleUtils.checkLoginStatus(this);
+        roleUtils.updateRole(this);
+        console.log(this.isLogin)
+        this.getAllData();
     },
 }
 </script>

@@ -1,10 +1,3 @@
-/*
- * @Author: yingxin wang
- * @Date: 2023-06-02 08:06:43
- * @LastEditors: yingxin wang
- * @LastEditTime: 2023-06-02 20:07:20
- * @Description: 请填写简介
- */
 package com.police.controller;
 
 import com.police.entity.User;
