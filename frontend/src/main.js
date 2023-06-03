@@ -16,6 +16,8 @@ import 'leaflet/dist/leaflet.css'
 import * as L from 'leaflet'
 
 import axios from 'axios'
+import x2js from 'x2js'
+
 
 axios.defaults.baseURL = "http://127.0.0.1:8080/"
 axios.defaults.withCredentials = true
@@ -23,6 +25,7 @@ axios.defaults.withCredentials = true
 const app = createApp(App)
 app.config.globalProperties.$L = L
 app.config.globalProperties.$axios = axios
+app.config.globalProperties.$x2js = new x2js()
 
 app.use(VueCookies)
 

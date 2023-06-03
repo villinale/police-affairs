@@ -8,7 +8,7 @@
 <template>
     <v-app-bar app color="primary" dark>
         <router-link to="/" class="title">
-            <v-toolbar-title>智慧交通警务系统</v-toolbar-title>
+            <v-toolbar-title>城市犯罪管理平台</v-toolbar-title>
         </router-link>
         <v-spacer></v-spacer>
         <v-btn @click="goToPerson" text>个人主页</v-btn>

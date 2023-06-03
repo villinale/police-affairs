@@ -4,8 +4,9 @@
 		<v-responsive class="d-flex align-center text-center">
 			<v-row class="d-flex align-center justify-center">
 				<v-col v-if="!isManager && !isOfficer" cols="auto">
-					<v-btn href="" min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text">
-						<v-icon icon="mdi-file-arrow-up-down" size="large" @click="goToReportCase" />
+					<v-btn href="" min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text"
+						@click="goToReportCase">
+						<v-icon icon="mdi-file-arrow-up-down" size="large" start />
 						电子报案
 					</v-btn>
 				</v-col>
@@ -59,6 +60,7 @@ export default {
 			this.$router.push('/login');
 		},
 		goToReportCase() {
+			console.log("go to report case");
 			this.$router.push('/report');
 		},
 	},
@@ -66,6 +68,7 @@ export default {
 		this.checkLoginStatus();
 		this.updateRole();
 	},
+	//TODO:路由守卫
 	// beforeRouteEnter(to, from, next) {
 	// 	const isLoggedIn = this.isLogin;
 	// 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);

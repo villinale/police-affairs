@@ -4,12 +4,24 @@
             <v-card-title>
                 <h2>电子报案</h2>
             </v-card-title>
+            <MapSelectItem style="margin-bottom:20px;" @getLoc="getLoc">
+            </MapSelectItem>
             <v-card-text>
                 <v-form ref="form">
-                    <v-text-field v-model="title" label="标题" required></v-text-field>
                     <v-row align="center">
                         <v-col cols="6">
-                            <v-text-field v-model="loc" label="地点" required></v-text-field>
+                            <v-text-field v-model="title" label="标题" required></v-text-field>
+                        </v-col>
+                        <v-col cols="6">
+                            <v-text-field v-model="loc.address" label="具体位置" required></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col cols="3">
+                            <v-text-field v-model="loc.lon" label="经度" required></v-text-field>
+                        </v-col>
+                        <v-col cols="3">
+                            <v-text-field v-model="loc.lat" label="纬度" required></v-text-field>
                         </v-col>
                         <v-col cols="6">
                             <v-text-field type="date" v-model="date" label="时间" required></v-text-field>
@@ -25,18 +37,32 @@
 </template>
   
 <script>
+import MapSelectItem from '@/components/MapSelectItem.vue'
 //TODO:界面美化
 export default {
+    components: {
+        MapSelectItem
+    },
     data() {
         return {
             title: '',
             date: null,
-            loc: '',
+            loc: {
+                lon: '',
+                lat: '',
+                province: '',
+                city: '',
+                area: '',
+                address: '',
+            },
             description: '',
             urgent: false
         };
     },
     methods: {
+        getLoc(data) {
+            this.loc = data;
+        },
         submitForm() {
             var a = {
                 c_title: this.title,
