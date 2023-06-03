@@ -22,7 +22,7 @@ CREATE TABLE station(
 
 CREATE TABLE officer(
     o_no INTEGER NOT NULL AUTO_INCREMENT,
-    o_stat INTEGER NOT NULL,
+    o_stat VARCHAR(10) NOT NULL check(o_stat='任务中' or o_stat='空闲') ,
     u_no INTEGER NOT NULL,
     s_no INTEGER NOT NULL,
     PRIMARY KEY(o_no),
@@ -42,7 +42,7 @@ CREATE TABLE cases(
     c_address VARCHAR(256) DEFAULT NULL,
     c_lon DOUBLE PRECISION NOT NULL,
     c_lat DOUBLE PRECISION NOT NULL,
-    c_stat INTEGER NOT NULL,
+    c_stat VARCHAR(10) NOT NULL check(c_stat='待分配' or c_stat='处理中' or c_stat='已结束') ,
     s_no INTEGER NOT NULL,
     o_no INTEGER NOT NULL,
     u_no INTEGER NOT NULL,

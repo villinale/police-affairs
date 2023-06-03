@@ -17,8 +17,27 @@
             </v-list>
         </v-navigation-drawer>
     </div>
-    <v-container v-if="manageType == 'officer'" class="fill-height" style="display: block;">
-        <v-data-table :headers="headers" :items="officers"></v-data-table>
+    <v-container class="fill-height" style="display: block;">
+        <template v-if="manageType == 'officer'">
+            <v-data-table :headers="headersforofficers" :items="officers">
+                <template v-slot:item.o_stat="{ item }">
+                    <v-chip :color="getColor(item.columns.o_stat)">
+                        {{ item.columns.o_stat }}
+                    </v-chip>
+                </template>
+            </v-data-table>
+        </template>
+
+
+        <template v-if="manageType == 'station'">
+            <v-data-table :headers="headersforofficers" :items="officers">
+                <template v-slot:item.o_stat="{ item }">
+                    <v-chip :color="getColor(item.columns.o_stat)">
+                        {{ item.columns.o_stat }}
+                    </v-chip>
+                </template>
+            </v-data-table>
+        </template>
     </v-container>
 </template>
 
@@ -39,7 +58,15 @@ export default {
             isManager: false,
             isOfficer: false,
             officers: [],
-            headers: [
+            headersforofficers: [
+                { title: '警员编号', align: 'start', key: 'o_no', },
+                { title: '警员名', align: 'end', key: 'u_name' },
+                { title: '性别', align: 'end', key: 'u_sex' },
+                { title: '手机号码', align: 'end', key: 'u_phone' },
+                { title: '警员状态', align: 'end', key: 'o_stat' },
+                { title: '站点编号', align: 'end', key: 's_no' },
+            ],
+            headersforstations: [
                 { title: '警员编号', align: 'start', key: 'o_no', },
                 { title: '警员名', align: 'end', key: 'u_name' },
                 { title: '性别', align: 'end', key: 'u_sex' },
@@ -61,6 +88,11 @@ export default {
         },
         toggleRail() {
             this.rail = !this.rail;
+        },
+        getColor(o_stat) {
+            if (o_stat == '任务中') return 'red'
+            else if (o_stat == '空闲') return 'green'
+            else return 'orange'
         },
     },
     mounted() {

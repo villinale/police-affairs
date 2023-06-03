@@ -39,7 +39,7 @@ public class CaseController {
         String c_address = (String) requestBody.get("c_address");
         double c_lon = (double) requestBody.get("c_lon");
         double c_lat = (double) requestBody.get("c_lat");
-        int c_stat = 0;
+        // Stirng c_stat = '未处理';
         int u_no = (int) requestBody.get("u_no");
 
         // 时间格式转换 原格式："2023-06-10T16:26" 转换后："2023-06-10 16:26"
@@ -62,7 +62,7 @@ public class CaseController {
         c.setC_address(c_address);
         c.setC_lon(c_lon);
         c.setC_lat(c_lat);
-        c.setC_stat(c_stat);
+        c.setC_stat("待分配");
         c.setS_no(1);
         c.setO_no(1);
         c.setU_no(u_no);

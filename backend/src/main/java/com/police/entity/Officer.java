@@ -27,7 +27,7 @@ public class Officer implements Serializable {
 
     private int o_no;
 
-    private int o_stat;
+    private String o_stat;
 
     private int s_no;
 

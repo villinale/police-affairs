@@ -55,7 +55,7 @@ public class Case implements Serializable {
     private double c_lat;
 
     @TableField
-    private int c_stat;
+    private String c_stat;
 
     @TableField
     private int s_no;
