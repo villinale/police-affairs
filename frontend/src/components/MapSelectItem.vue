@@ -23,8 +23,10 @@ export default {
     },
     setup() {
         const map = shallowRef(null);
+        const marker = shallowRef(null);
         return {
             map,
+            marker,
         }
     },
     methods: {
@@ -57,6 +59,19 @@ export default {
                             this.loc.province = result.response.regeocode.addressComponent.province;
                             this.loc.city = result.response.regeocode.addressComponent.city;
                             this.loc.area = result.response.regeocode.addressComponent.district;
+
+                            if (this.marker)
+                                this.map.remove(this.marker);
+
+                            // 创建一个 Marker 实例：
+                            this.marker = new AMap.Marker({
+                                position: new AMap.LngLat(this.loc.lon, this.loc.lat),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+                                title: this.loc.address,
+                                label: this.loc.address
+                            });
+
+                            // 将创建的点标记添加到已有的地图实例：
+                            this.map.add(this.marker);
 
                             //向父组件发送数据
                             this.sendLoc();
