@@ -5,7 +5,7 @@
         </router-link>
         <v-spacer></v-spacer>
         <v-btn text>信息查看</v-btn>
-        <v-btn v-if="isManager" @click="goToManage" text>人员管理</v-btn>
+        <v-btn v-if="isManager" @click="goToManage" text>信息管理</v-btn>
         <v-btn @click="goToPerson" text>个人主页</v-btn>
     </v-app-bar>
 </template>

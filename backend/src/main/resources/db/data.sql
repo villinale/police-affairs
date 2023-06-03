@@ -6,8 +6,8 @@ INSERT INTO user(u_no,u_role,u_name,u_psw,u_sex,u_phone) VALUES
 (5,'警员','3','3','男','3'),
 (6,'警员','4','4','男','4');
 
-INSERT INTO station(s_no,s_name,s_long,s_lat) VALUES
-(1,'浦东','12.3','10.2');
+INSERT INTO station(s_no,s_name,s_lon,s_lat,s_phone,s_province,s_city,s_area,s_address) VALUES
+(1,'浦东分局','12.3','10.2','0210000','上海市','','浦东区','浦东');
 
 INSERT INTO officer(o_no,o_stat,u_no,s_no) VALUES
 (1,'任务中',3,1),
