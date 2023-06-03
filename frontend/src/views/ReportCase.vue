@@ -1,4 +1,5 @@
 <template>
+    <Snackbar ref="mychild" />
     <v-container class="fill-height" style="display: block;">
         <v-card>
             <v-card-title>
@@ -38,13 +39,18 @@
   
 <script>
 import MapSelectItem from '@/components/MapSelectItem.vue'
+import Snackbar from '@/components/Snackbar.vue';
 //TODO:界面美化
 export default {
     components: {
-        MapSelectItem
+        MapSelectItem,
+        Snackbar
     },
     data() {
         return {
+            isLogin: false,
+            isManager: false,
+            isOfficer: false,
             title: '',
             date: '',
             loc: {
@@ -60,10 +66,32 @@ export default {
         };
     },
     methods: {
-        getLoc(data) {
+        checkLoginStatus() {
+            if (this.$cookies.get("userid") != null) {
+                this.isLogin = true;
+            }
+        },
+        updateRole() {
+            if (this.$cookies.get("role") == "管理员") {
+                this.isManager = true;
+            } else if (this.$cookies.get("role") == "警员") {
+                this.isOfficer = true;
+            }
+        },
+        getLoc(data) { //MapSelectItem传来的数据
             this.loc = data;
         },
         submitForm() {
+            console.log(this.isManager)
+            if (!this.isLogin) {
+                this.$refs.mychild.showSnackbar('未登录，不能执行该操作！', 'error');
+                return;
+            }
+            else if (this.isManager || this.isOfficer) {
+                this.$refs.mychild.showSnackbar('不是用户，不能执行该操作！', 'error');
+                return;
+            }
+
             var a = {
                 c_title: this.title,
                 c_text: this.description,
@@ -76,6 +104,7 @@ export default {
                 c_lon: this.loc.lon,
                 c_lat: this.loc.lat,
                 c_stat: 0,
+                u_no: this.$cookies.get("userid"),
             };
             console.log(a);
             this.$axios.post(`/case/addCase`,
@@ -91,6 +120,7 @@ export default {
                     c_lon: this.loc.lon,
                     c_lat: this.loc.lat,
                     c_stat: 0,
+                    u_no: this.$cookies.get("userid"),
                 })
                 .then(res => {
                     console.log(res.data);
@@ -99,7 +129,11 @@ export default {
                     console.log(err);
                 });
         }
-    }
+    },
+    mounted() {
+        this.checkLoginStatus();
+        this.updateRole();
+    },
 };
 </script>
   

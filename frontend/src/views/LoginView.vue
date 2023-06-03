@@ -59,9 +59,6 @@ export default {
             password: '',
             name: '',
             confirmPassword: '',
-            snackbarVisible: false,
-            snackbarText: '',
-            snackbarColor: ''
         }
     },
     methods: {

@@ -40,6 +40,7 @@ public class CaseController {
         double c_lon = (double) requestBody.get("c_lon");
         double c_lat = (double) requestBody.get("c_lat");
         int c_stat = 0;
+        int u_no = (int) requestBody.get("u_no");
 
         // 时间格式转换 原格式："2023-06-10T16:26" 转换后："2023-06-10 16:26"
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
@@ -64,7 +65,7 @@ public class CaseController {
         c.setC_stat(c_stat);
         c.setS_no(1);
         c.setO_no(1);
-        c.setU_no(1);
+        c.setU_no(u_no);
         System.out.println("addCase: " + c);
         int res = caseMapper.insert(c);
         if (res == 1)
