@@ -24,7 +24,12 @@ const routes = [
       {
         path: 'report',
         name: 'report',
-        component: () => import('@/views/ReportCase.vue'),
+        component: () => import('@/views/ReportCaseView.vue'),
+      },
+      {
+        path: 'manage',
+        name: 'manage',
+        component: () => import('@/views/ManageView.vue'),
       },
     ],
   },

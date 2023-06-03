@@ -36,7 +36,7 @@
 </template>
   
 <script>
-import Dashboard from '../components/DashBoard.vue';
+import Dashboard from '../components/DashBoardInPersonal.vue';
 
 //TODO:界面美化
 export default {
