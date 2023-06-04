@@ -10,5 +10,5 @@ import java.util.List;
 
 @Mapper
 public interface CaseMapper extends BaseMapper<Case> {
-
+    List<Case> getUserCasesByUId(Integer u_no);
 }

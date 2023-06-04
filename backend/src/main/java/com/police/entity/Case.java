@@ -31,10 +31,10 @@ public class Case implements Serializable {
     @TableField
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime c_date;
+    private LocalDateTime c_startdate;
 
     @TableField
-    private int c_level;
+    private String c_level;
 
     @TableField
     private String c_province;
@@ -59,6 +59,11 @@ public class Case implements Serializable {
 
     @TableField
     private Boolean c_isPublic;
+
+    @TableField
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime c_enddate;
 
     @TableField
     private int s_no;

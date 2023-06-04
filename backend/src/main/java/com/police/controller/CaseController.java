@@ -32,7 +32,8 @@ public class CaseController {
         String c_Title = (String) requestBody.get("c_title");
         String c_Text = (String) requestBody.get("c_text");
         String c_Date = (String) requestBody.get("c_date");
-        int c_level = (int) requestBody.get("c_level");
+        int levelint = (int) requestBody.get("c_level");
+        String c_level = (levelint == 0) ? "轻微" : "一般";
         String c_province = (String) requestBody.get("c_province");
         String c_city = (String) requestBody.get("c_city");
         String c_area = (String) requestBody.get("c_area");
@@ -54,7 +55,8 @@ public class CaseController {
         Case c = new Case();
         c.setC_text(c_Text);
         c.setC_title(c_Title);
-        c.setC_date(dateTime);
+        c.setC_startdate(dateTime);
+        c.setC_enddate(dateTime);
         c.setC_level(c_level);
         c.setC_province(c_province);
         c.setC_city(c_city);
@@ -72,5 +74,12 @@ public class CaseController {
         if (res == 1)
             return true;
         return false;
+    }
+
+    @GetMapping("/getUserCasesByUId/{uid}")
+    public List<Case> getUserCasesByUId(@PathVariable Integer uid) {
+        System.out.println("getUserCasesByUId: " + uid);
+        List<Case> res = caseMapper.getUserCasesByUId(uid);
+        return res;
     }
 }
