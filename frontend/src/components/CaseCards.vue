@@ -1,3 +1,7 @@
+<script setup>
+import * as caseUtils from '@/plugins/caseUtils.js'
+</script>
+
 <template>
     <div>
         <v-container>
@@ -11,11 +15,11 @@
                             <div class="info-row">
                                 <strong>发生日期:</strong> {{ info.c_startdate }}
                             </div>
-                            <div v-if="isClose(info.c_stat)" class="info-row">
+                            <div v-if="caseUtils.isClose(info.c_stat)" class="info-row">
                                 <strong>结案日期:</strong> {{ info.c_enddate }}
                             </div>
                             <div class="info-row">
-                                <strong>位置:</strong> {{ getLocString(info) }}
+                                <strong>位置:</strong> {{ caseUtils.getLocString(info) }}
                             </div>
                             <div class="info-row">
                                 <strong>描述:</strong> {{ info.c_text }}
@@ -28,9 +32,11 @@
                             </div>
 
                             <div class="info-row">
-                                <v-chip class="ca-v-chip" label :color="getLevelColor(info.c_level)">{{ info.c_level
+                                <v-chip class="ca-v-chip" label :color="caseUtils.getLevelColor(info.c_level)">{{
+                                    info.c_level
                                 }}</v-chip>
-                                <v-chip class="ca-v-chip" label :color="getStatusColor(info.c_stat)">{{ info.c_stat
+                                <v-chip class="ca-v-chip" label :color="caseUtils.getStatusColor(info.c_stat)">{{
+                                    info.c_stat
                                 }}</v-chip>
                             </div>
                         </v-card-text>
@@ -50,24 +56,24 @@ export default {
         }
     },
     methods: {
-        isClose(status) {
-            if (status == '已结束') return true
-            else return false
-        },
-        getLocString(info) {
-            return info.c_province + '-' + info.c_area + '-' + info.c_address;
-        },
-        getStatusColor(status) {
-            if (status == '待分配') return 'red'
-            else if (status == '调查中') return 'primary'
-            else return 'grey-lighten-1'
-        },
-        getLevelColor(level) {
-            if (level == '严重') return 'red'
-            else if (level == '较大') return 'amber-accent-2'
-            else if (level == '一般') return 'green-lighten-3'
-            else if (level == '轻微') return 'grey-darken-1'
-        }
+        // isClose(status) {
+        //     if (status == '已结束') return true
+        //     else return false
+        // },
+        // getLocString(info) {
+        //     return info.c_province + '-' + info.c_area + '-' + info.c_address;
+        // },
+        // getStatusColor(status) {
+        //     if (status == '待分配') return 'red'
+        //     else if (status == '调查中') return 'primary'
+        //     else return 'grey-lighten-1'
+        // },
+        // getLevelColor(level) {
+        //     if (level == '严重') return 'red'
+        //     else if (level == '较大') return 'amber-accent-2'
+        //     else if (level == '一般') return 'green-lighten-3'
+        //     else if (level == '轻微') return 'grey-darken-1'
+        // }
     }
 };
 </script>

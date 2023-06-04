@@ -1,3 +1,7 @@
+<script setup>
+import * as roleUtils from '@/plugins/roleUtils.js'
+</script>
+
 <template>
 	<v-container class="fill-height">
 		<mymap style="margin-bottom:20px;"></mymap>
@@ -43,19 +47,6 @@ export default {
 		}
 	},
 	methods: {
-		checkLoginStatus() {
-			if (this.$cookies.get("userid") != null) {
-				this.isLogin = true;
-			}
-			console.log(this.isLogin);
-		},
-		updateRole() {
-			if (this.$cookies.get("role") == "管理员") {
-				this.isManager = true;
-			} else if (this.$cookies.get("role") == "警员") {
-				this.isOfficer = true;
-			}
-		},
 		goToLogin() {
 			this.$router.push('/login');
 		},
@@ -65,8 +56,8 @@ export default {
 		},
 	},
 	mounted() {
-		this.checkLoginStatus();
-		this.updateRole();
+		roleUtils.checkLoginStatus();
+		roleUtils.updateRole();
 	},
 	//TODO:路由守卫
 	// beforeRouteEnter(to, from, next) {

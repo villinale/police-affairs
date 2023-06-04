@@ -1,3 +1,8 @@
+<script setup>
+import * as caseUtils from '@/plugins/caseUtils.js'
+import * as roleUtils from '@/plugins/roleUtils.js'
+</script>
+
 <template>
     <div class="drawer-container">
         <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false">
@@ -40,12 +45,12 @@
         <template v-if="manageType == 'cases'">
             <v-data-table :headers="headersforcases" :items="cases">
                 <template v-slot:item.c_level="{ item }">
-                    <v-chip :color="getCaseLevelColor(item.columns.c_level)">
+                    <v-chip :color="caseUtils.getLevelColor(item.columns.c_level)">
                         {{ item.columns.c_level }}
                     </v-chip>
                 </template>
                 <template v-slot:item.c_stat="{ item }">
-                    <v-chip :color="getCaseStatusColor(item.columns.c_stat)">
+                    <v-chip :color="caseUtils.getStatusColor(item.columns.c_stat)">
                         {{ item.columns.c_stat }}
                     </v-chip>
                 </template>
@@ -56,13 +61,9 @@
 
 <script>
 import { VDataTable } from 'vuetify/labs/VDataTable'
-import * as roleUtils from '@/plugins/roleUtils.js'
-import * as caseUtils from '@/plugins/caseUtils.js'
 export default {
     components: {
         VDataTable,
-        roleUtils,
-        caseUtils,
     },
     data() {
         return {
@@ -129,12 +130,6 @@ export default {
             else if (o_stat == '空闲') return 'green'
             else return 'orange'
         },
-        getCaseStatusColor(status) {
-            return caseUtils.getStatusColor(status)
-        },
-        getCaseLevelColor(level) {
-            return caseUtils.getLevelColor(level)
-        }
     },
     mounted() {
         roleUtils.checkLoginStatus(this);

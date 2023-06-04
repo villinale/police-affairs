@@ -1,3 +1,7 @@
+<script setup>
+import * as roleUtils from '@/plugins/roleUtils.js'
+</script>
+
 <template>
     <Snackbar ref="mychild" />
     <v-container class="fill-height" style="display: block;">
@@ -66,18 +70,6 @@ export default {
         };
     },
     methods: {
-        checkLoginStatus() {
-            if (this.$cookies.get("userid") != null) {
-                this.isLogin = true;
-            }
-        },
-        updateRole() {
-            if (this.$cookies.get("role") == "管理员") {
-                this.isManager = true;
-            } else if (this.$cookies.get("role") == "警员") {
-                this.isOfficer = true;
-            }
-        },
         getLoc(data) { //MapSelectItem传来的数据
             this.loc = data;
         },
@@ -135,8 +127,8 @@ export default {
         }
     },
     mounted() {
-        this.checkLoginStatus();
-        this.updateRole();
+        roleUtils.checkLoginStatus();
+        roleUtils.updateRole();
     },
 };
 </script>

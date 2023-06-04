@@ -2,7 +2,7 @@
  * @Author: yingxin wang
  * @Date: 2023-06-02 08:06:43
  * @LastEditors: yingxin wang
- * @LastEditTime: 2023-06-04 11:26:38
+ * @LastEditTime: 2023-06-04 16:05:51
  * @Description: 请填写简介
  */
 // Composables
@@ -31,7 +31,7 @@ const routes = [
       {
         path: 'report',
         name: 'report',
-        component: () => import('@/views/ReportCase.vue'),
+        component: () => import('@/views/ReportCaseView.vue'),
       },
       {
         path: 'manage',
