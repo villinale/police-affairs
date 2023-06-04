@@ -70,6 +70,12 @@ export default {
                                 label: this.loc.address
                             });
 
+                            this.marker.setLabel({
+                                offset: new AMap.Pixel(20, 20),  //设置文本标注偏移量
+                                content: "<div class='map-markerinfo'>" + this.loc.address + "</div>", //设置文本标注内容
+                                direction: 'right' //设置文本标注方位
+                            });
+
                             // 将创建的点标记添加到已有的地图实例：
                             this.map.add(this.marker);
 

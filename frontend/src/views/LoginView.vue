@@ -1,10 +1,3 @@
-<!--
- * @Author: yingxin wang
- * @Date: 2023-04-24 14:05:40
- * @LastEditors: yingxin wang
- * @LastEditTime: 2023-06-04 11:17:44
- * @Description: 登陆注册页面
--->
 <template>
     <Snackbar ref="mychild" />
     <v-container>

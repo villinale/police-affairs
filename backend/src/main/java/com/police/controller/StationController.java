@@ -31,4 +31,10 @@ public class StationController {
         List<Station> o = StationMapper.getAllStations();
         return o;
     }
+
+    @GetMapping("/getStationByNo")
+    public Station getStationByNo(@RequestParam("s_no") int s_no) {// 根据用户id查找用户信息
+        Station o = StationMapper.getStationBySNo(s_no);
+        return o;
+    }
 }

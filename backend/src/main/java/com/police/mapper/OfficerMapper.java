@@ -12,4 +12,6 @@ import java.util.List;
 public interface OfficerMapper extends BaseMapper<Officer> {
 
     List<Officer> getAllOfficers();
+
+    Officer getOfficerByONo(int o_no);
 }

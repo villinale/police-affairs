@@ -3,6 +3,11 @@ export function isClose(status) {
     else return false
 }
 
+export function isAssigned(status) {
+    if (status == '待分配') return false
+    else return true
+}
+
 export function getLocString(info) {
     return info.c_province + '-' + info.c_area + '-' + info.c_address;
 }

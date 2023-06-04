@@ -89,4 +89,12 @@ public class CaseController {
         List<Case> res = caseMapper.getAllCases();
         return res;
     }
+
+    @GetMapping("/getCasesByCId/{cid}")
+    public Case getCasesByCId(@PathVariable Integer cid) {
+        System.out.println("getCasesByCId: " + cid);
+        Case res = caseMapper.getCasesByCId(cid);
+        return res;
+    }
+
 }

@@ -1,6 +1,7 @@
 <script setup>
 import * as caseUtils from '@/plugins/caseUtils.js'
 import * as roleUtils from '@/plugins/roleUtils.js'
+import * as pageUtils from '@/plugins/pageUtils.js'
 </script>
 
 <template>
@@ -13,14 +14,14 @@ import * as roleUtils from '@/plugins/roleUtils.js'
                             @click.stop="toggleRail"></v-btn>
                     </template>
                 </v-list-item>
-                <v-list-item v-if="isLogin && isManager && !isOfficer" prepend-icon="mdi-account-cog-outline" title="人员管理"
-                    value="人员管理" link @click="changeManage('officer')">
+                <v-list-item v-if="roleUtils.isLogin && roleUtils.isManager && !roleUtils.isOfficer"
+                    prepend-icon="mdi-account-cog-outline" title="人员管理" value="人员管理" link @click="changeManage('officer')">
                 </v-list-item>
-                <v-list-item v-if="isLogin && isManager && !isOfficer" prepend-icon="mdi-home-silo-outline" title="辖区管理"
-                    value="辖区管理" link @click="changeManage('station')">
+                <v-list-item v-if="roleUtils.isLogin && roleUtils.isManager && !roleUtils.isOfficer"
+                    prepend-icon="mdi-home-silo-outline" title="辖区管理" value="辖区管理" link @click="changeManage('station')">
                 </v-list-item>
-                <v-list-item v-if="isLogin && isManager && !isOfficer" prepend-icon="mdi-file-cog-outline" title="案件管理"
-                    value="案件管理" link @click="changeManage('cases')">
+                <v-list-item v-if="roleUtils.isLogin && roleUtils.isManager && !roleUtils.isOfficer"
+                    prepend-icon="mdi-file-cog-outline" title="案件管理" value="案件管理" link @click="changeManage('cases')">
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
@@ -44,6 +45,12 @@ import * as roleUtils from '@/plugins/roleUtils.js'
 
         <template v-if="manageType == 'cases'">
             <v-data-table :headers="headersforcases" :items="cases">
+                <template v-slot:item.c_title="{ item }" class="hoverable">
+                    <div @click="pageUtils.goToCaseInfoView(this, item.columns.c_no)">{{ item.columns.c_title }}</div>
+                </template>
+                <template v-slot:item.c_no="{ item }" class="hoverable">
+                    <div @click="pageUtils.goToCaseInfoView(this, item.columns.c_no)">{{ item.columns.c_no }}</div>
+                </template>
                 <template v-slot:item.c_level="{ item }">
                     <v-chip :color="caseUtils.getLevelColor(item.columns.c_level)">
                         {{ item.columns.c_level }}
@@ -56,6 +63,7 @@ import * as roleUtils from '@/plugins/roleUtils.js'
                 </template>
             </v-data-table>
         </template>
+
     </v-container>
 </template>
 
@@ -70,9 +78,6 @@ export default {
             manageType: "officer",
             drawer: true,
             rail: true,
-            isLogin: false,
-            isManager: false,
-            isOfficer: false,
             officers: [],
             stations: [],
             cases: [],
@@ -92,6 +97,7 @@ export default {
                 { title: '详细地址', align: 'end', key: 's_address' },
             ],
             headersforcases: [
+                { title: '案件编号', align: 'start', key: 'c_no', },
                 { title: '案件名称', align: 'start', key: 'c_title', },
                 { title: '所在区', align: 'end', key: 'c_area' },
                 { title: '详细位置', align: 'end', key: 'c_address' },
@@ -154,5 +160,16 @@ export default {
 
 .drawer-container {
     flex-grow: 1;
+}
+
+.hoverable:hover {
+    cursor: pointer;
+    /* 修改为您希望的鼠标样式，例如： */
+    /* cursor: pointer; */
+    /* cursor: grab; */
+    /* cursor: crosshair; */
+    /* cursor: move; */
+    /* cursor: help; */
+    /* ... */
 }
 </style>

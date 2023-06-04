@@ -10,4 +10,9 @@
     <select id="getAllCases" resultType="com.police.entity.Case"> select * from cases left join
         station on cases.s_no left join officer on cases.o_no left join user on officer.u_no where
         cases.s_no=station.s_no and cases.o_no=officer.o_no and officer.u_no=user.u_no;</select>
+
+    <!-- getCasesByCId -->
+
+    <select id="getCasesByCId" resultType="com.police.entity.Case"> selsct * from cases where
+        c_no=#{c_no}; </select>
 </mapper>

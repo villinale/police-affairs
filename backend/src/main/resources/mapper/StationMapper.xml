@@ -2,4 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.police.mapper.StationMapper">
     <select id="getAllStations" resultType="com.police.entity.Station"> select * from station</select>
+
+    <!-- getStationBySNo -->
+
+    <select id="getStationBySNo" resultType="com.police.entity.Station"> select * from station where
+        s_no = #{s_no} </select>
 </mapper>

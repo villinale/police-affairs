@@ -52,9 +52,6 @@ export default {
     },
     data() {
         return {
-            isLogin: false,
-            isManager: false,
-            isOfficer: false,
             title: '',
             date: '',
             loc: {
@@ -75,11 +72,11 @@ export default {
         },
         submitForm() {
             console.log(this.isManager)
-            if (!this.isLogin) {
+            if (!roleUtils.isLogin) {
                 this.$refs.mychild.showSnackbar('未登录，不能执行该操作！', 'error');
                 return;
             }
-            else if (this.isManager || this.isOfficer) {
+            else if (roleUtils.isManager || roleUtils.isOfficer) {
                 this.$refs.mychild.showSnackbar('不是用户，不能执行该操作！', 'error');
                 return;
             }
@@ -127,8 +124,8 @@ export default {
         }
     },
     mounted() {
-        roleUtils.checkLoginStatus();
-        roleUtils.updateRole();
+        roleUtils.checkLoginStatus(this);
+        roleUtils.updateRole(this);
     },
 };
 </script>

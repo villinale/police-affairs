@@ -24,4 +24,10 @@ public class OfficerController {
         List<Officer> o = officerMapper.getAllOfficers();
         return o;
     }
+
+    @GetMapping("/getOfficerByNo")
+    public Officer getOfficerByNo(@RequestParam("o_no") int o_no) {// 根据用户id查找用户信息
+        Officer o = officerMapper.getOfficerByONo(o_no);
+        return o;
+    }
 }

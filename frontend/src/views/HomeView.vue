@@ -1,5 +1,6 @@
 <script setup>
 import * as roleUtils from '@/plugins/roleUtils.js'
+import * as pageUtils from '@/plugins/pageUtils.js'
 </script>
 
 <template>
@@ -7,9 +8,9 @@ import * as roleUtils from '@/plugins/roleUtils.js'
 		<mymap style="margin-bottom:20px;"></mymap>
 		<v-responsive class="d-flex align-center text-center">
 			<v-row class="d-flex align-center justify-center">
-				<v-col v-if="!isManager && !isOfficer" cols="auto">
+				<v-col v-if="!roleUtils.isManager && !roleUtils.isOfficer" cols="auto">
 					<v-btn href="" min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text"
-						@click="goToReportCase">
+						@click="pageUtils.goToReportCase(this)">
 						<v-icon icon="mdi-file-arrow-up-down" size="large" start />
 						电子报案
 					</v-btn>
@@ -18,7 +19,7 @@ import * as roleUtils from '@/plugins/roleUtils.js'
 				<v-col v-if="!isLogin" cols="auto">
 					<div class="login-wrapper">
 						<v-btn color="primary" min-width="228" rel="noopener noreferrer" size="x-large" target="_blank"
-							variant="flat" prepend-icon="mdi-login" @click="goToLogin">
+							variant="flat" prepend-icon="mdi-login" @click="pageUtils.goToLogin(this)">
 							登陆/注册
 						</v-btn>
 					</div>
@@ -41,23 +42,13 @@ export default {
 	components: { mymap },
 	data() {
 		return {
-			isLogin: false,
-			isManager: false,
-			isOfficer: false,
 		}
 	},
 	methods: {
-		goToLogin() {
-			this.$router.push('/login');
-		},
-		goToReportCase() {
-			console.log("go to report case");
-			this.$router.push('/report');
-		},
 	},
 	mounted() {
-		roleUtils.checkLoginStatus();
-		roleUtils.updateRole();
+		roleUtils.checkLoginStatus(this);
+		roleUtils.updateRole(this);
 	},
 	//TODO:路由守卫
 	// beforeRouteEnter(to, from, next) {
