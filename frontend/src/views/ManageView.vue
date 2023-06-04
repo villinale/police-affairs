@@ -14,6 +14,9 @@
                 <v-list-item v-if="isLogin && isManager && !isOfficer" prepend-icon="mdi-home-map-marker" title="辖区管理"
                     value="辖区管理" link @click="changeManage('station')">
                 </v-list-item>
+                <v-list-item v-if="isLogin && isManager && !isOfficer" prepend-icon="mdi-home-map-marker" title="案件管理"
+                    value="案件管理" link @click="changeManage('station')">
+                </v-list-item>
             </v-list>
         </v-navigation-drawer>
     </div>

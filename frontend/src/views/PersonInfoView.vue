@@ -1,60 +1,71 @@
 <template>
-    <Dashboard />
-    <v-card class="mx-auto pe-continer" max-width="400">
-        <v-card-title class="primary">
-            <span class="pe-header-text">用户信息</span>
-        </v-card-title>
-        <v-card-text>
+    <div class="drawer-container">
+        <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false">
             <v-list dense>
-                <v-list-item>
-                    <v-list-item-content>
-                        <v-list-item-title class="font-weight-bold">姓名:</v-list-item-title>
-                        <v-list-item-subtitle>{{ userInfo.u_name }}</v-list-item-subtitle>
-                    </v-list-item-content>
+                <v-list-item nav>
+                    <template v-slot:append>
+                        <v-btn variant="text" :icon="rail ? 'mdi-chevron-right' : 'mdi-chevron-left'"
+                            @click.stop="toggleRail"></v-btn>
+                    </template>
                 </v-list-item>
-                <v-list-item>
-                    <v-list-item-content>
-                        <v-list-item-title class="font-weight-bold">性别:</v-list-item-title>
-                        <v-list-item-subtitle>{{ userInfo.u_sex }}</v-list-item-subtitle>
-                    </v-list-item-content>
+                <v-list-item v-if="isLogin" prepend-icon="mdi-account" title="个人信息" value="个人信息" link>
                 </v-list-item>
-                <v-list-item>
-                    <v-list-item-content>
-                        <v-list-item-title class="font-weight-bold">手机号:</v-list-item-title>
-                        <v-list-item-subtitle>{{ userInfo.u_phone }}</v-list-item-subtitle>
-                    </v-list-item-content>
+                <v-list-item v-if="isLogin && !isManager && !isOfficer" prepend-icon="mdi-file" title="我的报案" value="我的报案"
+                    link>
                 </v-list-item>
-                <v-list-item>
-                    <v-list-item-content>
-                        <v-list-item-title class="font-weight-bold">身份:</v-list-item-title>
-                        <v-list-item-subtitle>{{ userInfo.u_role }}</v-list-item-subtitle>
-                    </v-list-item-content>
-                </v-list-item>
+                <v-list-item v-if="isLogin && !isManager && isOfficer" prepend-icon="mdi-checkbox-marked-circle-outline"
+                    title="我的案件" value="我的案件" link> </v-list-item>
             </v-list>
-        </v-card-text>
-    </v-card>
+
+            <template v-if="!rail" v-slot:append>
+                <div class="pa-2">
+                    <v-btn prepend-icon="mdi-logout" block @click="logout">
+                        退出
+                    </v-btn>
+                </div>
+            </template>
+        </v-navigation-drawer>
+    </div>
+    <div>
+        <user-info-card :user-info="userInfo" />
+    </div>
 </template>
   
 <script>
-import Dashboard from '../components/DashBoardInPersonal.vue';
+import * as roleUtils from '@/plugins/roleUtils.js'
+import UserInfoCard from "@/components/UserInfoCard.vue";
 
 //TODO:界面美化
 export default {
     components: {
-        Dashboard
+        roleUtils,
+        UserInfoCard,
     },
     data() {
         return {
+            drawer: true,
+            rail: true,
+            isLogin: true,
+            isManager: false,
+            isOfficer: false,
             uid: this.$cookies.get('userid'),
-            userInfo: {
-                u_no: 0,
-                u_role: '',
-                u_name: '',
-                u_psw: '',
-                u_sex: '',
-                u_phone: ''
-            }
+            userInfo: {},
         };
+    },
+    methods: {
+        toggleRail() {
+            this.rail = !this.rail;
+        },
+        logout() {
+            this.$cookies.remove("userid");
+            this.$cookies.remove("role");
+            this.$cookies.remove('name');
+            this.$router.push("/");
+        },
+    },
+    mounted() {
+        roleUtils.checkLoginStatus(this);
+        roleUtils.updateRole(this);
     },
     created() {
         if (this.uid) {
@@ -73,22 +84,8 @@ export default {
 </script>
   
 <style scoped>
-.pe-continer {
-    margin-top: 20px;
-    display: contents;
-}
-
-.primary {
-    background-color: #1976d2;
-}
-
-.pe-header-text {
-    font-size: 20px;
-    color: white;
-}
-
-.font-weight-bold {
-    font-weight: bold;
+.drawer-container {
+    flex-grow: 1;
 }
 </style>
   

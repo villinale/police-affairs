@@ -1,3 +1,10 @@
+/*
+ * @Author: yingxin wang
+ * @Date: 2023-06-02 08:06:43
+ * @LastEditors: yingxin wang
+ * @LastEditTime: 2023-06-04 11:26:38
+ * @Description: 请填写简介
+ */
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -24,7 +31,7 @@ const routes = [
       {
         path: 'report',
         name: 'report',
-        component: () => import('@/views/ReportCaseView.vue'),
+        component: () => import('@/views/ReportCase.vue'),
       },
       {
         path: 'manage',

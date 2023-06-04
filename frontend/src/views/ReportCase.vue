@@ -120,10 +120,14 @@ export default {
                     c_lon: this.loc.lon,
                     c_lat: this.loc.lat,
                     c_stat: 0,
-                    u_no: this.$cookies.get("userid"),
+                    u_no: parseInt(this.$cookies.get("userid")),
                 })
                 .then(res => {
-                    console.log(res.data);
+                    this.$refs.mychild.showSnackbar("成功报案，请在个人主页查看信息", "green-darken-3");
+                    setTimeout(() => {
+                        console.log(res.data);
+                        this.$router.push('/person');
+                    }, 3000);
                 })
                 .catch(err => {
                     console.log(err);

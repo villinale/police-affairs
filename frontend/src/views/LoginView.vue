@@ -2,7 +2,7 @@
  * @Author: yingxin wang
  * @Date: 2023-04-24 14:05:40
  * @LastEditors: yingxin wang
- * @LastEditTime: 2023-06-02 10:31:14
+ * @LastEditTime: 2023-06-04 11:17:44
  * @Description: 登陆注册页面
 -->
 <template>
@@ -82,7 +82,7 @@ export default {
                             this.$cookies.set('name', user.u_name)
                             this.$cookies.set('role', user.u_role)
                             // 跳转到主页
-                            this.$router.push('/')
+                            this.$router.replace('/')
                         } else {
                             this.showSnackbar('账号不存在或密码错误，登录失败！', 'error');
                         }
@@ -92,6 +92,7 @@ export default {
                     }
                 })
                 .catch(err => {
+                    this.showSnackbar('登录失败！', 'error');
                     console.log(err);
                 });
         },
