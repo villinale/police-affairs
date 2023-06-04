@@ -68,8 +68,14 @@ public class Case implements Serializable {
     @TableField
     private int s_no;
 
+    // @TableField
+    // private int s_name;
+
     @TableField
     private int o_no;
+
+    // @TableField
+    // private int o_name;
 
     @TableField
     private int u_no;

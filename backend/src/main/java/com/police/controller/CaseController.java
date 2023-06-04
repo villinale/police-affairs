@@ -82,4 +82,11 @@ public class CaseController {
         List<Case> res = caseMapper.getUserCasesByUId(uid);
         return res;
     }
+
+    @GetMapping("/getAllCases")
+    public List<Case> getAllCases() {
+        System.out.println("getAllCases");
+        List<Case> res = caseMapper.getAllCases();
+        return res;
+    }
 }

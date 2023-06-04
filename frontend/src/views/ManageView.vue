@@ -11,29 +11,44 @@
                 <v-list-item v-if="isLogin && isManager && !isOfficer" prepend-icon="mdi-account-cog-outline" title="人员管理"
                     value="人员管理" link @click="changeManage('officer')">
                 </v-list-item>
-                <v-list-item v-if="isLogin && isManager && !isOfficer" prepend-icon="mdi-home-map-marker" title="辖区管理"
+                <v-list-item v-if="isLogin && isManager && !isOfficer" prepend-icon="mdi-home-silo-outline" title="辖区管理"
                     value="辖区管理" link @click="changeManage('station')">
                 </v-list-item>
-                <v-list-item v-if="isLogin && isManager && !isOfficer" prepend-icon="mdi-home-map-marker" title="案件管理"
-                    value="案件管理" link @click="changeManage('station')">
+                <v-list-item v-if="isLogin && isManager && !isOfficer" prepend-icon="mdi-file-cog-outline" title="案件管理"
+                    value="案件管理" link @click="changeManage('cases')">
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
     </div>
+
     <v-container class="fill-height" style="display: block;">
         <template v-if="manageType == 'officer'">
             <v-data-table :headers="headersforofficers" :items="officers">
                 <template v-slot:item.o_stat="{ item }">
-                    <v-chip :color="getColor(item.columns.o_stat)">
+                    <v-chip :color="getOfficerStaColor(item.columns.o_stat)">
                         {{ item.columns.o_stat }}
                     </v-chip>
                 </template>
             </v-data-table>
         </template>
 
-
         <template v-if="manageType == 'station'">
             <v-data-table :headers="headersforstations" :items="stations">
+            </v-data-table>
+        </template>
+
+        <template v-if="manageType == 'cases'">
+            <v-data-table :headers="headersforcases" :items="cases">
+                <template v-slot:item.c_level="{ item }">
+                    <v-chip :color="getCaseLevelColor(item.columns.c_level)">
+                        {{ item.columns.c_level }}
+                    </v-chip>
+                </template>
+                <template v-slot:item.c_stat="{ item }">
+                    <v-chip :color="getCaseStatusColor(item.columns.c_stat)">
+                        {{ item.columns.c_stat }}
+                    </v-chip>
+                </template>
             </v-data-table>
         </template>
     </v-container>
@@ -42,10 +57,12 @@
 <script>
 import { VDataTable } from 'vuetify/labs/VDataTable'
 import * as roleUtils from '@/plugins/roleUtils.js'
+import * as caseUtils from '@/plugins/caseUtils.js'
 export default {
     components: {
         VDataTable,
         roleUtils,
+        caseUtils,
     },
     data() {
         return {
@@ -57,6 +74,7 @@ export default {
             isOfficer: false,
             officers: [],
             stations: [],
+            cases: [],
             headersforofficers: [
                 { title: '警员编号', align: 'start', key: 'o_no', },
                 { title: '警员名', align: 'end', key: 'u_name' },
@@ -72,6 +90,18 @@ export default {
                 { title: '所在区', align: 'end', key: 's_area' },
                 { title: '详细地址', align: 'end', key: 's_address' },
             ],
+            headersforcases: [
+                { title: '案件名称', align: 'start', key: 'c_title', },
+                { title: '所在区', align: 'end', key: 'c_area' },
+                { title: '详细位置', align: 'end', key: 'c_address' },
+                { title: '级别', align: 'end', key: 'c_level' },
+                { title: '发生时间', align: 'end', key: 'c_startdate' },
+                { title: '结案时间', align: 'end', key: 'c_enddate' },
+                { title: '状态', align: 'end', key: 'c_stat' },
+                { title: '上报人', align: 'end', key: 'u_no' },
+                { title: '负责人', align: 'end', key: 'o_no' },
+                { title: '负责辖区', align: 'end', key: 's_no' },
+            ],
         }
     },
     methods: {
@@ -80,22 +110,31 @@ export default {
                 this.officers = res.data;
             });
             this.$axios.get('/station/getAllStations').then(res => {
-                console.log(res.data)
                 this.stations = res.data;
+            });
+            this.$axios.get('/case/getAllCases').then(res => {
+                console.log(res.data)
+                this.cases = res.data;
             });
         },
         changeManage(data) {
-            if (data == "officer" || data == "station")
+            if (data == "officer" || data == "station" || data == "cases")
                 this.manageType = data;
         },
         toggleRail() {
             this.rail = !this.rail;
         },
-        getColor(o_stat) {
+        getOfficerStaColor(o_stat) {
             if (o_stat == '任务中') return 'red'
             else if (o_stat == '空闲') return 'green'
             else return 'orange'
         },
+        getCaseStatusColor(status) {
+            return caseUtils.getStatusColor(status)
+        },
+        getCaseLevelColor(level) {
+            return caseUtils.getLevelColor(level)
+        }
     },
     mounted() {
         roleUtils.checkLoginStatus(this);

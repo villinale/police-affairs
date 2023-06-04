@@ -3,7 +3,11 @@
 <mapper namespace="com.police.mapper.CaseMapper">
 
     <!-- getUserCasesByUId -->
-
     <select id="getUserCasesByUId" resultType="com.police.entity.Case"> select * from cases where
         u_no = #{u_no} </select>
+
+    <!-- getAllCases -->
+    <select id="getAllCases" resultType="com.police.entity.Case"> select * from cases left join
+        station on cases.s_no left join officer on cases.o_no left join user on officer.u_no where
+        cases.s_no=station.s_no and cases.o_no=officer.o_no and officer.u_no=user.u_no;</select>
 </mapper>
