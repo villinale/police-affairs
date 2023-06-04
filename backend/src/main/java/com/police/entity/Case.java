@@ -58,6 +58,9 @@ public class Case implements Serializable {
     private String c_stat;
 
     @TableField
+    private Boolean c_isPublic;
+
+    @TableField
     private int s_no;
 
     @TableField

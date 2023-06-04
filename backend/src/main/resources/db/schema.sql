@@ -48,6 +48,7 @@ CREATE TABLE cases(
     c_lon DOUBLE PRECISION NOT NULL,
     c_lat DOUBLE PRECISION NOT NULL,
     c_stat VARCHAR(10) NOT NULL check(c_stat='待分配' or c_stat='处理中' or c_stat='已结束') ,
+    c_isPublic BOOLEAN NOT NULL,
     s_no INTEGER NOT NULL,
     o_no INTEGER NOT NULL,
     u_no INTEGER NOT NULL,

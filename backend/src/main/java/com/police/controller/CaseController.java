@@ -63,6 +63,7 @@ public class CaseController {
         c.setC_lon(c_lon);
         c.setC_lat(c_lat);
         c.setC_stat("待分配");// TODO:分配警员后需要修改
+        c.setC_isPublic(false);
         c.setS_no(1);
         c.setO_no(1);
         c.setU_no(u_no);
