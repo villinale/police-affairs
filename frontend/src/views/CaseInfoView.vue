@@ -14,12 +14,31 @@ import * as roleUtils from '@/plugins/roleUtils.js'
                         <v-chip class="ca-v-chip" label :color="caseUtils.getLevelColor(caseinfo.c_level)">
                             {{ caseinfo.c_level }}
                         </v-chip>
-                        <v-chip class="ca-v-chip" label :color="caseUtils.getStatusColor(caseinfo.c_stat)">
-                            {{ caseinfo.c_stat }}
-                        </v-chip>
                     </v-col>
                 </v-row>
             </v-card-title>
+
+            <v-timeline side="end" direction="horizontal" style="margin-top: 20px;margin-bottom: 20px;">
+                <v-timeline-item size="small" :dot-color="(casestatInt < 1) ? 'blue-lighten-4' : 'blue-darken-4'">
+                    <div
+                        :style="(casestatInt < 1) ? { color: 'gray', 'font-weight': 'normal' } : { color: 'black', 'font-weight': 'bold' }">
+                        待分配
+                    </div>
+                </v-timeline-item>
+
+                <v-timeline-item size="small" :dot-color="(casestatInt < 2) ? 'blue-lighten-4' : 'blue-darken-4'">
+                    <div
+                        :style="(casestatInt < 2) ? { color: 'gray', 'font-weight': 'normal' } : { color: 'black', 'font-weight': 'bold' }">
+                        处理中</div>
+                </v-timeline-item>
+
+                <v-timeline-item size="small" :dot-color="(casestatInt < 3) ? 'blue-lighten-4' : 'blue-darken-4'">
+                    <div
+                        :style="(casestatInt < 3) ? { color: 'gray', 'font-weight': 'normal' } : { color: 'black', 'font-weight': 'bold' }">
+                        已结束</div>
+                </v-timeline-item>
+            </v-timeline>
+
             <MapShowItem ref="myMapShowItem" style="margin-bottom:20px;">
             </MapShowItem>
             <v-card-text>
@@ -62,15 +81,15 @@ import * as roleUtils from '@/plugins/roleUtils.js'
                         </v-col>
                     </v-row>
                     <v-textarea v-model="caseinfo.c_text" label="描述" readonly></v-textarea>
-                    <v-row align="center">
+                    <!-- <v-row align="center">
                         <v-col cols="12">
                             <v-btn v-if="!caseUtils.isAssigned(caseinfo.c_stat) && roleUtils.isManager" color="primary"
                                 rel="noopener noreferrer" size="large" target="_blank" variant="flat">
-                                <!--prepend-icon="mdi-login" @click="pageUtils.goToLogin(this)"> -->
-                                分配警员
-                            </v-btn>
-                        </v-col>
-                    </v-row>
+                                prepend-icon="mdi-login" @click="pageUtils.goToLogin(this)"> 
+                    分配警员
+                    </v-btn>
+                    </v-col>
+                    </v-row> -->
                 </v-caseinfo>
             </v-card-text>
         </v-card>
@@ -90,6 +109,7 @@ export default {
         return {
             caseinfo: {},
             userinfo: {},
+            casestatInt: 0,
             cid: this.$route.params.cid,
         };
     },
@@ -100,6 +120,7 @@ export default {
                     .get(`/case/getCasesByCId/` + this.cid)
                     .then((response) => {
                         this.caseinfo = response.data;
+                        this.casestatInt = caseUtils.getStatusInt(this.caseinfo.c_stat);
                         this.$refs.myMapShowItem.initMap(this.caseinfo.c_lon, this.caseinfo.c_lat, this.caseinfo.c_address);
 
                         this.$axios

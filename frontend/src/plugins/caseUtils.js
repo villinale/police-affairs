@@ -24,3 +24,10 @@ export function getLevelColor(level) {
     else if (level == '一般') return 'green-lighten-3'
     else if (level == '轻微') return 'grey-darken-1'
 }
+
+export function getStatusInt(level) {
+    if (level == '待分配') return 1;
+    else if (level == '调查中') return 2;
+    else if (level == '已结束') return 3;
+    else return 0;
+}
