@@ -40,6 +40,12 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 
         <template v-if="manageType == 'station'">
             <v-data-table :headers="headersforstations" :items="stations">
+                <template v-slot:item.s_no="{ item }" class="hoverable">
+                    <div @click="pageUtils.goToStationInfoView(this, item.columns.s_no)">{{ item.columns.s_no }}</div>
+                </template>
+                <template v-slot:item.s_name="{ item }" class="hoverable">
+                    <div @click="pageUtils.goToStationInfoView(this, item.columns.s_no)">{{ item.columns.s_name }}</div>
+                </template>
             </v-data-table>
         </template>
 

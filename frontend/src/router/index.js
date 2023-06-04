@@ -2,7 +2,7 @@
  * @Author: yingxin wang
  * @Date: 2023-06-02 08:06:43
  * @LastEditors: yingxin wang
- * @LastEditTime: 2023-06-04 19:14:33
+ * @LastEditTime: 2023-06-04 21:07:53
  * @Description: 请填写简介
  */
 // Composables
@@ -42,6 +42,11 @@ const routes = [
         path: 'caseInfo/:cid',
         name: 'case',
         component: () => import('@/views/CaseInfoView.vue')
+      },
+      {
+        path: 'stationInfo/:sid',
+        name: 'station',
+        component: () => import('@/views/StationInfoView.vue')
       },
     ],
   },

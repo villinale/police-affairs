@@ -99,14 +99,12 @@ export default {
                 this.$axios
                     .get(`/case/getCasesByCId/` + this.cid)
                     .then((response) => {
-                        console.log(response)
                         this.caseinfo = response.data;
                         this.$refs.myMapShowItem.initMap(this.caseinfo.c_lon, this.caseinfo.c_lat, this.caseinfo.c_address);
 
                         this.$axios
                             .get(`/user/getUserInfoById/` + this.caseinfo.u_no)
                             .then((response) => {
-                                console.log(response)
                                 this.userinfo = response.data;
                             }).catch((error) => {
                                 console.log(error.response)
