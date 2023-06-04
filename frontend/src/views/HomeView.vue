@@ -9,7 +9,7 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 		<v-responsive class="d-flex align-center text-center">
 			<v-row class="d-flex align-center justify-center">
 				<v-col v-if="!roleUtils.isManager && !roleUtils.isOfficer" cols="auto">
-					<v-btn href="" min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text"
+					<v-btn min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text"
 						@click="pageUtils.goToReportCase(this)">
 						<v-icon icon="mdi-file-arrow-up-down" size="large" start />
 						电子报案
@@ -26,7 +26,7 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 				</v-col>
 
 				<v-col cols="auto">
-					<v-btn href="" min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text">
+					<v-btn min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text">
 						<v-icon icon="mdi-message-bulleted" size="large" start />
 						最新消息
 					</v-btn>

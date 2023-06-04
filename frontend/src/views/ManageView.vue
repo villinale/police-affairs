@@ -29,13 +29,14 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 
     <v-container class="fill-height" style="display: block;">
         <template v-if="manageType == 'officer'">
-            <v-data-table :headers="headersforofficers" :items="officers">
+            <OfficerInfoTable />
+            <!-- <v-data-table :headers="headersforofficers" :items="officers">
                 <template v-slot:item.o_stat="{ item }">
                     <v-chip :color="getOfficerStaColor(item.columns.o_stat)">
                         {{ item.columns.o_stat }}
                     </v-chip>
                 </template>
-            </v-data-table>
+            </v-data-table> -->
         </template>
 
         <template v-if="manageType == 'station'">
@@ -75,9 +76,11 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 
 <script>
 import { VDataTable } from 'vuetify/labs/VDataTable'
+import OfficerInfoTable from '@/components/OfficerInfoTable.vue'
 export default {
     components: {
         VDataTable,
+        OfficerInfoTable,
     },
     data() {
         return {
@@ -94,6 +97,7 @@ export default {
                 { title: '手机号码', align: 'end', key: 'u_phone' },
                 { title: '警员状态', align: 'end', key: 'o_stat' },
                 { title: '站点编号', align: 'end', key: 's_no' },
+                { title: '编辑', key: 'actions', sortable: false },
             ],
             headersforstations: [
                 { title: '派出所编号', align: 'start', key: 's_no', },
