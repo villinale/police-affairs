@@ -82,9 +82,16 @@ public class CaseController {
         return false;
     }
 
-    @GetMapping("/getUserCasesByUId/{uid}")
-    public List<Case> getUserCasesByUId(@PathVariable Integer uid) {
-        System.out.println("getUserCasesByUId: " + uid);
+    // 该用户是警官，返回警官负责的案件
+    // 该用户是其他用户，返回该用户的案件
+    @GetMapping("/getUserCasesByUId/{uid}/{isOfficer}")
+    public List<Case> getUserCasesByUId(@PathVariable Integer uid, @PathVariable boolean isOfficer) {
+        System.out.println("getUserCasesByUId: " + uid + " " + isOfficer);
+        if (isOfficer) {
+            List<Case> res = caseMapper.getOfficerCasesByUId(uid);
+            return res;
+        }
+
         List<Case> res = caseMapper.getUserCasesByUId(uid);
         return res;
     }

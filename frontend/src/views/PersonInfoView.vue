@@ -32,18 +32,20 @@ import * as roleUtils from '@/plugins/roleUtils.js'
     <div>
         <user-info-card v-if="manageType == 'personInfo'" :user-info="userInfo" />
         <CaseCards v-if="manageType == 'casesInfo'" :casesInfoList="casesInfo" />
+        <!-- <CaseInfoTable v-if="(manageType == 'casesInfo') && roleUtils.isOfficer" /> -->
     </div>
 </template>
   
 <script>
 import UserInfoCard from "@/components/UserInfoCard.vue";
 import CaseCards from "@/components/CaseCards.vue";
+import CaseInfoTable from '@/components/table/CaseInfoTable.vue';
 
-//TODO:界面美化
 export default {
     components: {
         UserInfoCard,
         CaseCards,
+        CaseInfoTable,
     },
     data() {
         return {
@@ -67,14 +69,12 @@ export default {
             this.$cookies.remove("userid");
             this.$cookies.remove("role");
             this.$cookies.remove('name');
-            this.$router.push("/");
+            this.$router.replace("/");
         },
     },
-    mounted() {
+    created() {
         roleUtils.checkLoginStatus(this);
         roleUtils.updateRole(this);
-    },
-    created() {
         if (this.uid) {
             this.$axios
                 .get(`/user/getUserInfoById/` + this.uid)
@@ -86,7 +86,7 @@ export default {
                     console.log(err);
                 });
             this.$axios
-                .get(`/case/getUserCasesByUId/` + this.uid)
+                .get(`/case/getUserCasesByUId/` + this.uid + '/' + roleUtils.isOfficer)
                 .then(res => {
                     this.casesInfo = res.data;
                     console.log(this.casesInfo);
@@ -95,7 +95,9 @@ export default {
                     console.log(err);
                 });
         }
-    }
+    },
+    mounted() {
+    },
 };
 </script>
   

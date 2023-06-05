@@ -60,29 +60,9 @@ export default {
             manageType: "officer",
             drawer: true,
             rail: true,
-            cases: [],
-            headersforcases: [
-                { title: '案件编号', align: 'start', key: 'c_no', },
-                { title: '案件名称', align: 'start', key: 'c_title', },
-                { title: '所在区', align: 'end', key: 'c_area' },
-                { title: '详细位置', align: 'end', key: 'c_address' },
-                { title: '级别', align: 'end', key: 'c_level' },
-                { title: '发生时间', align: 'end', key: 'c_startdate' },
-                { title: '结案时间', align: 'end', key: 'c_enddate' },
-                { title: '状态', align: 'end', key: 'c_stat' },
-                { title: '上报人', align: 'end', key: 'u_no' },
-                { title: '负责人', align: 'end', key: 'o_no' },
-                { title: '负责辖区', align: 'end', key: 's_no' },
-            ],
         }
     },
     methods: {
-        getAllData() {
-            this.$axios.get('/case/getAllCases').then(res => {
-                console.log(res.data)
-                this.cases = res.data;
-            });
-        },
         changeManage(data) {
             if (data == "officer" || data == "station" || data == "cases")
                 this.manageType = data;
@@ -95,7 +75,6 @@ export default {
         roleUtils.checkLoginStatus(this);
         roleUtils.updateRole(this);
         console.log(this.isLogin)
-        this.getAllData();
     },
 }
 </script>

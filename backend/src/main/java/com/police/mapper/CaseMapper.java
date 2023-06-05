@@ -18,6 +18,8 @@ import java.util.Map;
 public interface CaseMapper extends BaseMapper<Case> {
     List<Case> getUserCasesByUId(Integer u_no);
 
+    List<Case> getOfficerCasesByUId(Integer u_no);
+
     List<Case> getAllCases();
 
     Case getCasesByCId(Integer c_no);
