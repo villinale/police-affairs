@@ -5,6 +5,7 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 </script>
 
 <template>
+    <Snackbar ref="mychild" />
     <v-container class="fill-height" style="display: block;">
         <v-data-table :headers="headersforofficers" :items="officers">
             <template v-slot:top>
@@ -23,7 +24,10 @@ import * as pageUtils from '@/plugins/pageUtils.js'
                                         <v-text-field v-model="editedItem.u_phone" label="联系方式"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="6" md="4">
-                                        <v-select v-model="editedItem.u_stat" label="状态" :items="['任务中', '空闲']"></v-select>
+                                        <v-select v-model="editedItem.o_stat" label="状态" :items="['任务中', '空闲']"></v-select>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="4">
+                                        <v-text-field v-model="editedItem.s_no" label="所在辖区"></v-text-field>
                                     </v-col>
                                 </v-row>
                             </v-container>
@@ -72,9 +76,11 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 
 <script>
 import { VDataTable } from 'vuetify/labs/VDataTable'
+import Snackbar from '@/components/Snackbar.vue';
 export default {
     components: {
         VDataTable,
+        Snackbar
     },
     data() {
         return {
@@ -96,12 +102,14 @@ export default {
                 u_sex: "",
                 u_phone: "",
                 o_stat: "",
+                s_no: "",
             },
             defaultItem: {
                 u_name: "",
                 u_sex: "",
                 u_phone: "",
                 o_stat: "",
+                s_no: "",
             },
         }
     },
@@ -127,6 +135,8 @@ export default {
         editItem(item) {
             this.editedIndex = this.officers.indexOf(item)
             this.editedItem = Object.assign({}, item)
+            const targetProp1 = Object.assign({}, this.editedItem).u_name;
+            console.log(targetProp1);
             this.dialogEdit = true
         },
         deleteItem(item) {
@@ -153,12 +163,36 @@ export default {
             })
         },
         save() {
-            // if (this.editedIndex > -1) {
-            //     Object.assign(this.officers[this.editedIndex], this.editedItem)
-            // } else {
-            //     this.officers.push(this.editedItem)
-            // }
-            // this.close()
+            if (this.editedIndex > -1) {
+                const u_name = Object.assign({}, this.editedItem).u_name;
+                const u_sex = Object.assign({}, this.editedItem).u_sex;
+                const u_phone = Object.assign({}, this.editedItem).u_phone;
+                const o_stat = Object.assign({}, this.editedItem).o_stat;
+                const s_no = Object.assign({}, this.editedItem).s_no;
+                console.log(o_stat);
+                this.$axios.post('/officer/updateOfficerInfo', {
+                    u_no: this.officers[this.editedIndex].u_no,
+                    o_no: this.officers[this.editedIndex].o_no,
+                    u_name: u_name,
+                    u_sex: u_sex,
+                    u_phone: u_phone,
+                    o_stat: o_stat,
+                    s_no: s_no,
+                })
+                    .then(res => {
+                        console.log(res.data)
+                        if (res.data == true)
+                            Object.assign(this.officers[this.editedIndex], Object.assign({}, this.editedItem))
+                        else
+                            this.$refs.mychild.showSnackbar("修改失败", 'error');
+                        this.close();
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        this.$refs.mychild.showSnackbar("修改失败", 'error');
+                        this.close();
+                    });
+            }
         },
     },
     mounted() {
