@@ -5,6 +5,7 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 </script>
 
 <template>
+    <Snackbar ref="mychild" />
     <v-container class="fill-height" style="display: block;">
         <v-data-table :headers="headersforcases" :items="cases">
             <template v-slot:top>
@@ -99,9 +100,11 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 
 <script>
 import { VDataTable } from 'vuetify/labs/VDataTable'
+import Snackbar from '@/components/Snackbar.vue';
 export default {
     components: {
         VDataTable,
+        Snackbar
     },
     data() {
         return {
@@ -189,12 +192,38 @@ export default {
             })
         },
         save() {
-            // if (this.editedIndex > -1) {
-            //     Object.assign(this.officers[this.editedIndex], this.editedItem)
-            // } else {
-            //     this.officers.push(this.editedItem)
-            // }
-            // this.close()
+            if (this.editedIndex > -1) {
+                let c_title = Object.assign({}, this.editedItem).c_title;
+                let c_address = Object.assign({}, this.editedItem).c_address;
+                let c_level = Object.assign({}, this.editedItem).c_level;
+                let c_enddate = Object.assign({}, this.editedItem).c_enddate;
+                let c_stat = Object.assign({}, this.editedItem).c_stat;
+                let o_no = Object.assign({}, this.editedItem).o_no;
+                let s_no = Object.assign({}, this.editedItem).s_no;
+                this.$axios.post('/case/updateCaseInfo', {
+                    c_no: this.cases[this.editedIndex].c_no,
+                    c_title: c_title,
+                    c_address: c_address,
+                    c_level: c_level,
+                    c_stat: c_stat,
+                    c_enddate: c_enddate,
+                    o_no: o_no,
+                    s_no: s_no,
+                })
+                    .then(res => {
+                        console.log(res.data)
+                        if (res.data == true)
+                            Object.assign(this.cases[this.editedIndex], Object.assign({}, this.editedItem))
+                        else
+                            this.$refs.mychild.showSnackbar("修改失败", 'error');
+                        this.close();
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        this.$refs.mychild.showSnackbar("修改失败", 'error');
+                        this.close();
+                    });
+            }
         },
     },
     mounted() {

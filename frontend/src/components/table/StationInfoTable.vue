@@ -5,6 +5,7 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 </script>
 
 <template>
+    <Snackbar ref="mychild" />
     <v-container class="fill-height" style="display: block;">
         <v-data-table :headers="headersforstations" :items="stations">
             <template v-slot:top>
@@ -21,6 +22,12 @@ import * as pageUtils from '@/plugins/pageUtils.js'
                                     </v-col>
                                     <v-col cols="12" sm="6" md="4">
                                         <v-text-field v-model="editedItem.s_area" label="派出所所在区"></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="4">
+                                        <v-text-field v-model="editedItem.s_lon" label="派出所经度"></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="4">
+                                        <v-text-field v-model="editedItem.s_lat" label="派出所纬度"></v-text-field>
                                     </v-col>
                                     <v-col cols=" 12" sm="6" md="4">
                                         <v-text-field v-model="editedItem.s_address" label="派出所具体位置"></v-text-field>
@@ -73,9 +80,11 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 
 <script>
 import { VDataTable } from 'vuetify/labs/VDataTable'
+import Snackbar from '@/components/Snackbar.vue';
 export default {
     components: {
         VDataTable,
+        Snackbar
     },
     data() {
         return {
@@ -94,12 +103,16 @@ export default {
             editedItem: {
                 s_name: "",
                 s_phone: "",
+                s_lon: "",
+                s_lat: "",
                 s_area: "",
                 s_address: "",
             },
             defaultItem: {
                 s_name: "",
                 s_phone: "",
+                s_lon: "",
+                s_lat: "",
                 s_area: "",
                 s_address: "",
             },
@@ -149,12 +162,36 @@ export default {
             })
         },
         save() {
-            // if (this.editedIndex > -1) {
-            //     Object.assign(this.officers[this.editedIndex], this.editedItem)
-            // } else {
-            //     this.officers.push(this.editedItem)
-            // }
-            // this.close()
+            if (this.editedIndex > -1) {
+                const s_name = Object.assign({}, this.editedItem).s_name;
+                const s_phone = Object.assign({}, this.editedItem).s_phone;
+                const s_lon = Object.assign({}, this.editedItem).s_lon;
+                const s_lat = Object.assign({}, this.editedItem).s_lat;
+                const s_area = Object.assign({}, this.editedItem).s_area;
+                const s_address = Object.assign({}, this.editedItem).s_address;
+                this.$axios.post('/station/updateStationInfo', {
+                    s_no: this.stations[this.editedIndex].s_no,
+                    s_name: s_name,
+                    s_phone: s_phone,
+                    s_lon: s_lon,
+                    s_lat: s_lat,
+                    s_area: s_area,
+                    s_address: s_address,
+                })
+                    .then(res => {
+                        console.log(res.data)
+                        if (res.data == true)
+                            Object.assign(this.stations[this.editedIndex], Object.assign({}, this.editedItem))
+                        else
+                            this.$refs.mychild.showSnackbar("修改失败", 'error');
+                        this.close();
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        this.$refs.mychild.showSnackbar("修改失败", 'error');
+                        this.close();
+                    });
+            }
         },
     },
     mounted() {

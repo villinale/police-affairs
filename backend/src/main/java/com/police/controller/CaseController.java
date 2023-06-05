@@ -1,5 +1,6 @@
 package com.police.controller;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.police.entity.Case;
 import com.police.entity.response_type.StationStatistics;
 
@@ -51,7 +52,6 @@ public class CaseController {
 
         // 时间格式转换 原格式："2023-06-10T16:26" 转换后："2023-06-10 16:26"
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         LocalDateTime dateTime = LocalDateTime.parse(c_Date, inputFormatter);
 
@@ -157,5 +157,48 @@ public class CaseController {
         s.setDailyNewCases(dailyNewCases);
         s.setDailyClosedCases(dailyClosedCases);
         return s;
+    }
+
+    @PostMapping("/updateCaseInfo")
+    public boolean updateCaseInfo(@RequestBody Map<String, Object> requestBody) {
+        for (String key : requestBody.keySet()) {
+            System.out.println(key + " " + requestBody.get(key));
+        }
+
+        try {
+            int c_no = (int) requestBody.get("c_no");
+            String c_title = (String) requestBody.get("c_title");
+            String c_address = (String) requestBody.get("c_address");
+            String c_level = (String) requestBody.get("c_level");
+            String c_enddate = (String) requestBody.get("c_enddate");
+            String c_stat = (String) requestBody.get("c_stat");
+            int o_no = (int) requestBody.get("o_no");
+            int s_no = (int) requestBody.get("s_no");
+
+            LocalDateTime dateTime = null;
+            if (c_enddate.contains("T")) {
+                DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+                dateTime = LocalDateTime.parse(c_enddate, inputFormatter);
+            } else {
+                DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                dateTime = LocalDateTime.parse(c_enddate, inputFormatter);
+            }
+
+            UpdateWrapper<Case> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.eq("c_no", c_no)
+                    .set("c_title", c_title)
+                    .set("c_address", c_address)
+                    .set("c_level", c_level)
+                    .set("c_enddate", dateTime)
+                    .set("c_stat", c_stat)
+                    .set("o_no", o_no)
+                    .set("s_no", s_no);
+            caseMapper.update(null, updateWrapper);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }
