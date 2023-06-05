@@ -1,6 +1,6 @@
 <template>
     <div>
-        <canvas id="caseChart"></canvas>
+        <canvas id="line"></canvas>
     </div>
 </template>
   
@@ -16,35 +16,28 @@ export default {
         this.createChart();
     },
     methods: {
-        createChart(labels, data, backgroundColor, title) {
-            console.log(labels);
-            console.log(title);
-            // 创建环状图配置对象
+        createChart(labels, datasets, title) {
+            // 创建折线图图配置对象
             const chartConfig = {
-                type: 'doughnut',
+                type: 'line',
                 data: {
                     labels: labels,
-                    datasets: [
-                        {
-                            data: data,
-                            backgroundColor: backgroundColor,
-                        },
-                    ],
+                    datasets: datasets,
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false, // 不保持纵横比
-                    responsive: true, // 允许图表响应容器大小变化
-                    cutout: '80%',
-                    legend: {
-                        display: true,
-                        position: 'bottom',
-                        fontSize: 15
-                    },
                     title: {
                         display: true,
-                        text: title,
+                        text: title, // 折线图标题
                         fontSize: 18
+                    },
+                    legend: {
+                        display: true, // 显示图例
+                        position: 'bottom',
+                        labels: {
+                            fontSize: 15
+                        }
                     },
                     layout: {
                         padding: {
@@ -58,7 +51,7 @@ export default {
             };
 
             // 使用 Chart.js 创建环状图
-            new Chart(document.getElementById('caseChart'), chartConfig);
+            new Chart(document.getElementById('line'), chartConfig);
         },
     },
 };
