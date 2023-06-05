@@ -8,7 +8,7 @@ import * as pageUtils from '@/plugins/pageUtils.js'
     <v-container class="fill-height" style="display: block;">
         <v-data-table :headers="headersforstations" :items="stations">
             <template v-slot:top>
-                <v-dialog v-model="dialogEdit" max-width="500px">
+                <v-dialog v-model="dialogEdit" max-width="800px">
                     <v-card>
                         <v-card-text>
                             <v-container>

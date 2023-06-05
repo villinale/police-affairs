@@ -45,9 +45,9 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 
 <script>
 import { VDataTable } from 'vuetify/labs/VDataTable'
-import OfficerInfoTable from '@/components/OfficerInfoTable.vue'
-import StationInfoTable from '@/components/StationInfoTable.vue'
-import CaseInfoTable from '@/components/CaseInfoTable.vue'
+import OfficerInfoTable from '@/components/table/OfficerInfoTable.vue'
+import StationInfoTable from '@/components/table/StationInfoTable.vue'
+import CaseInfoTable from '@/components/table/CaseInfoTable.vue'
 export default {
     components: {
         VDataTable,

@@ -8,7 +8,7 @@ import * as pageUtils from '@/plugins/pageUtils.js'
     <v-container class="fill-height" style="display: block;">
         <v-data-table :headers="headersforofficers" :items="officers">
             <template v-slot:top>
-                <v-dialog v-model="dialogEdit" max-width="500px">
+                <v-dialog v-model="dialogEdit" max-width="800px">
                     <v-card>
                         <v-card-text>
                             <v-container>
@@ -185,12 +185,5 @@ export default {
 
 .hoverable:hover {
     cursor: pointer;
-    /* 修改为您希望的鼠标样式，例如： */
-    /* cursor: pointer; */
-    /* cursor: grab; */
-    /* cursor: crosshair; */
-    /* cursor: move; */
-    /* cursor: help; */
-    /* ... */
 }
 </style>
