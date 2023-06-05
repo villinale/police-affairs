@@ -9,64 +9,73 @@ import * as pageUtils from '@/plugins/pageUtils.js'
     <v-container class="fill-height" style="display: block;">
         <v-data-table :headers="headersforcases" :items="cases">
             <template v-slot:top>
-                <v-dialog v-model="dialogEdit" max-width="800px">
-                    <v-card>
-                        <v-card-text>
-                            <v-container>
-                                <v-row>
-                                    <v-col cols="12" sm="6" md="4">
-                                        <v-text-field v-model="editedItem.c_title" label="案件名称"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="4">
-                                        <v-text-field v-model="editedItem.c_area" label="所在区"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="4">
-                                        <v-text-field v-model="editedItem.c_address" label="详细位置"></v-text-field>
-                                    </v-col>
-                                    <v-col cols=" 12" sm="6" md="4">
-                                        <v-select v-model="editedItem.c_level" label="级别"
-                                            :items="['轻微', '一般', '较大', '严重']"></v-select>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="4">
-                                        <v-text-field type="datetime-local" v-model="editedItem.c_enddate"
-                                            label="结案时间"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="4">
-                                        <v-select v-model="editedItem.c_stat" label="状态"
-                                            :items="['待分配', '处理中', '已结束']"></v-select>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="4">
-                                        <v-text-field v-model="editedItem.o_no" label="负责警员"></v-text-field>
-                                    </v-col>
-                                    <v-col cols=" 12" sm="6" md="4">
-                                        <v-text-field v-model="editedItem.s_no" label="负责辖区"></v-text-field>
-                                    </v-col>
-                                </v-row>
-                            </v-container>
-                        </v-card-text>
+                <v-toolbar flat>
+                    <v-toolbar-title>所有案件信息</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" dark class="mb-2" @click="pageUtils.goToReportCase(this)">
+                        新增案件
+                    </v-btn>
 
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="blue-darken-1" variant="text" @click="close">
-                                取消
-                            </v-btn>
-                            <v-btn color="blue-darken-1" variant="text" @click="save">
-                                保存
-                            </v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-dialog>
-                <v-dialog v-model="dialogDelete" max-width="500px">
-                    <v-card>
-                        <v-card-title class="text-h5">确认要删除吗？</v-card-title>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="blue-darken-1" variant="text" @click="closeDelete">取消</v-btn>
-                            <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">确认</v-btn>
-                            <v-spacer></v-spacer>
-                        </v-card-actions>
-                    </v-card>
-                </v-dialog>
+                    <v-dialog v-model="dialogEdit" max-width="800px">
+
+                        <v-card>
+                            <v-card-text>
+                                <v-container>
+                                    <v-row>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.c_title" label="案件名称"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.c_area" label="所在区"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.c_address" label="详细位置"></v-text-field>
+                                        </v-col>
+                                        <v-col cols=" 12" sm="6" md="4">
+                                            <v-select v-model="editedItem.c_level" label="级别"
+                                                :items="['轻微', '一般', '较大', '严重']"></v-select>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field type="datetime-local" v-model="editedItem.c_enddate"
+                                                label="结案时间"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-select v-model="editedItem.c_stat" label="状态"
+                                                :items="['待分配', '处理中', '已结束']"></v-select>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.o_no" label="负责警员"></v-text-field>
+                                        </v-col>
+                                        <v-col cols=" 12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.s_no" label="负责辖区"></v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                            </v-card-text>
+
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue-darken-1" variant="text" @click="close">
+                                    取消
+                                </v-btn>
+                                <v-btn color="blue-darken-1" variant="text" @click="save">
+                                    保存
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                    <v-dialog v-model="dialogDelete" max-width="500px">
+                        <v-card>
+                            <v-card-title class="text-h5">确认要删除吗？</v-card-title>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue-darken-1" variant="text" @click="closeDelete">取消</v-btn>
+                                <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">确认</v-btn>
+                                <v-spacer></v-spacer>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                </v-toolbar>
             </template>
 
             <template v-slot:item.c_title="{ item }" class="hoverable">

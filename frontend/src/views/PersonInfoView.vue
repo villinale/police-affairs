@@ -15,11 +15,9 @@ import * as roleUtils from '@/plugins/roleUtils.js'
                 <v-list-item v-if="roleUtils.isLogin" @click="changeManage('personInfo')" prepend-icon=" mdi-account"
                     title="个人信息" value="个人信息" link>
                 </v-list-item>
-                <v-list-item v-if="roleUtils.isLogin && !roleUtils.isManager && !roleUtils.isOfficer"
-                    @click="changeManage('casesInfo')" prepend-icon="mdi-file" title="我的报案" value="我的报案" link>
+                <v-list-item v-if="roleUtils.isLogin" @click="changeManage('casesInfo')" prepend-icon="mdi-file"
+                    title="我的案件" value="我的案件" link>
                 </v-list-item>
-                <v-list-item v-if="roleUtils.isLogin && !roleUtils.isManager && roleUtils.isOfficer"
-                    prepend-icon="mdi-checkbox-marked-circle-outline" title="我的案件" value="我的案件" link> </v-list-item>
             </v-list>
 
             <template v-if="!rail" v-slot:append>

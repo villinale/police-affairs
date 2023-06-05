@@ -76,10 +76,6 @@ export default {
                 this.$refs.mychild.showSnackbar('未登录，不能执行该操作！', 'error');
                 return;
             }
-            else if (roleUtils.isManager || roleUtils.isOfficer) {
-                this.$refs.mychild.showSnackbar('不是用户，不能执行该操作！', 'error');
-                return;
-            }
 
             var a = {
                 c_title: this.title,
