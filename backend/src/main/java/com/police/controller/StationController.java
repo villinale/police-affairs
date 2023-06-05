@@ -1,10 +1,3 @@
-/*
- * @Author: yingxin wang
- * @Date: 2023-06-03 21:58:45
- * @LastEditors: yingxin wang
- * @LastEditTime: 2023-06-05 21:02:28
- * @Description: 请填写简介
- */
 package com.police.controller;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -72,6 +65,33 @@ public class StationController {
                     .set("s_address", s_address);
             StationMapper.update(null, updateWrapper);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @PostMapping("/addStation")
+    public boolean addStation(@RequestBody Map<String, Object> requestBody) {
+        try {
+            String s_name = (String) requestBody.get("s_name");
+            String s_phone = (String) requestBody.get("s_phone");
+            double s_lon = (double) requestBody.get("s_lon");
+            double s_lat = (double) requestBody.get("s_lat");
+            String s_area = (String) requestBody.get("s_area");
+            String s_address = (String) requestBody.get("s_address");
+
+            Station station = new Station();
+
+            station.setS_address(s_address);
+            station.setS_area(s_area);
+            station.setS_lat(s_lat);
+            station.setS_lon(s_lon);
+            station.setS_name(s_name);
+            station.setS_phone(s_phone);
+
+            StationMapper.insert(station);
         } catch (Exception e) {
             e.printStackTrace();
             return false;

@@ -22,7 +22,7 @@ import * as pageUtils from '@/plugins/pageUtils.js'
                         </template>
 
                         <v-card>
-                            <v-card-title>
+                            <v-card-title v-if="formTitle != ''">
                                 <span class="headline">{{ formTitle }}</span>
                             </v-card-title>
                             <v-card-text>
@@ -62,7 +62,10 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 
                     <v-dialog v-model="dialogDelete" max-width="500px">
                         <v-card>
-                            <v-card-title class="text-h5">确认要删除吗？</v-card-title>
+                            <v-card-title class="text-h5">
+                                确认要删除吗？
+                                <span class="headline">{{ formTitle }}</span>
+                            </v-card-title>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="blue-darken-1" variant="text" @click="closeDelete">取消</v-btn>
@@ -163,6 +166,7 @@ export default {
             this.editedIndex = this.officers.indexOf(item)
             this.editedItem = Object.assign({}, item)
             this.dialogDelete = true
+            this.setTitle('NO.' + item.u_no + ' ' + item.u_name)
         },
         deleteItemConfirm() {
             this.officers.splice(this.editedIndex, 1)
