@@ -10,18 +10,21 @@ import * as pageUtils from '@/plugins/pageUtils.js'
         <v-data-table :headers="headersforofficers" :items="officers">
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title>My CRUD</v-toolbar-title>
+                    <v-toolbar-title>所有警官信息</v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
                     <v-spacer></v-spacer>
 
                     <v-dialog v-model="dialogEdit" max-width="800px">
                         <template v-slot:activator="{ props }">
-                            <v-btn color="primary" dark class="mb-2" v-bind="props">
-                                新增信息
+                            <v-btn color="primary" dark class="mb-2" v-bind="props" @click="setTitle('新增警官')">
+                                新增警官
                             </v-btn>
                         </template>
 
                         <v-card>
+                            <v-card-title>
+                                <span class="headline">{{ formTitle }}</span>
+                            </v-card-title>
                             <v-card-text>
                                 <v-container>
                                     <v-row>
@@ -98,6 +101,7 @@ export default {
     },
     data() {
         return {
+            formTitle: '',
             officers: [],
             headersforofficers: [
                 { title: '警员编号', align: 'start', key: 'o_no', },
@@ -136,6 +140,9 @@ export default {
         },
     },
     methods: {
+        setTitle(formTitle) {
+            this.formTitle = formTitle;
+        },
         getAllData() {
             this.$axios.get('/officer/getAllOfficers').then(res => {
                 this.officers = res.data;
@@ -149,9 +156,8 @@ export default {
         editItem(item) {
             this.editedIndex = this.officers.indexOf(item)
             this.editedItem = Object.assign({}, item)
-            let targetProp1 = Object.assign({}, this.editedItem).u_name;
-            console.log(targetProp1);
             this.dialogEdit = true
+            this.setTitle('修改警官信息 NO.' + item.u_no)
         },
         deleteItem(item) {
             this.editedIndex = this.officers.indexOf(item)
