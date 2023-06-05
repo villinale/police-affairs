@@ -71,6 +71,7 @@ export default {
                         this.$axios
                             .get(`/case/getStatisticsBySNo/` + this.sid)
                             .then((response) => {
+                                console.log(response.data);
                                 this.statics = response.data;
                             }).catch((error) => {
                                 console.log(error.response)

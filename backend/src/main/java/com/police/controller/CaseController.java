@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
+import java.util.Comparator;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.sql.Timestamp;
+import java.sql.Date;
 
 @Controller
 @RestController
@@ -99,10 +103,59 @@ public class CaseController {
         return res;
     }
 
+    private List<Map<String, Object>> fillCaseNumber(List<Map<String, Object>> days) {
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusDays(6);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate currentDatel = startDate;
+        while (!currentDatel.isAfter(endDate)) {
+            Date currentDate = Date.valueOf(currentDatel);
+
+            boolean found = false;
+            for (Map<String, Object> map : days) {
+                Date mapKey = (Date) map.get("key");
+                if (currentDate.equals(mapKey)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                Map<String, Object> newMap = Map.of("value", 0, "key", currentDate);
+                days.add(newMap);
+            }
+
+            currentDatel = currentDatel.plusDays(1);
+        }
+        return days;
+    }
+
+    public static void sortByDate(List<Map<String, Object>> list) {
+        Collections.sort(list, new Comparator<Map<String, Object>>() {
+            @Override
+            public int compare(Map<String, Object> map1, Map<String, Object> map2) {
+                Date date1 = (Date) map1.get("key");
+                Date date2 = (Date) map2.get("key");
+                return date1.compareTo(date2);
+            }
+        });
+    }
+
     @GetMapping("/getStatisticsBySNo/{s_no}")
     public StationStatistics getStatisticsBySNo(@PathVariable int s_no) {
-        // 根据sNo进行相应的查询和统计操作
-        // 返回统计结果对象 CaseStatistics
-        return caseMapper.getStationStatisticsBySNo(s_no);
+        System.out.println("getStatisticsBySNo: " + s_no);
+        StationStatistics s = caseMapper.getStationStatisticsBySNo(s_no);
+
+        List<Map<String, Object>> dailyNewCases = caseMapper.getStationDailyNewCasesBySNo(s_no);
+        fillCaseNumber(dailyNewCases);
+        sortByDate(dailyNewCases);
+
+        List<Map<String, Object>> dailyClosedCases = caseMapper.getStationDailyClosedCasesBySNo(s_no);
+        fillCaseNumber(dailyClosedCases);
+        sortByDate(dailyClosedCases);
+
+        s.setDailyNewCases(dailyNewCases);
+        s.setDailyClosedCases(dailyClosedCases);
+        return s;
     }
 }

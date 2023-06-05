@@ -10,6 +10,8 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,14 +22,10 @@ public class StationStatistics {
     private int totalCases;
     private int closedCases;
     private double closedRatio;
+    private List<Map<String, Object>> dailyNewCases; // 新增案件数
+     private List<Map<String, Object>> dailyClosedCases; // 新增结案数
 
     public StationStatistics() {
 
-    }
-
-    public StationStatistics(int totalCases, int closedCases, double closedRatio) {
-        this.totalCases = totalCases;
-        this.closedCases = closedCases;
-        this.closedRatio = closedRatio;
     }
 }

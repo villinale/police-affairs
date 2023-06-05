@@ -12,14 +12,67 @@
         cases.s_no=station.s_no and cases.o_no=officer.o_no and officer.u_no=user.u_no;</select>
 
     <!-- getCasesByCId -->
-
     <select id="getCasesByCId" resultType="com.police.entity.Case"> selsct * from cases where
         c_no=#{c_no}; </select>
 
-    <!-- getStationStatisticsBySNo -->
+    <!-- 定义结果映射规则
+    <resultMap id="StationStatisticsResultMap"
+        type="com.police.entity.response_type.StationStatistics">
+        <id property="totalCases" column="total_cases" />
+        <result property="closedCases" column="closed_cases" />
+        <result property="closedRatio" column="closed_ratio" />
+        <collection property="dailyNewCases" column="daily_newCases"
+            select="getStationDailyNewCasesBySNo">
+        </collection>
+    </resultMap>
+
+    定义 DailyNewCasesResultMap 
+    <resultMap id="DailyNewCasesResultMap" type="java.util.HashMap">
+        <result property="key" column="dates" />
+        <result property="value" column="new_cases" />
+    </resultMap>
+
 
     <select id="getStationStatisticsBySNo"
-        resultType="com.police.entity.response_type.StationStatistics"> SELECT COUNT(*) AS
-        totalCases, SUM(CASE WHEN c_stat = '已结束' THEN 1 ELSE 0 END) AS closedCases, (SUM(CASE WHEN
-        c_stat = '已结束' THEN 1 ELSE 0 END) / COUNT(*)) AS closedRatio FROM cases WHERE s_no = #{s_no} </select>
+        resultMap="StationStatisticsResultMap"> SELECT COUNT(*) AS total_cases, SUM(CASE WHEN c_stat
+        = '已结束' THEN 1 ELSE 0 END) AS closed_cases, (SUM(CASE WHEN c_stat = '已结束' THEN 1 ELSE 0 END)
+        / COUNT(*)) AS closed_ratio FROM cases WHERE s_no = #{s_no} </select>
+
+    <select id="getStationDailyNewCasesBySNo" resultMap="DailyNewCasesResultMap"> SELECT
+        DATE(c_startdate) AS dates, COUNT(*) AS new_cases FROM cases WHERE c_startdate &gt;=
+        DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND c_startdate &lt; CURDATE() AND s_no = #{s_no} GROUP
+        BY DATE(c_startdate) ORDER BY DATE(c_startdate); </select> -->
+    <!-- 定义结果映射规则 -->
+    <resultMap id="StationStatisticsResultMap"
+        type="com.police.entity.response_type.StationStatistics">
+        <id property="totalCases" column="total_cases" />
+        <result property="closedCases" column="closed_cases" />
+        <result property="closedRatio" column="closed_ratio" />
+        <collection property="dailyNewCases" column="daily_new_cases"
+            select="getStationDailyNewCasesBySNo" />
+    </resultMap>
+
+    <select id="getStationStatisticsBySNo" resultMap="StationStatisticsResultMap"> SELECT COUNT(*)
+        AS total_cases, SUM(CASE WHEN c_stat = '已结束' THEN 1 ELSE 0 END) AS closed_cases, (SUM(CASE
+        WHEN c_stat = '已结束' THEN 1 ELSE 0 END) / COUNT(*)) AS closed_ratio FROM cases WHERE s_no =
+        #{s_no} </select>
+
+    <resultMap id="DailyNewCasesResultMap" type="java.util.HashMap">
+        <result property="key" column="dates" />
+        <result property="value" column="new_cases" />
+    </resultMap>
+    <select id="getStationDailyNewCasesBySNo" resultMap="DailyNewCasesResultMap"> SELECT
+        DATE(c_startdate) AS dates, COUNT(*) AS new_cases FROM cases WHERE c_startdate &gt;=
+        DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND c_startdate &lt;CURDATE() AND s_no=#{s_no} GROUP BY
+        DATE(c_startdate) ORDER BY DATE(c_startdate); </select>
+
+    <resultMap id="DailyClosedCasesResultMap" type="java.util.HashMap">
+        <result property="key" column="dates" />
+        <result property="value" column="new_closed_cases" />
+    </resultMap>
+    <select id="getStationDailyClosedCasesBySNo" resultMap="DailyClosedCasesResultMap"> SELECT
+        DATE(c_enddate) AS dates, COUNT(*) AS new_closed_cases FROM cases WHERE c_enddate &gt;=
+        DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND c_enddate &lt;CURDATE() AND c_stat='已结束' AND s_no= 1
+        GROUP BY DATE(c_enddate) ORDER BY DATE(c_enddate); </select>
+
 </mapper>
