@@ -1,7 +1,7 @@
 <template>
     <v-app-bar app color="primary" dark>
         <router-link to="/" class="title">
-            <v-toolbar-title>智慧交警平台</v-toolbar-title>
+            <v-toolbar-title>智慧警务平台</v-toolbar-title>
         </router-link>
         <v-spacer></v-spacer>
         <v-btn text>信息查看</v-btn>

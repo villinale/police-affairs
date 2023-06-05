@@ -8,7 +8,7 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 		<mymap style="margin-bottom:20px;"></mymap>
 		<v-responsive class="d-flex align-center text-center">
 			<v-row class="d-flex align-center justify-center">
-				<v-col v-if="(!roleUtils.isManager) && (!roleUtils.isOfficer)" cols="auto">
+				<v-col v-if="isShowReport" cols="auto">
 					<v-btn min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text"
 						@click="pageUtils.goToReportCase(this)">
 						<v-icon icon="mdi-file-arrow-up-down" size="large" start />
@@ -16,7 +16,7 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 					</v-btn>
 				</v-col>
 
-				<v-col v-if="!roleUtils.isLogin" cols="auto">
+				<v-col v-if="isShowLogin" cols="auto">
 					<div class="login-wrapper">
 						<v-btn color="primary" min-width="228" rel="noopener noreferrer" size="x-large" target="_blank"
 							variant="flat" prepend-icon="mdi-login" @click="pageUtils.goToLogin(this)">
@@ -42,6 +42,8 @@ export default {
 	components: { mymap },
 	data() {
 		return {
+			isShowReport: false,
+			isShowLogin: false,
 		}
 	},
 	methods: {
@@ -49,9 +51,10 @@ export default {
 	mounted() {
 		roleUtils.checkLoginStatus(this);
 		roleUtils.updateRole(this);
-		console.log(roleUtils.isManager);
-		console.log(roleUtils.isOfficer);
-		console.log(roleUtils.isLogin);
+		this.isShowReport = (!roleUtils.isManager) && (!roleUtils.isOfficer);
+		this.isShowLogin = (!roleUtils.isLogin);
+		console.log(this.isShowReport);
+		console.log(this.isShowLogin);
 	},
 	//TODO:路由守卫
 	// beforeRouteEnter(to, from, next) {

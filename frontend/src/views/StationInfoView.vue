@@ -27,6 +27,9 @@ import * as roleUtils from '@/plugins/roleUtils.js'
                             <v-text-field v-model="stationinfo.s_phone" label="联系方式" readonly></v-text-field>
                         </v-col>
                     </v-row>
+                    <v-row>
+                        <DoughnutChart />
+                    </v-row>
                 </v-caseinfo>
             </v-card-text>
         </v-card>
@@ -36,16 +39,20 @@ import * as roleUtils from '@/plugins/roleUtils.js'
 <script>
 import MapShowItem from '@/components/MapShowItem.vue'
 import Snackbar from '@/components/Snackbar.vue';
+import DoughnutChart from '@/components/chart/DoughnutChart.vue'; // 根据实际路径进行引入
+
 
 export default {
     components: {
         MapShowItem,
         Snackbar,
+        DoughnutChart,
     },
     data() {
         return {
             stationinfo: {},
             sid: this.$route.params.sid,
+            statics: {},
         };
     },
     methods: {
@@ -58,18 +65,16 @@ export default {
                         },
                     })
                     .then((response) => {
-                        console.log(response)
                         this.stationinfo = response.data;
                         this.$refs.myMapShowItem.initMap(this.stationinfo.s_lon, this.stationinfo.s_lat, this.stationinfo.s_address);
 
-                        // this.$axios
-                        //     .get(`/user/getUserInfoById/` + this.caseinfo.u_no)
-                        //     .then((response) => {
-                        //         console.log(response)
-                        //         this.userinfo = response.data;
-                        //     }).catch((error) => {
-                        //         console.log(error.response)
-                        //     });
+                        this.$axios
+                            .get(`/case/getStatisticsBySNo/` + this.sid)
+                            .then((response) => {
+                                this.statics = response.data;
+                            }).catch((error) => {
+                                console.log(error.response)
+                            });
                     }).catch((error) => {
                         console.log(error.response)
                     });

@@ -9,6 +9,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.police.entity.User;
 import com.police.mapper.UserMapper;
+import com.police.entity.response_type.StationStatistics;
+import com.police.mapper.CaseMapper;
 
 import java.util.List;
 
@@ -16,14 +18,14 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SampleTest {
     @Autowired
-    private UserMapper userMapper;
+    private CaseMapper caseMapper;
 
     @Test
     public void testSelect() {
         System.out.println("----------- method test --------------");
-        // List<User> userList = userMapper.selectList(null);
-        // Assert.assertEquals(2, userList.size());
-        // userList.forEach(System.out::println);
+        StationStatistics list = caseMapper.getCaseStatisticsBySNo(1);
+        System.out.println("********************************");
+        System.out.println(list);
     }
 
 }

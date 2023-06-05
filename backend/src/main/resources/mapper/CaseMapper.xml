@@ -15,4 +15,11 @@
 
     <select id="getCasesByCId" resultType="com.police.entity.Case"> selsct * from cases where
         c_no=#{c_no}; </select>
+
+    <!-- getStationStatisticsBySNo -->
+
+    <select id="getStationStatisticsBySNo"
+        resultType="com.police.entity.response_type.StationStatistics"> SELECT COUNT(*) AS
+        totalCases, SUM(CASE WHEN c_stat = '已结束' THEN 1 ELSE 0 END) AS closedCases, (SUM(CASE WHEN
+        c_stat = '已结束' THEN 1 ELSE 0 END) / COUNT(*)) AS closedRatio FROM cases WHERE s_no = #{s_no} </select>
 </mapper>

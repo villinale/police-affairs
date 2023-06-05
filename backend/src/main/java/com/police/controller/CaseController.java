@@ -1,6 +1,8 @@
 package com.police.controller;
 
 import com.police.entity.Case;
+import com.police.entity.response_type.StationStatistics;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.police.mapper.CaseMapper;
@@ -97,4 +99,10 @@ public class CaseController {
         return res;
     }
 
+    @GetMapping("/getStatisticsBySNo/{s_no}")
+    public StationStatistics getStatisticsBySNo(@PathVariable int s_no) {
+        // 根据sNo进行相应的查询和统计操作
+        // 返回统计结果对象 CaseStatistics
+        return caseMapper.getStationStatisticsBySNo(s_no);
+    }
 }

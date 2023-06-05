@@ -1,5 +1,7 @@
 <script setup>
 import * as caseUtils from '@/plugins/caseUtils.js'
+import * as roleUtils from '@/plugins/roleUtils.js'
+import * as pageUtils from '@/plugins/pageUtils.js'
 </script>
 
 <template>
@@ -7,7 +9,8 @@ import * as caseUtils from '@/plugins/caseUtils.js'
         <v-container>
             <v-row>
                 <v-col v-for="(info, index) in casesInfoList" :key="index" cols="12" sm="6" md="4">
-                    <v-card class="mx-auto pe-container" max-width="400">
+                    <v-card class="mx-auto pe-container" max-width="400"
+                        @click="pageUtils.goToCaseInfoView(this, info.c_no)">
                         <v-card-title class="primary">
                             <span class="pe-header-text">NO.{{ info.c_no }} {{ info.c_title }}</span>
                         </v-card-title>
@@ -56,24 +59,6 @@ export default {
         }
     },
     methods: {
-        // isClose(status) {
-        //     if (status == '已结束') return true
-        //     else return false
-        // },
-        // getLocString(info) {
-        //     return info.c_province + '-' + info.c_area + '-' + info.c_address;
-        // },
-        // getStatusColor(status) {
-        //     if (status == '待分配') return 'red'
-        //     else if (status == '调查中') return 'primary'
-        //     else return 'grey-lighten-1'
-        // },
-        // getLevelColor(level) {
-        //     if (level == '严重') return 'red'
-        //     else if (level == '较大') return 'amber-accent-2'
-        //     else if (level == '一般') return 'green-lighten-3'
-        //     else if (level == '轻微') return 'grey-darken-1'
-        // }
     }
 };
 </script>

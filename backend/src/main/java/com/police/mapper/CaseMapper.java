@@ -1,6 +1,7 @@
 package com.police.mapper;
 
 import com.police.entity.Case;
+import com.police.entity.response_type.StationStatistics;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -15,4 +16,6 @@ public interface CaseMapper extends BaseMapper<Case> {
     List<Case> getAllCases();
 
     Case getCasesByCId(Integer c_no);
+
+    StationStatistics getStationStatisticsBySNo(int s_no);
 }
