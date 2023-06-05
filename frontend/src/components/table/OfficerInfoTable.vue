@@ -9,52 +9,66 @@ import * as pageUtils from '@/plugins/pageUtils.js'
     <v-container class="fill-height" style="display: block;">
         <v-data-table :headers="headersforofficers" :items="officers">
             <template v-slot:top>
-                <v-dialog v-model="dialogEdit" max-width="800px">
-                    <v-card>
-                        <v-card-text>
-                            <v-container>
-                                <v-row>
-                                    <v-col cols="12" sm="6" md="4">
-                                        <v-text-field v-model="editedItem.u_name" label="警官名"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="4">
-                                        <v-select v-model="editedItem.u_sex" label="性别" :items="['男', '女']"></v-select>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="4">
-                                        <v-text-field v-model="editedItem.u_phone" label="联系方式"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="4">
-                                        <v-select v-model="editedItem.o_stat" label="状态" :items="['任务中', '空闲']"></v-select>
-                                    </v-col>
-                                    <v-col cols="12" sm="6" md="4">
-                                        <v-text-field v-model="editedItem.s_no" label="所在辖区"></v-text-field>
-                                    </v-col>
-                                </v-row>
-                            </v-container>
-                        </v-card-text>
+                <v-toolbar flat>
+                    <v-toolbar-title>My CRUD</v-toolbar-title>
+                    <v-divider class="mx-4" inset vertical></v-divider>
+                    <v-spacer></v-spacer>
 
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="blue-darken-1" variant="text" @click="close">
-                                取消
+                    <v-dialog v-model="dialogEdit" max-width="800px">
+                        <template v-slot:activator="{ props }">
+                            <v-btn color="primary" dark class="mb-2" v-bind="props">
+                                新增信息
                             </v-btn>
-                            <v-btn color="blue-darken-1" variant="text" @click="save">
-                                保存
-                            </v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-dialog>
-                <v-dialog v-model="dialogDelete" max-width="500px">
-                    <v-card>
-                        <v-card-title class="text-h5">确认要删除吗？</v-card-title>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="blue-darken-1" variant="text" @click="closeDelete">取消</v-btn>
-                            <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">确认</v-btn>
-                            <v-spacer></v-spacer>
-                        </v-card-actions>
-                    </v-card>
-                </v-dialog>
+                        </template>
+
+                        <v-card>
+                            <v-card-text>
+                                <v-container>
+                                    <v-row>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.u_name" label="警官名"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-select v-model="editedItem.u_sex" label="性别" :items="['男', '女']"></v-select>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.u_phone" label="联系方式"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-select v-model="editedItem.o_stat" label="状态"
+                                                :items="['任务中', '空闲']"></v-select>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.s_no" label="所在辖区"></v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                            </v-card-text>
+
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue-darken-1" variant="text" @click="close">
+                                    取消
+                                </v-btn>
+                                <v-btn color="blue-darken-1" variant="text" @click="save">
+                                    保存
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+
+                    <v-dialog v-model="dialogDelete" max-width="500px">
+                        <v-card>
+                            <v-card-title class="text-h5">确认要删除吗？</v-card-title>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue-darken-1" variant="text" @click="closeDelete">取消</v-btn>
+                                <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">确认</v-btn>
+                                <v-spacer></v-spacer>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                </v-toolbar>
             </template>
 
             <template v-slot:item.o_stat="{ item }">
@@ -135,7 +149,7 @@ export default {
         editItem(item) {
             this.editedIndex = this.officers.indexOf(item)
             this.editedItem = Object.assign({}, item)
-            const targetProp1 = Object.assign({}, this.editedItem).u_name;
+            let targetProp1 = Object.assign({}, this.editedItem).u_name;
             console.log(targetProp1);
             this.dialogEdit = true
         },
@@ -163,13 +177,14 @@ export default {
             })
         },
         save() {
-            if (this.editedIndex > -1) {
-                const u_name = Object.assign({}, this.editedItem).u_name;
-                const u_sex = Object.assign({}, this.editedItem).u_sex;
-                const u_phone = Object.assign({}, this.editedItem).u_phone;
-                const o_stat = Object.assign({}, this.editedItem).o_stat;
-                const s_no = Object.assign({}, this.editedItem).s_no;
-                console.log(o_stat);
+            let u_name = Object.assign({}, this.editedItem).u_name;
+            let u_sex = Object.assign({}, this.editedItem).u_sex;
+            let u_phone = Object.assign({}, this.editedItem).u_phone;
+            let o_stat = Object.assign({}, this.editedItem).o_stat;
+            let s_no = Object.assign({}, this.editedItem).s_no;
+            if (typeof s_no === "string")
+                s_no = parseInt(s_no);
+            if (this.editedIndex > -1) { //修改信息
                 this.$axios.post('/officer/updateOfficerInfo', {
                     u_no: this.officers[this.editedIndex].u_no,
                     o_no: this.officers[this.editedIndex].o_no,
@@ -183,6 +198,28 @@ export default {
                         console.log(res.data)
                         if (res.data == true)
                             Object.assign(this.officers[this.editedIndex], Object.assign({}, this.editedItem))
+                        else
+                            this.$refs.mychild.showSnackbar("修改失败", 'error');
+                        this.close();
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        this.$refs.mychild.showSnackbar("修改失败", 'error');
+                        this.close();
+                    });
+            }
+            else {//新增信息
+                this.$axios.post('/officer/addOfficer', {
+                    u_name: u_name,
+                    u_sex: u_sex,
+                    u_phone: u_phone,
+                    o_stat: o_stat,
+                    s_no: s_no,
+                })
+                    .then(res => {
+                        console.log(res.data)
+                        if (res.data == true)
+                            this.getAllData();
                         else
                             this.$refs.mychild.showSnackbar("修改失败", 'error');
                         this.close();

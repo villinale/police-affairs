@@ -23,9 +23,6 @@ public class SampleTest {
     @Test
     public void testSelect() {
         System.out.println("----------- method test --------------");
-        StationStatistics list = caseMapper.getCaseStatisticsBySNo(1);
-        System.out.println("********************************");
-        System.out.println(list);
     }
 
 }
