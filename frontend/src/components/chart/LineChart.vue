@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <canvas id="line"></canvas>
-    </div>
+    <canvas id="line"></canvas>
 </template>
   
 <script>

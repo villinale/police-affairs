@@ -8,25 +8,25 @@
                 <v-list-item>
                     <v-list-item-content>
                         <v-list-item-title class="font-weight-bold">姓名:</v-list-item-title>
-                        <v-list-item-subtitle>{{ userInfo.u_name }}</v-list-item-subtitle>
+                        <v-list-item-subtitle class="sub-text">{{ userInfo.u_name }}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item>
                     <v-list-item-content>
                         <v-list-item-title class="font-weight-bold">性别:</v-list-item-title>
-                        <v-list-item-subtitle>{{ userInfo.u_sex }}</v-list-item-subtitle>
+                        <v-list-item-subtitle class="sub-text">{{ userInfo.u_sex }}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item>
                     <v-list-item-content>
                         <v-list-item-title class="font-weight-bold">手机号:</v-list-item-title>
-                        <v-list-item-subtitle>{{ userInfo.u_phone }}</v-list-item-subtitle>
+                        <v-list-item-subtitle class="sub-text">{{ userInfo.u_phone }}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item>
                     <v-list-item-content>
                         <v-list-item-title class="font-weight-bold">身份:</v-list-item-title>
-                        <v-list-item-subtitle>{{ userInfo.u_role }}</v-list-item-subtitle>
+                        <v-list-item-subtitle class="sub-text">{{ userInfo.u_role }}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -64,7 +64,16 @@ export default {
 }
 
 .font-weight-bold {
+    font-size: 17px;
     font-weight: bold;
+    line-height: 30px;
+}
+
+.sub-text {
+    font-size: 16px;
+    color: #757575;
+    margin-bottom: 2px;
+    line-height: 30px;
 }
 </style>
   
