@@ -72,10 +72,10 @@ export default {
             this.$router.replace("/");
         },
     },
-    created() {
-        roleUtils.checkLoginStatus(this);
-        roleUtils.updateRole(this);
+    mounted()
+    {
         if (this.uid) {
+            console.log(this.uid);
             this.$axios
                 .get(`/user/getUserInfoById/` + this.uid)
                 .then(res => {
@@ -85,7 +85,7 @@ export default {
                 .catch(err => {
                     console.log(err);
                 });
-            if (!roleUtils.isOfficer)
+            if (!(roleUtils.isOfficer))
                 this.$axios
                     .get(`/case/getUserCasesByUId/` + this.uid + '/' + roleUtils.isOfficer)
                     .then(res => {
@@ -96,6 +96,10 @@ export default {
                         console.log(err);
                     });
         }
+    },
+    created() {
+        roleUtils.checkLoginStatus(this);
+        roleUtils.updateRole(this);
     },
     mounted() {
     },

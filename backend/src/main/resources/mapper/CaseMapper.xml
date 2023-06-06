@@ -7,10 +7,13 @@
         u_no = #{u_no} </select>
 
     <!-- getOfficerCasesByUId -->
-    <select id="getOfficerCasesByUId" resultType="com.police.entity.Case">select
-        c_no,c_title,c_text,c_startdate,c_level,c_province,c_city,c_area,c_address,c_lon,c_lat,c_stat,c_isPublic,c_enddate,
-        cases.s_no,cases.o_no,cases.u_no from officer left join cases on officer.o_no =cases.o_no
-        left join user on officer.u_no=user.u_no where officer.u_no= #{u_no}; </select>
+    <select id="getOfficerCasesByUId" resultType="com.police.entity.Case">
+    select distinct * 
+    from cases left join station on cases.s_no 
+                left join officer on cases.o_no 
+                left join user on officer.u_no 
+    where cases.s_no=station.s_no and cases.o_no=officer.o_no and officer.u_no=user.u_no and officer.u_no=#{u_no};</select>
+
 
     <!-- getAllCases -->
     <select id="getAllCases" resultType="com.police.entity.Case"> select * from cases left join

@@ -55,9 +55,6 @@ export default {
         }
     },
     methods: {
-        showSnackbar(text, color) {
-            this.$refs.mychild.showSnackbar(text, color);
-        },
         login() {
             console.log(this.telephone, this.password)
             // 根据手机号和密码查询数据库
@@ -77,21 +74,21 @@ export default {
                             // 跳转到主页
                             this.$router.replace('/')
                         } else {
-                            this.showSnackbar('账号不存在或密码错误，登录失败！', 'error');
+                            this.$refs.mychild.showSnackbar('账号不存在或密码错误，登录失败！', 'error');
                         }
                     }
                     else {
-                        this.showSnackbar('账号不存在或密码错误，登录失败！', 'error');
+                        this.$refs.mychild.showSnackbar('账号不存在或密码错误，登录失败！', 'error');
                     }
                 })
                 .catch(err => {
-                    this.showSnackbar('登录失败！', 'error');
+                    this.$refs.mychild.showSnackbar('登录失败！', 'error');
                     console.log(err);
                 });
         },
         register() {
             if (this.password !== this.confirmPassword) {
-                this.showSnackbar('两次输入的密码不一致！', 'error');
+                this.$refs.mychild.showSnackbar('两次输入的密码不一致！', 'error');
                 return;
             }
             console.log(this.telephone, this.password)
@@ -101,7 +98,7 @@ export default {
                 .then((res) => {
                     console.log(res.data)
                     if (res.data === true) {
-                        this.showSnackbar('该手机号已被注册！请重换', 'error');
+                        this.$refs.mychild.showSnackbar('该手机号已被注册！请重换', 'error');
                     }
                     else if (res.data === false) {
                         this.$axios.post('/user/register',
@@ -113,11 +110,11 @@ export default {
                             .then((res) => {
                                 console.log(res.data)
                                 if (res.data === true) {
-                                    this.showSnackbar('注册成功', 'success');
+                                    this.$refs.mychild.showSnackbar('注册成功', 'success');
                                     this.tab = 0;
                                 }
                                 else {
-                                    this.showSnackbar('注册失败，请联系管理员', 'error');
+                                    this.$refs.mychild.showSnackbar('注册失败，请联系管理员', 'error');
                                 }
                             })
                             .catch(err => {
@@ -125,7 +122,7 @@ export default {
                             });
                     }
                     else {
-                        this.showSnackbar('注册失败', 'error');
+                        this.$refs.mychild.showSnackbar('注册失败', 'error');
                     }
                 })
                 .catch(err => {
