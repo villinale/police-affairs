@@ -43,7 +43,7 @@ import * as pageUtils from '@/plugins/pageUtils.js'
                                             <v-select v-model="editedItem.c_stat" label="状态"
                                                 :items="['待分配', '处理中', '已结束']"></v-select>
                                         </v-col>
-                                        <v-col cols="12" sm="6" md="4">
+                                        <v-col v-if="roleUtils.isManager" cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.o_no" label="负责警员"></v-text-field>
                                         </v-col>
                                         <v-col cols=" 12" sm="6" md="4">
@@ -117,6 +117,7 @@ export default {
     },
     data() {
         return {
+            uid: this.$cookies.get('userid'),
             cases: [],
             headersforcases: [
                 { title: '案件编号', align: 'start', key: 'c_no', },
@@ -167,10 +168,25 @@ export default {
     },
     methods: {
         getAllData() {
-            this.$axios.get('/case/getAllCases').then(res => {
-                console.log(res.data)
-                this.cases = res.data;
-            });
+            console.log(this.uid)
+            console.log(roleUtils.isOfficer)
+            if (!(roleUtils.isOfficer)) {
+                this.$axios.get('/case/getAllCases').then(res => {
+                    console.log(res.data)
+                    this.cases = res.data;
+                });
+            }
+            else {
+                this.$axios
+                    .get(`/case/getUserCasesByUId/` + this.uid + '/' + roleUtils.isOfficer)
+                    .then(res => {
+                        this.cases = res.data;
+                        console.log(this.cases);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
         },
         editItem(item) {
             this.editedIndex = this.cases.indexOf(item)

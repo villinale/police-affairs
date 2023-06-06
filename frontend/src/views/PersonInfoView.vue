@@ -31,8 +31,8 @@ import * as roleUtils from '@/plugins/roleUtils.js'
     </div>
     <div>
         <user-info-card v-if="manageType == 'personInfo'" :user-info="userInfo" />
-        <CaseCards v-if="manageType == 'casesInfo'" :casesInfoList="casesInfo" />
-        <!-- <CaseInfoTable v-if="(manageType == 'casesInfo') && roleUtils.isOfficer" /> -->
+        <CaseCards v-if="(manageType == 'casesInfo') && (!roleUtils.isOfficer)" :casesInfoList="casesInfo" />
+        <CaseInfoTable v-if="(manageType == 'casesInfo') && (roleUtils.isOfficer)" ref="myCaseInfoTable" />
     </div>
 </template>
   
@@ -85,15 +85,16 @@ export default {
                 .catch(err => {
                     console.log(err);
                 });
-            this.$axios
-                .get(`/case/getUserCasesByUId/` + this.uid + '/' + roleUtils.isOfficer)
-                .then(res => {
-                    this.casesInfo = res.data;
-                    console.log(this.casesInfo);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+            if (!roleUtils.isOfficer)
+                this.$axios
+                    .get(`/case/getUserCasesByUId/` + this.uid + '/' + roleUtils.isOfficer)
+                    .then(res => {
+                        this.casesInfo = res.data;
+                        console.log(this.casesInfo);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
         }
     },
     mounted() {

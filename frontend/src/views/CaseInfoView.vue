@@ -63,20 +63,12 @@ import * as roleUtils from '@/plugins/roleUtils.js'
                         </v-col>
                     </v-row>
                     <v-row align="center">
-                        <v-col cols="6">
-                            <v-text-field type="datetime-local" v-model="caseinfo.c_startdate" label="报案时间"
-                                readonly></v-text-field>
-                        </v-col>
                         <v-col v-if="!caseUtils.isClose(caseinfo.c_stat)" cols="6">
                             <v-text-field type="datetime-local" v-model="caseinfo.c_startdate" label="报案时间"
                                 readonly></v-text-field>
                         </v-col>
-                        <v-col v-if="caseUtils.isClose(caseinfo.c_stat)" cols="3">
+                        <v-col v-if="caseUtils.isClose(caseinfo.c_stat)" cols="6">
                             <v-text-field type="datetime-local" v-model="caseinfo.c_startdate" label="报案时间"
-                                readonly></v-text-field>
-                        </v-col>
-                        <v-col v-if="caseUtils.isClose(caseinfo.c_stat)" cols="3">
-                            <v-text-field type="datetime-local" v-model="caseinfo.c_enddate" label="结案时间"
                                 readonly></v-text-field>
                         </v-col>
                     </v-row>
