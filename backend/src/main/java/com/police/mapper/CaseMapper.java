@@ -2,6 +2,7 @@ package com.police.mapper;
 
 import com.police.entity.Case;
 import com.police.entity.response_type.StationStatistics;
+import com.police.entity.response_type.UserStatistics;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import org.apache.ibatis.annotations.MapKey;
@@ -32,4 +33,22 @@ public interface CaseMapper extends BaseMapper<Case> {
 
     @MapKey("dates")
     List<Map<String, Object>> getStationDailyClosedCasesBySNo(int s_no);
+
+    @ResultMap("UserStatisticsResultMap")
+    UserStatistics getUserStatisticsByUNo(int u_no);
+
+    @MapKey("dates")
+    List<Map<String, Object>> getUserDailyNewCasesByUNo(int u_no);
+
+    @MapKey("dates")
+    List<Map<String, Object>> getUserDailyClosedCasesByUNo(int u_no);
+
+    @ResultMap("UserStatisticsResultMap")
+    UserStatistics getOfficerStatisticsByONo(int o_no);
+
+    @MapKey("dates")
+    List<Map<String, Object>> getOfficerDailyNewCasesByONo(int u_no);
+
+    @MapKey("dates")
+    List<Map<String, Object>> getOfficerDailyClosedCasesByONo(int u_no);
 }

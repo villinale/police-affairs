@@ -15,4 +15,5 @@ public interface OfficerMapper extends BaseMapper<Officer> {
 
     Officer getOfficerByONo(int o_no);
 
+    Officer getOfficerByUNo(int u_no);
 }

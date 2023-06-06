@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mx-auto pe-continer" max-width="400">
+    <v-card class="mx-auto pe-continer" max-width="400" min-width="350" min-height="300">
         <v-card-title class="primary">
             <span class="pe-header-text">用户信息</span>
         </v-card-title>
@@ -48,11 +48,14 @@ export default {
 <style scoped>
 .pe-continer {
     margin-top: 20px;
-    display: block;
 }
 
 .primary {
     background-color: #1976d2;
+    align-content: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .pe-header-text {

@@ -3,10 +3,12 @@ package com.police.controller;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.police.entity.Case;
 import com.police.entity.response_type.StationStatistics;
+import com.police.entity.response_type.UserStatistics;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.police.mapper.CaseMapper;
+import com.police.mapper.OfficerMapper;
 
 import freemarker.core.ParseException;
 
@@ -33,6 +35,9 @@ public class CaseController {
 
     @Autowired
     private CaseMapper caseMapper;
+
+    @Autowired
+    private OfficerMapper officerMapper;
 
     @PostMapping("/addCase")
     public Boolean addCase(@RequestBody Map<String, Object> requestBody) {
@@ -158,6 +163,41 @@ public class CaseController {
         sortByDate(dailyNewCases);
 
         List<Map<String, Object>> dailyClosedCases = caseMapper.getStationDailyClosedCasesBySNo(s_no);
+        fillCaseNumber(dailyClosedCases);
+        sortByDate(dailyClosedCases);
+
+        s.setDailyNewCases(dailyNewCases);
+        s.setDailyClosedCases(dailyClosedCases);
+        return s;
+    }
+
+    @GetMapping("/getStatisticsByUNo/{u_no}/{isOfficer}")
+    public UserStatistics getStatisticsByUNo(@PathVariable int u_no, @PathVariable boolean isOfficer) {
+        System.out.println("getStatisticsByUNo: " + u_no + " " + isOfficer);
+        if (!isOfficer) {
+            UserStatistics s = caseMapper.getUserStatisticsByUNo(u_no);
+
+            List<Map<String, Object>> dailyNewCases = caseMapper.getUserDailyNewCasesByUNo(u_no);
+            fillCaseNumber(dailyNewCases);
+            sortByDate(dailyNewCases);
+
+            List<Map<String, Object>> dailyClosedCases = caseMapper.getUserDailyClosedCasesByUNo(u_no);
+            fillCaseNumber(dailyClosedCases);
+            sortByDate(dailyClosedCases);
+
+            s.setDailyNewCases(dailyNewCases);
+            s.setDailyClosedCases(dailyClosedCases);
+            return s;
+        }
+
+        int o_no = officerMapper.getOfficerByUNo(u_no).getO_no();
+        UserStatistics s = caseMapper.getOfficerStatisticsByONo(o_no);
+
+        List<Map<String, Object>> dailyNewCases = caseMapper.getOfficerDailyNewCasesByONo(o_no);
+        fillCaseNumber(dailyNewCases);
+        sortByDate(dailyNewCases);
+
+        List<Map<String, Object>> dailyClosedCases = caseMapper.getOfficerDailyClosedCasesByONo(o_no);
         fillCaseNumber(dailyClosedCases);
         sortByDate(dailyClosedCases);
 
