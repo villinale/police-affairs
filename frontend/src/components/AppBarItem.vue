@@ -1,12 +1,19 @@
+<script setup>
+import * as pageUtils from '@/plugins/pageUtils.js'
+import * as roleUtils from '@/plugins/roleUtils.js'
+</script>
+
 <template>
     <v-app-bar app color="primary" dark>
         <router-link to="/" class="title">
             <v-toolbar-title>智慧警务平台</v-toolbar-title>
         </router-link>
         <v-spacer></v-spacer>
-        <v-btn text>信息查看</v-btn>
-        <v-btn v-if="isManager" @click="goToManage" text>信息管理</v-btn>
-        <v-btn @click="goToPerson" text>个人主页</v-btn>
+        <div v-if="!isHome">
+            <v-btn text>信息公开</v-btn>
+            <v-btn v-if="roleUtils.isManager" @click="pageUtils.goToManage(this)" text>信息管理</v-btn>
+            <v-btn @click="pageUtils.goToPerson(this)" text>个人主页</v-btn>
+        </div>
     </v-app-bar>
 </template>
 
@@ -14,35 +21,29 @@
 export default {
     data() {
         return {
-            isLogin: true,
-            isManager: false,
-            isOfficer: false,
+            isHome: true,
         };
     },
     methods: {
-        checkLoginStatus() {
-            if (this.$cookies.get("userid") != null) {
-                this.isLogin = true;
+        setIsHome(isHome) {
+            this.isHome = isHome;
+        },
+    },
+    watch: {
+        $route(to, from) {
+            let that = this;
+            if (to.path != from.path) {
+                that.isHome = (that.$route.path == "/");
             }
-            console.log(this.isLogin);
-        },
-        updateRole() {
-            if (this.$cookies.get("role") == "管理员") {
-                this.isManager = true;
-            } else if (this.$cookies.get("role") == "警员") {
-                this.isOfficer = true;
-            }
-        },
-        goToPerson() {
-            this.$router.push('/person');
-        },
-        goToManage() {
-            this.$router.push('/manage');
         }
     },
     mounted() {
-        this.checkLoginStatus();
-        this.updateRole();
+        this.isHome = (this.$route.path == "/");
+    },
+    create() {
+        roleUtils.checkLoginStatus(this);
+        roleUtils.updateRole(this);
+        this.isHome = (this.$route.path == "/");
     },
 }
 </script>

@@ -4,9 +4,6 @@
             <el-amap-layer-district type="Province" adcode="310000" :depth="2" :styles="styles"></el-amap-layer-district>
         </el-amap>
     </div>
-    <div class="toolbar">
-        <button @click="switchVisible()">{{ visible ? '隐藏' : '显示' }}</button>
-    </div>
 </template>
   
 <style></style>

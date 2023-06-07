@@ -2,18 +2,13 @@
  * @Author: yingxin wang
  * @Date: 2023-06-02 08:06:43
  * @LastEditors: yingxin wang
- * @LastEditTime: 2023-06-04 21:07:53
+ * @LastEditTime: 2023-06-07 14:04:30
  * @Description: 请填写简介
  */
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
-  {
-    path: '/test',
-    name: 'test',
-    component: () => import('@/components/MapItem.vue'),
-  },
   {
     path: '/',
     component: () => import('@/layouts/DefaultLayout.vue'),
@@ -47,6 +42,11 @@ const routes = [
         path: 'stationInfo/:sid',
         name: 'station',
         component: () => import('@/views/StationInfoView.vue')
+      },
+      {
+        path: 'openInfo',
+        name: 'openInfo',
+        component: () => import('@/views/OpenInfoView.vue')
       },
     ],
   },

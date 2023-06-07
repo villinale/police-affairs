@@ -5,9 +5,17 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 
 <template>
 	<v-container class="fill-height">
-		<mymap style="margin-bottom:20px;"></mymap>
+		<mymap></mymap>
 		<v-responsive class="d-flex align-center text-center">
 			<v-row class="d-flex align-center justify-center">
+				<v-col v-if="isShowManage" cols="auto">
+					<v-btn min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text"
+						@click="pageUtils.goToManage(this)">
+						<v-icon icon="mdi-file-arrow-up-down" size="large" start />
+						信息管理
+					</v-btn>
+				</v-col>
+
 				<v-col v-if="isShowReport" cols="auto">
 					<v-btn min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text"
 						@click="pageUtils.goToReportCase(this)">
@@ -20,7 +28,16 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 					<div class="login-wrapper">
 						<v-btn color="primary" min-width="228" rel="noopener noreferrer" size="x-large" target="_blank"
 							variant="flat" prepend-icon="mdi-login" @click="pageUtils.goToLogin(this)">
-							登陆/注册
+							登录/注册
+						</v-btn>
+					</div>
+				</v-col>
+
+				<v-col v-if="isShowPerson" cols="auto">
+					<div class="login-wrapper">
+						<v-btn color="primary" min-width="228" rel="noopener noreferrer" size="x-large" target="_blank"
+							variant="flat" prepend-icon="mdi-home-assistant" @click="pageUtils.goToPerson(this)">
+							个人主页
 						</v-btn>
 					</div>
 				</v-col>
@@ -28,7 +45,7 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 				<v-col cols="auto">
 					<v-btn min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text">
 						<v-icon icon="mdi-message-bulleted" size="large" start />
-						最新消息
+						信息公开
 					</v-btn>
 				</v-col>
 			</v-row>
@@ -44,40 +61,24 @@ export default {
 		return {
 			isShowReport: false,
 			isShowLogin: false,
+			isShowPerson: false,
+			isShowManage: false,
 		}
 	},
 	methods: {
 	},
-	mounted() {
+	created() {
 		roleUtils.checkLoginStatus(this);
 		roleUtils.updateRole(this);
+		this.isShowManage = roleUtils.isManager;
 		this.isShowReport = (!roleUtils.isManager) && (!roleUtils.isOfficer);
 		this.isShowLogin = (!roleUtils.isLogin);
+		this.isShowPerson = (roleUtils.isLogin);
 		console.log(this.isShowReport);
 		console.log(this.isShowLogin);
 	},
-	//TODO:路由守卫
-	// beforeRouteEnter(to, from, next) {
-	// 	const isLoggedIn = this.isLogin;
-	// 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-
-	// 	if (requiresAuth && !isLoggedIn) {
-	// 		next('/login');
-	// 	} else {
-	// 		next();
-	// 	}
-	// },
-	// beforeRouteUpdate(to, from, next) {
-	// 	// 在路由更新时进行相应的逻辑处理
-	// 	const isLoggedIn = this.isLogin;
-	// 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-
-	// 	if (requiresAuth && !isLoggedIn) {
-	// 		next('/login');
-	// 	} else {
-	// 		next();
-	// 	}
-	// },
+	mounted() {
+	},
 }
 </script>
 

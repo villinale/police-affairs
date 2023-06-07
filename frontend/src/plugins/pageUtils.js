@@ -16,3 +16,15 @@ export function goToStationInfoView(that, sid) {
     console.log("go to Station info view");
     that.$router.push('/stationInfo/' + sid);
 }
+
+export function goToPerson(that) {
+    that.$router.push('/person');
+}
+
+export function goToManage(that) {
+    that.$router.push('/manage');
+}
+
+export function goToOpenInfo(that) {
+    that.$router.push('/openInfo');
+}
