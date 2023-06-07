@@ -10,7 +10,7 @@ import * as roleUtils from '@/plugins/roleUtils.js'
         </router-link>
         <v-spacer></v-spacer>
         <div v-if="!isHome">
-            <v-btn text>信息公开</v-btn>
+            <v-btn text @click="pageUtils.goToOpenInfo(this)">信息公开</v-btn>
             <v-btn v-if="roleUtils.isManager" @click="pageUtils.goToManage(this)" text>信息管理</v-btn>
             <v-btn @click="pageUtils.goToPerson(this)" text>个人主页</v-btn>
         </div>

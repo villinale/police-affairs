@@ -8,7 +8,7 @@ import * as roleUtils from '@/plugins/roleUtils.js'
     <v-container class="fill-height" style="display: block;">
         <v-card>
             <v-card-title>
-                <v-row align="center" style="margin: auto;">
+                <v-row align="center" style="margin-top: auto;">
                     <h2>NO.{{ stationinfo.s_no }} {{ stationinfo.s_name }}</h2>
                 </v-row>
             </v-card-title>
@@ -26,6 +26,78 @@ import * as roleUtils from '@/plugins/roleUtils.js'
                         <v-text-field v-model="stationinfo.s_phone" label="联系方式" readonly></v-text-field>
                     </v-col>
                 </v-row>
+                <v-row style="margin-bottom:20px ;">
+                    <v-col align="center" cols="3">
+                        <div class="card">
+                            <div style="align-items: center;justify-items: center;">
+                                <label class="avatar">
+                                    <span style="font-size: 20px;color: #1976d2;">
+                                        <v-btn variant="text" :icon="'mdi-file-document-check-outline'"></v-btn>
+                                    </span>
+                                </label>
+                                <label class="info">
+                                    <span class="info-1">结案总数</span>
+                                </label>
+                            </div>
+                            <div class="content">
+                                <div class="content-1">
+                                    <countTo :startVal='0' :endVal='statics.closedCases' :duration='3000'></countTo>
+                                </div>
+                            </div>
+                        </div>
+                    </v-col>
+                    <v-col align="center" cols="3">
+                        <div class="card">
+                            <label class="avatar">
+                                <span style="font-size: 20px;color: #1976d2;">
+                                    <v-btn variant="text" :icon="'mdi-file-document-check-outline'"></v-btn>
+                                </span>
+                            </label>
+                            <label class="info">
+                                <span class="info-1">案件总数</span>
+                            </label>
+                            <div class="content">
+                                <div class="content-1">
+                                    <countTo :startVal='0' :endVal='statics.totalCases' :duration='3000'></countTo>
+                                </div>
+                            </div>
+                        </div>
+                    </v-col>
+                    <v-col align="center" cols="3">
+                        <div class="card-month">
+                            <label class="avatar">
+                                <span style="font-size: 20px;color: #1976d2;">
+                                    <v-btn variant="text" :icon="'mdi-file-document-check-outline'"></v-btn>
+                                </span>
+                            </label>
+                            <label class="info">
+                                <span class="info-1">月结案总数</span>
+                            </label>
+                            <div class="content">
+                                <div class="content-1">
+                                    <countTo :startVal='0' :endVal='statics.closedCases' :duration='3000'></countTo>
+                                </div>
+                            </div>
+                        </div>
+                    </v-col>
+                    <v-col align="center" cols="3">
+                        <div class="card-month">
+                            <label class="avatar">
+                                <span style="font-size: 20px;color: #1976d2;">
+                                    <v-btn variant="text" :icon="'mdi-file-document-check-outline'"></v-btn>
+                                </span>
+                            </label>
+                            <label class="info">
+                                <span class="info-1">月案件总数</span>
+                            </label>
+                            <div class="content">
+                                <div class="content-1">
+                                    <countTo :startVal='0' :endVal='statics.totalCases' :duration='3000'></countTo>
+                                </div>
+                            </div>
+                        </div>
+                    </v-col>
+                </v-row>
                 <v-row style="height: 300px;">
                     <DoughnutChart style="height: 270px;" ref="myDoughnutChart" />
                     <v-col style="height: 300px;margin-top:10px;weight:800px;justify-content: center;">
@@ -38,6 +110,7 @@ import * as roleUtils from '@/plugins/roleUtils.js'
 </template>
 
 <script>
+import countTo from '@/components/count-to';
 import MapShowItem from '@/components/MapShowItem.vue'
 import Snackbar from '@/components/Snackbar.vue';
 import DoughnutChart from '@/components/chart/DoughnutChart.vue';
@@ -49,6 +122,7 @@ export default {
         Snackbar,
         DoughnutChart,
         LineChart,
+        countTo,
     },
     data() {
         return {
@@ -126,6 +200,11 @@ export default {
             this.loc = data;
         },
     },
+    created() {
+        roleUtils.checkLoginStatus(this);
+        roleUtils.updateRole(this);
+        this.getStationInfo();
+    },
     mounted() {
         roleUtils.checkLoginStatus(this);
         roleUtils.updateRole(this);
@@ -134,7 +213,63 @@ export default {
 };
 </script>
 <style scoped>
-.t {
-    color: rgba(26, 34, 127, 0.63);
+.card {
+    width: 190px;
+    height: 180px;
+    border-radius: 5px;
+    background: lightgrey;
+    background: linear-gradient(145deg, #f6f6f6, #dfecf6);
+    box-shadow: 2px 3px 3px #d5d9ed,
+        2px 3px 3px #e2f0fb;
+}
+
+.card-month {
+    width: 190px;
+    height: 180px;
+    border-radius: 5px;
+    background: lightgrey;
+    background: linear-gradient(145deg, #f6f6f6, #b8d8ef);
+    box-shadow: 2px 3px 3px #d5d9ed,
+        2px 3px 3px #e2f0fb;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.9);
+    margin: 30px 10px 10px 10px;
+    border-radius: 14px;
+}
+
+.info {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 40px;
+    width: 120px;
+    justify-content: center;
+    align-items: left;
+}
+
+.info-1 {
+    display: inline-block;
+    font-size: 23px;
+    width: 100%;
+    display: flex;
+    color: rgb(102, 102, 102);
+}
+
+.content {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-1 {
+    height: 40px;
+    margin: auto;
+    font-size: 60px;
+    color: #1a237e;
 }
 </style>

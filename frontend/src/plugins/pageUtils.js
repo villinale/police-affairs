@@ -26,5 +26,6 @@ export function goToManage(that) {
 }
 
 export function goToOpenInfo(that) {
+    console.log("go to open info view");
     that.$router.replace('/openInfo');
 }
