@@ -166,6 +166,11 @@ public class CaseController {
         fillCaseNumber(dailyClosedCases);
         sortByDate(dailyClosedCases);
 
+        System.out.println("************************************************************************");
+        StationStatistics s2 = caseMapper.getMonthStationStatisticsBySNo(s_no);
+
+        s.setMonthCases(s2.getMonthCases());
+        s.setMonthClosedCases(s2.getMonthClosedCases());
         s.setDailyNewCases(dailyNewCases);
         s.setDailyClosedCases(dailyClosedCases);
         return s;

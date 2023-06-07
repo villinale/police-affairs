@@ -14,8 +14,6 @@ export default {
     },
     methods: {
         createChart(labels, datasets, title) {
-            console.log(labels);
-            console.log(title);
             // 创建折线图图配置对象
             const chartConfig = {
                 type: 'line',

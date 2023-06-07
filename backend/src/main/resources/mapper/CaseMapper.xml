@@ -34,6 +34,8 @@
         <id property="totalCases" column="total_cases" />
         <result property="closedCases" column="closed_cases" />
         <result property="closedRatio" column="closed_ratio" />
+        <result property="monthCases" column="month_cases" />
+        <result property="monthClosedCases" column="month_closed_cases" />
         <collection property="dailyNewCases" column="daily_new_cases"
             select="getStationDailyNewCasesBySNo" />
     </resultMap>
@@ -41,7 +43,12 @@
     <select id="getStationStatisticsBySNo" resultMap="StationStatisticsResultMap"> SELECT COUNT(*)
         AS total_cases, SUM(CASE WHEN c_stat = '已结束' THEN 1 ELSE 0 END) AS closed_cases, (SUM(CASE
         WHEN c_stat = '已结束' THEN 1 ELSE 0 END) / COUNT(*)) AS closed_ratio FROM cases WHERE s_no =
-        #{s_no} </select>
+        #{s_no}; </select>
+
+    <select id="getMonthStationStatisticsBySNo" resultMap="StationStatisticsResultMap"> SELECT
+        COUNT(*) AS month_cases, SUM(IF(c_stat = '已结束', 1, 0)) AS month_closed_cases FROM cases
+        WHERE MONTH(c_enddate) = MONTH(CURRENT_DATE()) AND YEAR(c_enddate) = YEAR(CURRENT_DATE())
+        And s_no = #{s_no}; </select>
 
     <resultMap id="DailyNewCasesResultMap" type="java.util.HashMap">
         <result property="key" column="dates" />

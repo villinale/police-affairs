@@ -22,6 +22,8 @@ public class StationStatistics {
     private int totalCases;
     private int closedCases;
     private double closedRatio;
+    private int monthCases;
+    private int monthClosedCases;
     private List<Map<String, Object>> dailyNewCases; // 新增案件数
     private List<Map<String, Object>> dailyClosedCases; // 新增结案数
 

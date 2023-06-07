@@ -75,7 +75,7 @@ import * as roleUtils from '@/plugins/roleUtils.js'
                             </label>
                             <div class="content">
                                 <div class="content-1">
-                                    <countTo :startVal='0' :endVal='statics.closedCases' :duration='3000'></countTo>
+                                    <countTo :startVal='0' :endVal='statics.monthClosedCases' :duration='3000'></countTo>
                                 </div>
                             </div>
                         </div>
@@ -92,7 +92,7 @@ import * as roleUtils from '@/plugins/roleUtils.js'
                             </label>
                             <div class="content">
                                 <div class="content-1">
-                                    <countTo :startVal='0' :endVal='statics.totalCases' :duration='3000'></countTo>
+                                    <countTo :startVal='0' :endVal='statics.monthCases' :duration='3000'></countTo>
                                 </div>
                             </div>
                         </div>
@@ -143,14 +143,11 @@ export default {
             var labels = [];
             var newCases = [];
             var closeCases = [];
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < 7; i++) {
                 labels.push(this.statics.dailyNewCases[i].key);
                 newCases.push(this.statics.dailyNewCases[i].value);
                 closeCases.push(this.statics.dailyClosedCases[i].value);
             }
-            console.log(labels);
-            console.log(newCases);
-            console.log(closeCases);
             var datasets = [
                 {
                     label: '新增案件数',

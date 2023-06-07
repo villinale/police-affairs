@@ -30,6 +30,9 @@ public interface CaseMapper extends BaseMapper<Case> {
     @ResultMap("StationStatisticsResultMap")
     StationStatistics getStationStatisticsBySNo(int s_no);
 
+    @ResultMap("StationStatisticsResultMap")
+    StationStatistics getMonthStationStatisticsBySNo(int s_no);
+
     @MapKey("dates")
     List<Map<String, Object>> getStationDailyNewCasesBySNo(int s_no);
 
