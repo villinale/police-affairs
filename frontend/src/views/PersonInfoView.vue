@@ -36,7 +36,7 @@ import * as roleUtils from '@/plugins/roleUtils.js'
 
                 <v-card v-if="manageType == 'personInfo'" class=" mx-auto pe-continer" max-width="400" min-width="350">
                     <v-card-title class="primary">
-                        <span v-if="(!roleUtils.isManager) && (!roleUtils.isOfficer)" class="pe-header-text">您上报的案件数</span>
+                        <span v-if="!roleUtils.isOfficer" class="pe-header-text">您上报的案件数</span>
                         <span v-if="roleUtils.isOfficer" class="pe-header-text">您负责的案件数</span>
                     </v-card-title>
                     <v-card-text class="case-count">
