@@ -28,6 +28,16 @@
     <select id="getCasesByCId" resultType="com.police.entity.Case"> select * from cases where
         c_no=#{c_no}; </select>
 
+
+    <!-- getUnclosedCasesByOId -->
+    <select id="getUnclosedCasesByOId" resultType="com.police.entity.Case">select * from cases where
+        o_no=#{o_no} and c_stat='处理中'; </select>
+
+
+    <!-- getUnclosedCasesBySId -->
+    <select id="getUnclosedCasesBySId" resultType="com.police.entity.Case">select * from cases where
+        s_no=#{s_no} and c_stat='待分配'; </select>
+
     <!-- 定义结果映射规则 -->
     <resultMap id="StationStatisticsResultMap"
         type="com.police.entity.response_type.StationStatistics">

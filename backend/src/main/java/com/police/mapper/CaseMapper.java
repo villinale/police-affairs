@@ -27,6 +27,10 @@ public interface CaseMapper extends BaseMapper<Case> {
 
     Case getCasesByCId(Integer c_no);
 
+    List<Case> getUnclosedCasesByOId(int o_no);
+
+    List<Case> getUnclosedCasesBySId(int s_no);
+
     @ResultMap("StationStatisticsResultMap")
     StationStatistics getStationStatisticsBySNo(int s_no);
 

@@ -84,20 +84,20 @@ public class CaseController {
             c.setC_isPublic(false);
 
         int o_no = 0, s_no = 0;
-        if (isOfficer) {
+        if (isOfficer) { // 如果是警官进行操作的，直接分配给该警官
             Officer officer = officerMapper.getOfficerByUNo(u_no);
             o_no = officer.getO_no();
             s_no = officer.getS_no();
             c.setC_stat("处理中");
-        } else {
+        } else { // 如果是其他用户进行操作的，分配给距离最近的警局，获取该警局的空闲警官
             Station station = stationMapper.getMinDisByLonLat(c_lon, c_lat);
 
             List<Officer> officers = officerMapper.getFreeOfficerBySNo(station.getS_no());
-            if (officers.size() == 0) {
+            if (officers.size() == 0) { // 如果该警局没有空闲警官，分配给该警局
                 o_no = 0;
                 s_no = station.getS_no();
                 c.setC_stat("待分配");
-            } else {
+            } else { // 如果该警局有空闲警官，分配给该警官
                 o_no = officers.get(0).getO_no();
                 s_no = station.getS_no();
                 c.setC_stat("处理中");
@@ -147,7 +147,6 @@ public class CaseController {
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minusDays(6);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate currentDatel = startDate;
         while (!currentDatel.isAfter(endDate)) {
             Date currentDate = Date.valueOf(currentDatel);
@@ -241,9 +240,7 @@ public class CaseController {
 
     @PostMapping("/updateCaseInfo")
     public boolean updateCaseInfo(@RequestBody Map<String, Object> requestBody) {
-        for (String key : requestBody.keySet()) {
-            System.out.println(key + " " + requestBody.get(key));
-        }
+        System.out.println("updateCaseInfo: " + requestBody);
 
         try {
             int c_no = (int) requestBody.get("c_no");
@@ -256,12 +253,41 @@ public class CaseController {
             int s_no = (int) requestBody.get("s_no");
 
             LocalDateTime dateTime = null;
-            if (c_enddate.contains("T")) {
+            if (c_enddate.contains("T")) { // 修改了enddate的情况
                 DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
                 dateTime = LocalDateTime.parse(c_enddate, inputFormatter);
-            } else {
+            } else { // 没有修改enddate的情况
                 DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                 dateTime = LocalDateTime.parse(c_enddate, inputFormatter);
+            }
+
+            // 如果是已结案，结案时间变为现在的时间
+            if (c_stat.equals("已结案")) {
+                dateTime = LocalDateTime.now();
+
+                // 查看是否还有其他未完结案件是该警官负责的
+                // 如果没有，需要查看当前辖区是否有待处理案件------如果有，将案件分配给该警官
+                // ---------------------------------------------如果没有，将警官标记为空闲
+                // 如果有，只修改当前案件状态，其他不做处理
+                List<Case> unclosedCasesForOfficer = caseMapper.getUnclosedCasesByOId(o_no);
+
+                if (unclosedCasesForOfficer.isEmpty()) { // 如果没有，需要查看当前辖区是否有待处理案件
+                    List<Case> unclosedCasesForStation = caseMapper.getUnclosedCasesBySId(s_no);
+
+                    if (!unclosedCasesForStation.isEmpty()) { // 如果有，将案件分配给该警官
+                        Case c = unclosedCasesForStation.get(0);
+                        UpdateWrapper<Case> updateWrapper2 = new UpdateWrapper<>();
+                        updateWrapper2.eq("c_no", c.getC_no())
+                                .set("c_stat", "处理中")
+                                .set("o_no", o_no);
+                        caseMapper.update(null, updateWrapper2);
+                    } else { // 如果没有，将警官标记为空闲
+                        UpdateWrapper<Officer> updateWrapper2 = new UpdateWrapper<>();
+                        updateWrapper2.eq("o_no", o_no)
+                                .set("o_stat", "空闲");
+                        officerMapper.update(null, updateWrapper2);
+                    }
+                }
             }
 
             UpdateWrapper<Case> updateWrapper = new UpdateWrapper<>();
