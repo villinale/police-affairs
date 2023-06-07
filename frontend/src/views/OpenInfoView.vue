@@ -14,41 +14,39 @@ import * as pageUtils from '@/plugins/pageUtils.js'
                             @click.stop="toggleRail"></v-btn>
                     </template>
                 </v-list-item>
-                <v-list-item v-if="roleUtils.isLogin && roleUtils.isManager && !roleUtils.isOfficer"
-                    prepend-icon="mdi-home-silo-outline" title="辖区查看" value="辖区查看" link @click="changeManage('station')">
+                <v-list-item v-if="roleUtils.isLogin" prepend-icon="mdi-home-silo-outline" title="辖区查看" value="辖区查看" link
+                    @click="changeManage('station')">
                 </v-list-item>
-                <v-list-item v-if="roleUtils.isLogin && roleUtils.isManager && !roleUtils.isOfficer"
-                    prepend-icon="mdi-file-cog-outline" title="公开案件查看" value="公开案件查看" link @click="changeManage('cases')">
+                <v-list-item v-if="roleUtils.isLogin" prepend-icon="mdi-file-cog-outline" title="公开案件查看" value="公开案件查看" link
+                    @click="changeManage('cases')">
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
     </div>
 
     <v-container class="fill-height" style="display: block;">
-        <template v-if="manageType == 'station'">
-            <StationInfoTable />
+        <template v-if="lookType == 'station'">
+            <OpenStationInfoTable />
         </template>
 
-        <template v-if="manageType == 'cases'">
-            <CaseInfoTable />
+        <template v-if="lookType == 'cases'">
+            <OpenCaseInfoTable />
         </template>
 
     </v-container>
 </template>
 
 <script>
-import { VDataTable } from 'vuetify/labs/VDataTable'
-import StationInfoTable from '@/components/table/StationInfoTable.vue'
-import CaseInfoTable from '@/components/table/OpenCaseInfoTable.vue'
+import OpenStationInfoTable from '@/components/table/OpenStationInfoTable.vue'
+import OpenCaseInfoTable from '@/components/table/OpenCaseInfoTable.vue'
 export default {
     components: {
-        VDataTable,
-        StationInfoTable,
-        CaseInfoTable,
+        OpenStationInfoTable,
+        OpenCaseInfoTable,
     },
     data() {
         return {
-            manageType: "station",
+            lookType: "station",
             drawer: true,
             rail: true,
         }
@@ -56,7 +54,7 @@ export default {
     methods: {
         changeManage(data) {
             if (data == "station" || data == "cases")
-                this.manageType = data;
+                this.lookType = data;
         },
         toggleRail() {
             this.rail = !this.rail;

@@ -23,6 +23,8 @@ public interface CaseMapper extends BaseMapper<Case> {
 
     List<Case> getAllCases();
 
+    List<Case> getAllOpenClosedCases();
+
     Case getCasesByCId(Integer c_no);
 
     @ResultMap("StationStatisticsResultMap")
@@ -51,4 +53,5 @@ public interface CaseMapper extends BaseMapper<Case> {
 
     @MapKey("dates")
     List<Map<String, Object>> getOfficerDailyClosedCasesByONo(int u_no);
+
 }

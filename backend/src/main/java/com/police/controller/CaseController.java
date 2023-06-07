@@ -248,4 +248,11 @@ public class CaseController {
         }
         return true;
     }
+
+    @GetMapping("/getAllOpenClosedCases")
+    public List<Case> getAllOpenClosedCases() {
+        System.out.println("getAllOpenClosedCases: ");
+        List<Case> res = caseMapper.getAllOpenClosedCases();
+        return res;
+    }
 }

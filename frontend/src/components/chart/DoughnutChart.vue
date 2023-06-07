@@ -17,8 +17,6 @@ export default {
     },
     methods: {
         createChart(labels, data, backgroundColor, title) {
-            console.log(labels);
-            console.log(title);
             // 创建环状图配置对象
             const chartConfig = {
                 type: 'doughnut',

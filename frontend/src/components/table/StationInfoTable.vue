@@ -7,12 +7,15 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 <template>
     <Snackbar ref="mychild" />
     <v-container class="fill-height" style="display: block;">
-        <v-data-table :headers="headersforstations" :items="stations">
+        <v-data-table :headers="headersforstations" :items="stations" :search="search">
             <template v-slot:top>
                 <v-toolbar flat>
                     <v-toolbar-title>所有辖区信息</v-toolbar-title>
-                    <v-divider class="mx-4" inset vertical></v-divider>
+
                     <v-spacer></v-spacer>
+
+                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line
+                        hide-details></v-text-field>
 
                     <v-dialog v-model="dialogEdit" max-width="800px">
                         <template v-slot:activator="{ props }">
@@ -108,6 +111,7 @@ export default {
     },
     data() {
         return {
+            search: "",
             formTitle: '',
             stations: [],
             headersforstations: [

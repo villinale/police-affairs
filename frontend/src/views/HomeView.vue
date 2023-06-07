@@ -44,7 +44,7 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 
 				<v-col cols="auto">
 					<v-btn min-width="164" rel="noopener noreferrer" size="x-large" target="_blank" variant="text">
-						<v-icon icon="mdi-message-bulleted" size="large" start />
+						<v-icon icon="mdi-message-bulleted" size="large" start @click="pageUtils.goToOpenInfo(this)" />
 						信息公开
 					</v-btn>
 				</v-col>

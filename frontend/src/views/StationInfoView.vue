@@ -26,9 +26,11 @@ import * as roleUtils from '@/plugins/roleUtils.js'
                         <v-text-field v-model="stationinfo.s_phone" label="联系方式" readonly></v-text-field>
                     </v-col>
                 </v-row>
-                <v-row style="height: 250px;">
-                    <DoughnutChart ref="myDoughnutChart" />
-                    <LineChart ref="myLineChart" />
+                <v-row style="height: 300px;">
+                    <DoughnutChart style="height: 270px;" ref="myDoughnutChart" />
+                    <v-col style="height: 300px;margin-top:10px;weight:800px;justify-content: center;">
+                        <LineChart ref="myLineChart" />
+                    </v-col>
                 </v-row>
             </v-card-text>
         </v-card>
