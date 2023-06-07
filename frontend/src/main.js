@@ -18,6 +18,13 @@ import * as L from 'leaflet'
 import axios from 'axios'
 import x2js from 'x2js'
 
+import VueAMap, { initAMapApiLoader } from '@vuemap/vue-amap';
+import '@vuemap/vue-amap/dist/style.css'
+
+initAMapApiLoader({
+    key: 'f5d84e6e315b88e94510f92d132bc894',
+})
+
 
 axios.defaults.baseURL = "http://127.0.0.1:8080/"
 axios.defaults.withCredentials = true
@@ -28,6 +35,7 @@ app.config.globalProperties.$axios = axios
 app.config.globalProperties.$x2js = new x2js()
 
 app.use(VueCookies)
+    .use(VueAMap)
 
 registerPlugins(app)
 

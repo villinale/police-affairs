@@ -1,14 +1,20 @@
 <template>
-    <div id="map"></div>
+    <div class="map">
+        <el-amap :center="center" :zoom="zoom" @init="init" />
+    </div>
 </template>
 
 <script>
-import AMapLoader from '@amap/amap-jsapi-loader';
+import { defineComponent } from "vue";
 import { shallowRef } from '@vue/reactivity';
 
-export default {
+export default defineComponent({
     data() {
         return {
+            zoom: 12,
+            center: [121.59996, 31.197646],
+            map: null,
+            keyforweb: "5be7f264c67902ddf911675b64eff7fa",
             loc: {
                 lon: 0,
                 lat: 0,
@@ -17,15 +23,11 @@ export default {
                 area: '',
                 address: '',
             },
-            keyforweb: "5be7f264c67902ddf911675b64eff7fa",
-            keyforjs: "f5d84e6e315b88e94510f92d132bc894",
-        }
+        };
     },
     setup() {
-        const map = shallowRef(null);
         const marker = shallowRef(null);
         return {
-            map,
             marker,
         }
     },
@@ -44,10 +46,12 @@ export default {
                 const url = 'https://restapi.amap.com/v3/geocode/regeo?output=xml' +
                     '&location=' + this.loc.lon + ',' + this.loc.lat +
                     '&key=' + this.keyforweb;
+                console.log(url)
 
                 fetch(url)
                     .then(response => response.text())
                     .then(data => {
+
                         // 处理返回的数据
                         let result = this.$x2js.xml2js(data);
 
@@ -92,41 +96,16 @@ export default {
                     });
             });
         },
-        initMap() {
-            AMapLoader.load({
-                key: this.keyforjs,// 申请好的Web端开发者Key，首次调用 load 时必填
-                version: "2.0",      // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-                AMapUI: {
-                    version: '1.1',
-                    plugins: ['geo/DistrictExplorer',
-                        'overlay/SimpleMarker']
-                },
-                plugins: [''],       // 需要使用的的插件列表，如比例尺'AMap.Scale'等
-            }).then(() => {
-                this.map = new AMap.Map("map", {  //设置地图容器id
-                    viewMode: "3D",    //是否为3D地图模式
-                    zoom: 10,           //初始化地图级别
-                    center: [121.470463, 31.224329], //初始化地图中心点位置
-                    mapStyle: "amap://styles/whitesmoke",
-                });
-
-                // 给地图选点绑定点击事件
-                this.bondClickEvent();
-
-            }).catch(e => {
-                console.log(e);
-            })
+        init(map) {
+            this.map = map;
+            this.bondClickEvent();
         },
-    },
-    mounted() {
-        //DOM初始化完成进行地图初始化
-        this.initMap();
     }
-}
+})
 </script>
  
 <style scoped>
-#map {
+.map {
     height: 40vh;
     width: 100vw;
     color: #413e3e;
