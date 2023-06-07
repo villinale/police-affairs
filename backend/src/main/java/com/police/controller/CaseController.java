@@ -281,6 +281,12 @@ public class CaseController {
                                 .set("c_stat", "处理中")
                                 .set("o_no", o_no);
                         caseMapper.update(null, updateWrapper2);
+
+                        // 将警官标记为忙碌
+                        UpdateWrapper<Officer> updateWrapper3 = new UpdateWrapper<>();
+                        updateWrapper3.eq("o_no", o_no)
+                                .set("o_stat", "任务中");
+                        officerMapper.update(null, updateWrapper3);
                     } else { // 如果没有，将警官标记为空闲
                         UpdateWrapper<Officer> updateWrapper2 = new UpdateWrapper<>();
                         updateWrapper2.eq("o_no", o_no)

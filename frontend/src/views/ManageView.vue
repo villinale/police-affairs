@@ -97,12 +97,5 @@ export default {
 
 .hoverable:hover {
     cursor: pointer;
-    /* 修改为您希望的鼠标样式，例如： */
-    /* cursor: pointer; */
-    /* cursor: grab; */
-    /* cursor: crosshair; */
-    /* cursor: move; */
-    /* cursor: help; */
-    /* ... */
 }
 </style>
