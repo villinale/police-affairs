@@ -7,11 +7,14 @@ import * as pageUtils from '@/plugins/pageUtils.js'
 <template>
     <Snackbar ref="mychild" />
     <v-container class="fill-height" style="display: block;">
-        <v-data-table :headers="headersforcases" :items="cases">
+        <v-data-table :headers="headersforcases" :items="cases" :search="search">
             <template v-slot:top>
                 <v-toolbar flat>
                     <v-toolbar-title>所有案件信息</v-toolbar-title>
                     <v-spacer></v-spacer>
+
+                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line
+                        hide-details></v-text-field>
                     <v-btn color="primary" dark class="mb-2" @click="pageUtils.goToReportCase(this)">
                         新增案件
                     </v-btn>
@@ -117,6 +120,7 @@ export default {
     },
     data() {
         return {
+            search: "",
             uid: this.$cookies.get('userid'),
             cases: [],
             headersforcases: [
