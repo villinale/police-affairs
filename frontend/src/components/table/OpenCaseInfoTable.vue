@@ -56,7 +56,6 @@ export default {
                 { title: '发生时间', align: 'end', key: 'c_startdate' },
                 { title: '结案时间', align: 'end', key: 'c_enddate' },
                 { title: '状态', align: 'end', key: 'c_stat' },
-                { title: '上报人', align: 'end', key: 'u_no' },
                 { title: '负责辖区', align: 'end', key: 's_no' },
             ],
         }

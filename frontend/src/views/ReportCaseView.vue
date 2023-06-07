@@ -106,6 +106,7 @@ export default {
                     c_lat: this.loc.lat,
                     c_stat: 0,
                     u_no: parseInt(this.$cookies.get("userid")),
+                    isOfficer: roleUtils.isOfficer,
                 })
                 .then(res => {
                     this.$refs.mychild.showSnackbar("成功报案，请在个人主页查看信息", "green-darken-3");

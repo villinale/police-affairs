@@ -11,7 +11,7 @@ import { shallowRef } from '@vue/reactivity';
 export default defineComponent({
     data() {
         return {
-            zoom: 12,
+            zoom: 15,
             center: [121.59996, 31.197646],
             map: null,
             keyforweb: "5be7f264c67902ddf911675b64eff7fa",

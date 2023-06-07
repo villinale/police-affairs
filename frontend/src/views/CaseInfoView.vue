@@ -63,25 +63,16 @@ import * as roleUtils from '@/plugins/roleUtils.js'
                         </v-col>
                     </v-row>
                     <v-row align="center">
-                        <v-col v-if="!caseUtils.isClose(caseinfo.c_stat)" cols="6">
+                        <v-col cols="6">
                             <v-text-field type="datetime-local" v-model="caseinfo.c_startdate" label="报案时间"
                                 readonly></v-text-field>
                         </v-col>
                         <v-col v-if="caseUtils.isClose(caseinfo.c_stat)" cols="6">
-                            <v-text-field type="datetime-local" v-model="caseinfo.c_startdate" label="报案时间"
+                            <v-text-field type="datetime-local" v-model="caseinfo.c_enddate" label="结案时间"
                                 readonly></v-text-field>
                         </v-col>
                     </v-row>
                     <v-textarea v-model="caseinfo.c_text" label="描述" readonly></v-textarea>
-                    <!-- <v-row align="center">
-                        <v-col cols="12">
-                            <v-btn v-if="!caseUtils.isAssigned(caseinfo.c_stat) && roleUtils.isManager" color="primary"
-                                rel="noopener noreferrer" size="large" target="_blank" variant="flat">
-                                prepend-icon="mdi-login" @click="pageUtils.goToLogin(this)"> 
-                    分配警员
-                    </v-btn>
-                    </v-col>
-                    </v-row> -->
                 </v-caseinfo>
             </v-card-text>
         </v-card>
