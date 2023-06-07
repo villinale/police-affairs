@@ -14,7 +14,7 @@ export function getLocString(info) {
 
 export function getStatusColor(status) {
     if (status == '待分配') return 'red'
-    else if (status == '调查中') return 'primary'
+    else if (status == '处理中') return 'primary'
     else return 'grey-lighten-1'
 }
 
@@ -27,7 +27,7 @@ export function getLevelColor(level) {
 
 export function getStatusInt(level) {
     if (level == '待分配') return 1;
-    else if (level == '调查中') return 2;
+    else if (level == '处理中') return 2;
     else if (level == '已结束') return 3;
     else return 0;
 }
