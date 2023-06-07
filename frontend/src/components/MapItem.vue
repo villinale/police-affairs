@@ -1,8 +1,11 @@
 <template>
     <div class="map-page-container">
         <el-amap :center="center" :zoom="zoom">
-            <el-amap-layer-district :type="Province" adcode="310000" :depth="2" :styles="styles"></el-amap-layer-district>
+            <el-amap-layer-district type="Province" adcode="310000" :depth="2" :styles="styles"></el-amap-layer-district>
         </el-amap>
+    </div>
+    <div class="toolbar">
+        <button @click="switchVisible()">{{ visible ? '隐藏' : '显示' }}</button>
     </div>
 </template>
   
@@ -18,25 +21,17 @@ export default defineComponent({
         const getColorByAdcode = function (adcode) {
             if (!colors[adcode]) {
                 let gb = Math.random() * 155 + 50;
-                colors[adcode] = 'rgb(' + gb + ',' + gb + ',255)';
+                colors[adcode] = 'rgba(' + gb + ',' + gb + ',255,0.6)';
             }
-
             return colors[adcode];
         };
 
         return {
-            zoom: 10,
-            center: [121.470463, 31.224329], //初始化地图中心点位置
-            mapStyle: "amap://styles/whitesmoke",
+            zoom: 9,
+            center: [121.59996, 31.197646],
             visible: true,
-            depth: 2,
             styles: {
                 'fill': function (properties) {
-                    // properties为可用于做样式映射的字段，包含
-                    // NAME_CHN:中文名称
-                    // adcode_pro
-                    // adcode_cit
-                    // adcode
                     let adcode = properties.adcode;
                     return getColorByAdcode(adcode);
                 },
@@ -48,16 +43,13 @@ export default defineComponent({
     },
 
     methods: {
-        switchVisible() {
-            this.visible = !this.visible;
-        },
-    },
+    }
 });
 </script>
 <style scoped>
 .map-page-container {
     height: 75vh;
     width: 100vw;
-    color: #413e3e;
+    color: #413e3eac;
 }
 </style>
