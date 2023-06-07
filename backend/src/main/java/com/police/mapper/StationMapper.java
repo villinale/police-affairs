@@ -14,4 +14,6 @@ public interface StationMapper extends BaseMapper<Station> {
     List<Station> getAllStations();
 
     Station getStationBySNo(int s_no);
+
+    Station getMinDisByLonLat(double lon, double lat);
 }

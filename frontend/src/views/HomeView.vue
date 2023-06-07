@@ -78,6 +78,12 @@ export default {
 		console.log(this.isShowLogin);
 	},
 	mounted() {
+		roleUtils.checkLoginStatus(this);
+		roleUtils.updateRole(this);
+		this.isShowManage = roleUtils.isManager;
+		this.isShowReport = (!roleUtils.isManager) && (!roleUtils.isOfficer);
+		this.isShowLogin = (!roleUtils.isLogin);
+		this.isShowPerson = (roleUtils.isLogin);
 	},
 }
 </script>

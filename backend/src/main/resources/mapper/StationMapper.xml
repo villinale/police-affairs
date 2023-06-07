@@ -7,4 +7,10 @@
 
     <select id="getStationBySNo" resultType="com.police.entity.Station"> select * from station where
         s_no = #{s_no} </select>
+
+    <!-- geStationBySarea -->
+    <select id="getMinDisByLonLat" resultType="com.police.entity.Station"> SELECT s_no,s_name,
+        s_lon, s_lat, s_phone, s_province,s_city,s_area, s_address,
+        ST_DISTANCE_SPHERE(POINT(#{lon},#{lat}), POINT(s_lon, s_lat)) AS distance FROM station ORDER
+        BY distance ASC LIMIT 1;</select>
 </mapper>

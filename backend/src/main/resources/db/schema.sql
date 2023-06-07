@@ -21,7 +21,7 @@ CREATE TABLE station(
     s_province VARCHAR(50) DEFAULT NULL,
     s_city VARCHAR(50) DEFAULT NULL,
     s_area VARCHAR(50) DEFAULT NULL,
-    s_address VARCHAR(256) DEFAULT NULL,
+    s_address VARCHAR(512) DEFAULT NULL,
     PRIMARY KEY(s_no)
 );
 

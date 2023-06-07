@@ -8,11 +8,16 @@
     <!-- getOfficerByNo -->
 
     <select id="getOfficerByONo" resultType="com.police.entity.Officer"> select distinct
-        ser.u_no,u_role,u_name,u_psw,u_sex,u_phone,o_no,o_stat,s_no from user,officer where
+        user.u_no,u_role,u_name,u_psw,u_sex,u_phone,o_no,o_stat,s_no from user,officer where
         user.u_no = officer.u_no and officer.o_no = #{o_no} </select>
 
     <!-- getOfficerByUNo -->
     <select id="getOfficerByUNo" resultType="com.police.entity.Officer"> select distinct
-        ser.u_no,u_role,u_name,u_psw,u_sex,u_phone,o_no,o_stat,s_no from user,officer where
+        user.u_no,u_role,u_name,u_psw,u_sex,u_phone,o_no,o_stat,s_no from user,officer where
         user.u_no = officer.u_no and officer.u_no = #{u_no} </select>
+
+    <!-- getFreeOfficerBySNo -->
+    <select id="getFreeOfficerBySNo" resultType="com.police.entity.Officer"> select
+        user.u_no,u_role,u_name,u_psw,u_sex,u_phone,o_no,o_stat,s_no from user,officer where
+        user.u_no = officer.u_no and officer.s_no = #{s_no} and officer.o_stat='空闲';</select>
 </mapper>

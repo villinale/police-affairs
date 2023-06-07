@@ -2,6 +2,8 @@ package com.police.controller;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.police.entity.Case;
+import com.police.entity.Officer;
+import com.police.entity.Station;
 import com.police.entity.response_type.StationStatistics;
 import com.police.entity.response_type.UserStatistics;
 
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.police.mapper.CaseMapper;
 import com.police.mapper.OfficerMapper;
+import com.police.mapper.StationMapper;
 
 import freemarker.core.ParseException;
 
@@ -39,6 +42,9 @@ public class CaseController {
     @Autowired
     private OfficerMapper officerMapper;
 
+    @Autowired
+    private StationMapper stationMapper;
+
     @PostMapping("/addCase")
     public Boolean addCase(@RequestBody Map<String, Object> requestBody) {
         String c_Title = (String) requestBody.get("c_title");
@@ -52,17 +58,14 @@ public class CaseController {
         String c_address = (String) requestBody.get("c_address");
         double c_lon = (double) requestBody.get("c_lon");
         double c_lat = (double) requestBody.get("c_lat");
-        // Stirng c_stat = '未处理';
         int u_no = (int) requestBody.get("u_no");
+        boolean isOfficer = (boolean) requestBody.get("isOfficer");
 
         // 时间格式转换 原格式："2023-06-10T16:26" 转换后："2023-06-10 16:26"
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
         LocalDateTime dateTime = LocalDateTime.parse(c_Date, inputFormatter);
 
-        // TODO:分配警局和警员
-        // int stationNo = (int) requestBody.get("stationNo");
-        // int officerNo = (int) requestBody.get("officerNo");
         Case c = new Case();
         c.setC_text(c_Text);
         c.setC_title(c_Title);
@@ -75,11 +78,36 @@ public class CaseController {
         c.setC_address(c_address);
         c.setC_lon(c_lon);
         c.setC_lat(c_lat);
-        c.setC_stat("待分配");// TODO:分配警员后需要修改
-        c.setC_isPublic(false);
-        c.setS_no(1);
-        c.setO_no(1);
+        if (levelint == 0)
+            c.setC_isPublic(true);
+        else
+            c.setC_isPublic(false);
+
+        int o_no = 0, s_no = 0;
+        if (isOfficer) {
+            Officer officer = officerMapper.getOfficerByUNo(u_no);
+            o_no = officer.getO_no();
+            s_no = officer.getS_no();
+            c.setC_stat("处理中");
+        } else {
+            Station station = stationMapper.getMinDisByLonLat(c_lon, c_lat);
+
+            List<Officer> officers = officerMapper.getFreeOfficerBySNo(station.getS_no());
+            if (officers.size() == 0) {
+                o_no = 0;
+                s_no = station.getS_no();
+                c.setC_stat("待分配");
+            } else {
+                o_no = officers.get(0).getO_no();
+                s_no = station.getS_no();
+                c.setC_stat("处理中");
+            }
+        }
+
+        c.setS_no(s_no);
+        c.setO_no(o_no);
         c.setU_no(u_no);
+
         System.out.println("addCase: " + c);
         int res = caseMapper.insert(c);
         if (res == 1)
