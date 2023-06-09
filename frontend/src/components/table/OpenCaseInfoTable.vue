@@ -49,6 +49,7 @@ export default {
             uid: this.$cookies.get('userid'),
             cases: [],
             headersforcases: [
+                { title: '案件编号', align: 'start', key: 'c_no', },
                 { title: '案件名称', align: 'start', key: 'c_title', },
                 { title: '所在区', align: 'end', key: 'c_area' },
                 { title: '详细位置', align: 'end', key: 'c_address' },

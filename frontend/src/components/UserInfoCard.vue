@@ -1,7 +1,12 @@
 <template>
     <v-card class="mx-auto pe-continer" max-width="400" min-width="350" min-height="300">
         <v-card-title class="primary">
-            <span class="pe-header-text">用户信息</span>
+            <span class="pe-header-text">
+                用户信息
+                <span style="height: 15px;">
+                    <v-btn variant="text" :icon="'mdi-pencil'" @click="editUserInfo"></v-btn>
+                </span>
+            </span>
         </v-card-title>
         <v-card-text>
             <v-list>
@@ -41,6 +46,15 @@ export default {
             type: Object,
             required: true
         }
+    },
+    data() {
+        return {
+        }
+    },
+    methods: {
+        editUserInfo() {
+            this.$emit('geteditUserInfo');
+        },
     }
 };
 </script>

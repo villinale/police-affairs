@@ -50,15 +50,16 @@ import * as roleUtils from '@/plugins/roleUtils.js'
                         <v-col cols="3">
                             <v-text-field v-model="caseinfo.s_no" label="所属辖区" readonly></v-text-field>
                         </v-col>
-                        <v-col v-if="caseUtils.isAssigned(caseinfo.c_stat)" cols="3">
+                        <v-col v-if="caseUtils.isAssigned(caseinfo.c_stat) && (roleUtils.isManager ||
+                            roleUtils.isOfficer || (caseinfo.u_no == uid))" cols=" 3">
                             <v-text-field v-model="caseinfo.o_no" label="分配警员" readonly></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row align="center">
-                        <v-col cols="6">
+                        <v-col v-if="roleUtils.isManager || roleUtils.isOfficer || (caseinfo.u_no == uid)" cols="6">
                             <v-text-field v-model="userinfo.u_name" label="报案人" readonly></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col v-if="roleUtils.isManager || roleUtils.isOfficer || (caseinfo.u_no == uid)" cols="6">
                             <v-text-field v-model="userinfo.u_phone" label="报案人联系方式" readonly></v-text-field>
                         </v-col>
                     </v-row>
@@ -90,6 +91,7 @@ export default {
     },
     data() {
         return {
+            uid: this.$cookies.get('userid'),
             caseinfo: {},
             userinfo: {},
             casestatInt: 0,

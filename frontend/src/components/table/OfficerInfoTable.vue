@@ -169,7 +169,23 @@ export default {
             this.setTitle('NO.' + item.u_no + ' ' + item.u_name)
         },
         deleteItemConfirm() {
-            this.officers.splice(this.editedIndex, 1)
+            if (this.editedIndex > -1) {
+                this.$axios.post('/officer/deleteOfficer', {
+                    u_no: this.officers[this.editedIndex].u_no,
+                    o_no: this.officers[this.editedIndex].o_no,
+                }).then(res => {
+                    console.log(res.data)
+                    if (res.data == true)
+                        this.officers.splice(this.editedIndex, 1)
+                    else
+                        this.$refs.mychild.showSnackbar("修改失败", 'error');
+                })
+                    .catch(err => {
+                        console.log(err);
+                        this.$refs.mychild.showSnackbar("修改失败", 'error');
+                        this.close();
+                    });
+            }
             this.closeDelete()
         },
         close() {

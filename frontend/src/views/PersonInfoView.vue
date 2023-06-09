@@ -29,10 +29,41 @@ import * as roleUtils from '@/plugins/roleUtils.js'
             </template>
         </v-navigation-drawer>
     </div>
+
+    <v-dialog v-model="dialogEdit" max-width="800px">
+        <v-card>
+            <v-card-text>
+                <v-container>
+                    <v-row>
+                        <v-col cols="12" sm="6" md="4">
+                            <v-text-field v-model="editedItem.name" label="姓名"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                            <v-select v-model="editedItem.sex" label="性别" :items="['男', '女']"></v-select>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                            <v-text-field v-model="editedItem.phone" label="电话"></v-text-field>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-card-text>
+
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue-darken-1" variant="text" @click="close">
+                    取消
+                </v-btn>
+                <v-btn color="blue-darken-1" variant="text" @click="save">
+                    保存
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+
     <div>
         <v-container>
             <v-row>
-                <UserInfoCard v-if="manageType == 'personInfo'" :user-info="userInfo" />
+                <UserInfoCard v-if="manageType == 'personInfo'" :user-info="userInfo" @geteditUserInfo="geteditUserInfo" />
 
                 <v-card v-if="manageType == 'personInfo'" class=" mx-auto pe-continer" max-width="400" min-width="350">
                     <v-card-title class="primary">
@@ -105,6 +136,7 @@ export default {
     },
     data() {
         return {
+            dialogEdit: false,
             manageType: "personInfo",
             drawer: true,
             rail: true,
@@ -112,11 +144,57 @@ export default {
             userInfo: {},
             casesInfo: {},
             statics: [],
+            editedItem: {
+                name: "",
+                sex: "",
+                phone: "",
+            },
+            defaultItem: {
+                name: "",
+                sex: "",
+                phone: "",
+            },
         };
     },
     methods: {
+        geteditUserInfo() {
+            this.editedItem.name = this.userInfo.u_name
+            this.editedItem.sex = this.userInfo.u_sex
+            this.editedItem.phone = this.userInfo.u_phone
+            this.dialogEdit = true;
+        },
+        close() {
+            this.dialogEdit = false
+            this.$nextTick(() => {
+                this.editedItem = this.defaultItem
+            })
+        },
+        save() {
+            this.$axios.post('/user/updateUserInfo', {
+                u_no: parseInt(this.uid),
+                u_name: this.editedItem.name,
+                u_sex: this.editedItem.sex,
+                u_phone: this.editedItem.phone,
+            })
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data == true) {
+                        this.userInfo.u_name = this.editedItem.name;
+                        this.userInfo.u_sex = this.editedItem.sex;
+                        this.userInfo.u_phone = this.editedItem.phone;
+                    }
+                    this.close();
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.close();
+                });
+        },
         setDoughnutChart() {
             var labels = ['结案数', '未结案数'];
+            if (this.statics.totalCases == 0) {
+                this.statics.closedCases = 0;
+            }
             var data = [this.statics.closedCases, this.statics.totalCases - this.statics.closedCases];
             var backgroundColor = ['#1A237E', '#BBDEFB'];
             var title = `未结案数 vs 结案数`;

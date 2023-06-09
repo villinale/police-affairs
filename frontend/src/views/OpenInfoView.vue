@@ -1,3 +1,10 @@
+<!--
+ * @Author: yingxin wang
+ * @Date: 2023-06-07 13:56:23
+ * @LastEditors: yingxin wang
+ * @LastEditTime: 2023-06-09 00:24:44
+ * @Description: 请填写简介
+-->
 <script setup>
 import * as caseUtils from '@/plugins/caseUtils.js'
 import * as roleUtils from '@/plugins/roleUtils.js'
@@ -14,10 +21,10 @@ import * as pageUtils from '@/plugins/pageUtils.js'
                             @click.stop="toggleRail"></v-btn>
                     </template>
                 </v-list-item>
-                <v-list-item v-if="roleUtils.isLogin" prepend-icon="mdi-home-silo-outline" title="辖区查看" value="辖区查看" link
+                <v-list-item prepend-icon="mdi-home-silo-outline" title="辖区查看" value="辖区查看" link
                     @click="changeManage('station')">
                 </v-list-item>
-                <v-list-item v-if="roleUtils.isLogin" prepend-icon="mdi-file-cog-outline" title="公开案件查看" value="公开案件查看" link
+                <v-list-item prepend-icon="mdi-file-cog-outline" title="公开案件查看" value="公开案件查看" link
                     @click="changeManage('cases')">
                 </v-list-item>
             </v-list>

@@ -17,7 +17,7 @@ export default defineComponent({
         let colors = {};
         const getColorByAdcode = function (adcode) {
             if (!colors[adcode]) {
-                let gb = Math.random() * 155 + 50;
+                let gb = (adcode * 155 + 50) % 255;
                 colors[adcode] = 'rgba(' + gb + ',' + gb + ',255,0.6)';
             }
             return colors[adcode];
@@ -40,7 +40,7 @@ export default defineComponent({
     },
 
     methods: {
-    }
+    },
 });
 </script>
 <style scoped>

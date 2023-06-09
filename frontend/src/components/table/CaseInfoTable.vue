@@ -46,7 +46,7 @@ import * as pageUtils from '@/plugins/pageUtils.js'
                                             <v-select v-model="editedItem.c_stat" label="状态"
                                                 :items="['待分配', '处理中', '已结束']"></v-select>
                                         </v-col>
-                                        <v-col v-if="roleUtils.isManager" cols="12" sm="6" md="4">
+                                        <v-col v-if="roleUtils.isManager || roleUtils.isOfficer" cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.o_no" label="负责警员"></v-text-field>
                                         </v-col>
                                         <v-col cols=" 12" sm="6" md="4">

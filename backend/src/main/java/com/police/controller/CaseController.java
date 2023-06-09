@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+
+import javax.xml.crypto.Data;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.time.LocalDate;
@@ -262,8 +265,12 @@ public class CaseController {
             }
 
             // 如果是已结案，结案时间变为现在的时间
-            if (c_stat.equals("已结案")) {
+            if (c_stat.equals("已结束")) {
                 dateTime = LocalDateTime.now();
+                String sdata = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                dateTime = LocalDateTime.parse(sdata, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+                System.out.println(dateTime);
 
                 // 查看是否还有其他未完结案件是该警官负责的
                 // 如果没有，需要查看当前辖区是否有待处理案件------如果有，将案件分配给该警官

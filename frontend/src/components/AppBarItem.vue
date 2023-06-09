@@ -9,10 +9,13 @@ import * as roleUtils from '@/plugins/roleUtils.js'
             <v-toolbar-title>智慧警务平台</v-toolbar-title>
         </router-link>
         <v-spacer></v-spacer>
+        <div v-if="isHome && roleUtils.isLogin" style="margin-right: 10px;">
+            <v-btn variant="text" :icon="'mdi-account-tie'"></v-btn>欢迎你，{{ username }}
+        </div>
         <div v-if="!isHome">
             <v-btn text @click="pageUtils.goToOpenInfo(this)">信息公开</v-btn>
             <v-btn v-if="roleUtils.isManager" @click="pageUtils.goToManage(this)" text>信息管理</v-btn>
-            <v-btn @click="pageUtils.goToPerson(this)" text>个人主页</v-btn>
+            <v-btn v-if="roleUtils.isLogin" @click="pageUtils.goToPerson(this)" text>个人主页</v-btn>
         </div>
     </v-app-bar>
 </template>
@@ -21,6 +24,7 @@ import * as roleUtils from '@/plugins/roleUtils.js'
 export default {
     data() {
         return {
+            username: this.$cookies.get("name"),
             isHome: true,
         };
     },

@@ -134,6 +134,9 @@ export default {
     methods: {
         setDoughnutChart() {
             var labels = ['结案数', '未结案数'];
+            if (this.statics.totalCases == 0) {
+                this.statics.closedCases = 0;
+            }
             var data = [this.statics.closedCases, this.statics.totalCases - this.statics.closedCases];
             var backgroundColor = ['#1A237E', '#BBDEFB'];
             var title = `结案数 vs 案件数\n比例: ${this.statics.closedRatio}`;

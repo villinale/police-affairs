@@ -105,4 +105,10 @@ public class OfficerController {
         }
         return true;
     }
+
+    @PostMapping("/deleteOfficer")
+    public boolean deleteOfficer(@RequestBody Map<String, Object> requestBody) {
+        // System.out.println("deleteOfficer: " + requestBody);
+        return true;
+    }
 }

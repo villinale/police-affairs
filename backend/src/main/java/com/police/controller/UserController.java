@@ -1,5 +1,13 @@
+/*
+ * @Author: yingxin wang
+ * @Date: 2023-06-02 08:06:43
+ * @LastEditors: yingxin wang
+ * @LastEditTime: 2023-06-08 23:54:01
+ * @Description: 请填写简介
+ */
 package com.police.controller;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.police.entity.User;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -42,6 +50,28 @@ public class UserController {
             u.setU_sex("null");
         }
         return u;
+    }
+
+    @PostMapping("/updateUserInfo")
+    public Boolean updateUserInfo(@RequestBody Map<String, Object> requestBody) {
+        System.out.println("updateUserInfo: " + requestBody);
+        try {
+            Integer u_no = (Integer) requestBody.get("u_no");
+            String u_name = (String) requestBody.get("u_name");
+            String u_sex = (String) requestBody.get("u_sex");
+            String u_phone = (String) requestBody.get("u_phone");
+
+            UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.eq("u_no", u_no)
+                    .set("u_name", u_name)
+                    .set("u_sex", u_sex)
+                    .set("u_phone", u_phone);
+            userMapper.update(null, updateWrapper);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     @PostMapping("/hasPhone")
