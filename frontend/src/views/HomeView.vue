@@ -93,7 +93,7 @@ export default {
 		roleUtils.checkLoginStatus(this);
 		roleUtils.updateRole(this);
 		this.isShowManage = roleUtils.isManager;
-		this.isShowReport = (!roleUtils.isManager) && (!roleUtils.isOfficer);
+		this.isShowReport = (!roleUtils.isManager) && (!roleUtils.isOfficer) && (roleUtils.isLogin);
 		this.isShowLogin = (!roleUtils.isLogin);
 		this.isShowPerson = (roleUtils.isLogin);
 		console.log(this.isShowReport);
